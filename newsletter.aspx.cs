@@ -3,6 +3,7 @@ using aspNetEmail;
 using System.Data;
 using System.Configuration;
 using Npgsql;
+using System.Net.Configuration;
 
 public partial class newsletter : System.Web.UI.Page
 {
@@ -13,8 +14,7 @@ public partial class newsletter : System.Web.UI.Page
 
     private DataSet BuildDataSet(string SqlStatement, string DataTableName)
     {
-        String cs = ConfigurationManager.ConnectionStrings["Heroku"].ConnectionString;
-        NpgsqlConnection conn = new NpgsqlConnection(cs);
+        NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ConnectionString);
         DataSet ds = new DataSet();
         NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(SqlStatement, conn);
         adapter.Fill(ds, DataTableName);
@@ -24,19 +24,19 @@ public partial class newsletter : System.Web.UI.Page
     protected void btnSend_Click(object sender, EventArgs e)
     {
         bool IsTestMode = false;
-        // System.Net.Configuration.SmtpSection smtp = new System.Net.Configuration.SmtpSection();
+        SmtpSection smtp = new SmtpSection();
         EmailMessage msg = new EmailMessage();
         msg.ValidateAddress = false;
-        msg.FromAddress = "leta@schoolhouseyoga.com";
+        msg.FromAddress = smtp.From;
         msg.MailMergeReconnectAttempts = 3;
         msg.MailMergeReconnectDelay = 3;
 
         String sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 0 ROWS FETCH NEXT 9000 ROWS ONLY;";
-        // String sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 9000 ROWS;";
+        // String sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 9000 ROWS FETCH NEXT 9000 ROWS ONLY;";
 
         if (IsTestMode)
         {
-            sql = "SELECT email FROM public.\"Users\" WHERE email IN ('info@schoolhouseyoga.com');";
+            sql = "SELECT email FROM public.\"Users\" WHERE email IN ('" + msg.FromAddress + "');";
         }
 
         DataSet ds = BuildDataSet(sql, "Users");
