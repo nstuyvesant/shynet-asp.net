@@ -24,15 +24,21 @@ public partial class newsletter : System.Web.UI.Page
     protected void btnSend_Click(object sender, EventArgs e)
     {
         bool IsTestMode = false;
-        SmtpSection smtp = new SmtpSection();
+        SmtpSection section = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
         EmailMessage msg = new EmailMessage();
         msg.ValidateAddress = false;
-        msg.FromAddress = smtp.From;
+        msg.FromAddress = section.From;
         msg.MailMergeReconnectAttempts = 3;
         msg.MailMergeReconnectDelay = 3;
 
-        String sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 0 ROWS FETCH NEXT 9000 ROWS ONLY;";
-        // String sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 9000 ROWS FETCH NEXT 9000 ROWS ONLY;";
+        String sql;
+        if (batch.SelectedValue == "1")
+        {
+            sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 0 ROWS FETCH NEXT 9000 ROWS ONLY;";
+        } else
+        {
+            sql = "SELECT email FROM public.\"Users\" WHERE email IS NOT NULL AND \"optOut\" = false ORDER BY email OFFSET 9000 ROWS FETCH NEXT 9000 ROWS ONLY;";
+        }
 
         if (IsTestMode)
         {
