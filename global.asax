@@ -38,8 +38,7 @@
     
     public static void RegisterRoutes(RouteCollection routes)
     {
-        routes.MapPageRoute("Admin", "admin", "~/admin.aspx");
         routes.MapPageRoute("History", "history", "~/history.aspx");
-        routes.MapPageRoute("Newsletter", "newsletter", "~/newsletter.aspx");
+        routes.MapPageRoute("Newsletter", "admin/newsletter", "~/admin/newsletter.aspx");
     }
 </script>
