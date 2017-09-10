@@ -365,7 +365,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="NumberOfClasses">Number of classes</label>
-                                            <input type="text" id="NumberOfClasses" autofocus required class="form-control" value="1" runat="server" style="margin-bottom:10px;" />
+                                            <input type="number" id="NumberOfClasses" min="1" autofocus required class="form-control" value="1" runat="server" style="margin-bottom:10px;" />
                                         </div>
                                         <div class="form-group">
                                             <label for="lstPaymentType">Payment method</label>

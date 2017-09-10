@@ -60,6 +60,7 @@ public partial class shynet_default : System.Web.UI.Page
     {
         // purchased_on is set to GETDATE() as a SQL Server default
         srcPayments.InsertParameters["source_ip"].DefaultValue = Request.UserHostAddress;
+        //srcPayments.InsertParameters["quantity"].DefaultValue = Math.Abs(srcPayments.InsertParameters["quantity"].DefaultValue);
         srcPayments.Insert();
         gvStudents.DataBind(); // Refresh to show increased quantity
         ScriptManager.RegisterStartupScript(this, this.GetType(), "PurchaseClassesHide", "purchaseClassesHide();", true);

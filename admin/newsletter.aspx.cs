@@ -76,7 +76,11 @@ public partial class newsletter : System.Web.UI.Page
         {
             if (msg.SendMailMergeToMSPickup(ds, @"c:\inetpub\mailroot\pickup\"))
             {
-                litMsg.Text = ds.Tables[0].Rows.Count.ToString() + " messages were sent.";
+                //DataTable table = ds.Tables[0];
+                //DataRow row = table.Rows[0];
+                //DataColumn column = table.Columns[0];
+                //row[column].ToString();
+                litMsg.Text = ds.Tables[0].Rows.Count.ToString() + " messages were sent. ";
             }
             else
             {
