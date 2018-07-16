@@ -240,14 +240,14 @@
                                                 class_id = @class_id AND
                                                 location_id = @location_id
                                             ORDER BY name"
-                        InsertCommand="INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id, @class_id, @location_id, @class_date, @student_id)"                
-                        DeleteCommand="DELETE FROM old_attendances WHERE id = @id"
+                        InsertCommand="INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id::uuid, @class_id::uuid, @location_id::uuid, @class_date::date, @student_id::uuid)"                
+                        DeleteCommand="DELETE FROM old_attendances WHERE id = @id::uuid"
                     >
                         <SelectParameters>
                             <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
-                            <asp:ControlParameter Name="instructor_id" ControlID="lstInstructor" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="class_id" ControlID="lstClass" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="location_id" ControlID="lstLocation" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
                         </SelectParameters>
                         <InsertParameters>
                             <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
@@ -261,27 +261,27 @@
                     <asp:SqlDataSource ID="srcClasses" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"  
-                        SelectCommand="SELECT id, name FROM old_classes WHERE active=1 ORDER BY name"
+                        SelectCommand="SELECT id, name FROM old_classes WHERE active=true ORDER BY name"
                         DataSourceMode="DataReader"
                     />
 
                     <asp:SqlDataSource ID="srcInstructors" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"          
-                        SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=1 ORDER BY lastname"
+                        SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname"
                         DataSourceMode="DataReader"
                     />
 
                     <asp:SqlDataSource ID="srcLocations" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                        SelectCommand="SELECT id, name FROM old_locations WHERE active=1 ORDER BY name"
+                        SelectCommand="SELECT id, name FROM old_locations WHERE active=true ORDER BY name"
                         DataSourceMode="DataReader"
                     />
 
                     <asp:SqlDataSource ID="srcPayments" runat="server"
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id, source_ip) VALUES (@student_id, @location_id, @instructor_id, @class_id, @quantity, @payment_type_id, @source_ip)" 
+                        InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id) VALUES (@student_id::uuid, @location_id::uuid, @instructor_id::uuid, @class_id::uuid, @quantity, @payment_type_id::uuid)" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>">
                         <InsertParameters>
                             <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
@@ -290,14 +290,13 @@
                             <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue" />
                             <asp:ControlParameter Name="quantity" DbType="Int16" ControlID="NumberOfClasses" PropertyName="Value" />
                             <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
-                            <asp:Parameter Name="source_ip" DbType="String" />
                         </InsertParameters>
                     </asp:SqlDataSource>
 
                     <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                        SelectCommand="SELECT id, name FROM old_payment_types WHERE active=1 ORDER BY ordinal"
+                        SelectCommand="SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal"
                         DataSourceMode="DataReader"
                     />
 
