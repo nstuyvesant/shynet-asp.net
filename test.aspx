@@ -307,9 +307,9 @@
                       EnableViewState="False"
                       DataSourceMode="DataReader"
                       >
-                      <WhereParameters>
+                      <SelectParameters>
                         <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
-                      </WhereParameters>
+                      </SelectParameters>
                     </asp:SqlDataSource>
 
                     <!-- <asp:LinqDataSource
