@@ -203,7 +203,8 @@ CREATE OR REPLACE VIEW old_student_balances AS
       FROM old_purchases -- AS purchases_1
       WHERE (student_id = old_students.id)) AS last_purchase
   FROM old_students
-  WHERE active = true;
+  WHERE active = true
+  ORDER BY lastname, firstname;
 
 CREATE OR REPLACE VIEW old_students_who_owe AS
   SELECT

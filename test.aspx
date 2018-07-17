@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="shynet_default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="test.aspx.cs" Inherits="test" %>
 <%@ Register Namespace="SHY" TagPrefix="shy" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -300,10 +300,21 @@
                         DataSourceMode="DataReader"
                     />
 
-                    <asp:LinqDataSource
-                        ID="lnqStudents"
+                    <asp:SqlDataSource ID="srcStudentBalances" runat="server"
+                      ConnectionString="<%$ ConnectionStrings:Heroku %>"
+                      ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
+                      SelectCommand="SELECT lastname, firstname FROM old_student_balances WHERE lastname LIKE @SearchText% OR firstname LIKE @SearchText%"
+                      EnableViewState="False"
+                      DataSourceMode="DataReader"
+                      >
+                      <WhereParameters>
+                        <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
+                      </WhereParameters>
+                    </asp:SqlDataSource>
+
+                    <!-- <asp:LinqDataSource
+                        ID="lqnStudents"
                         TableName="old_student_balances"
-                        OrderBy="lastname,firstname"
                         runat="server"
                         ContextTypeName="DataClassesDataContext"
                         Where="@search_text == String.Empty || (lastname.StartsWith(@search_text) Or firstname.StartsWith(@search_text))"
@@ -311,7 +322,7 @@
                         <WhereParameters>
                             <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
                         </WhereParameters>
-                    </asp:LinqDataSource>
+                    </asp:LinqDataSource> -->
 
                     <asp:SqlDataSource ID="srcStudents" runat="server"
                         ConnectionString="<%$ ConnectionStrings:Heroku %>"
