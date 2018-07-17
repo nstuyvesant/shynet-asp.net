@@ -104,7 +104,6 @@
                                     OnRowCommand="gvStudents_RowCommand"
                                     PageSize="25"
                                     runat="server"
-                                    ItemType="student_balance"
                                 >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Student name" ItemStyle-Wrap="False">
@@ -303,26 +302,14 @@
                     <asp:SqlDataSource ID="srcStudentBalances" runat="server"
                       ConnectionString="<%$ ConnectionStrings:Heroku %>"
                       ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
-                      SelectCommand="SELECT lastname, firstname FROM old_student_balances WHERE lastname LIKE @SearchText% OR firstname LIKE @SearchText%"
+                      SelectCommand="SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lastname LIKE '@search_text%' OR firstname LIKE '@search_text%'"
                       EnableViewState="False"
-                      DataSourceMode="DataReader"
+                      DataSourceMode="DataSet"
                       >
                       <SelectParameters>
                         <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
                       </SelectParameters>
                     </asp:SqlDataSource>
-
-                    <!-- <asp:LinqDataSource
-                        ID="lqnStudents"
-                        TableName="old_student_balances"
-                        runat="server"
-                        ContextTypeName="DataClassesDataContext"
-                        Where="@search_text == String.Empty || (lastname.StartsWith(@search_text) Or firstname.StartsWith(@search_text))"
-                     >
-                        <WhereParameters>
-                            <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
-                        </WhereParameters>
-                    </asp:LinqDataSource> -->
 
                     <asp:SqlDataSource ID="srcStudents" runat="server"
                         ConnectionString="<%$ ConnectionStrings:Heroku %>"
