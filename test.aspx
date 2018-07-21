@@ -302,7 +302,7 @@
                     <asp:SqlDataSource ID="srcStudentBalances" runat="server"
                       ConnectionString="<%$ ConnectionStrings:Heroku %>"
                       ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
-                      SelectCommand="SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lastname LIKE @search_text || '%' OR firstname LIKE @search_text || '%'"
+                      SelectCommand="SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search_text) || '%' OR lower(firstname) LIKE lower(@search_text) || '%'"
                       EnableViewState="False"
                       DataSourceMode="DataSet"
                       >
