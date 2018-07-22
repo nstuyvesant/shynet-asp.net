@@ -118,11 +118,24 @@ public partial class test : System.Web.UI.Page
 
     protected void PurchaseClassesOK_Click(Object sender, EventArgs e)
     {
+        NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+        conn.Open();
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT student_id, location_id, instructor_id, class_id, quantity, payment_type_id FROM old_purchases where 0 = 1", conn);
+        DataSet ds = new DataSet();
+        da.Fill(ds, "old_purchases");
+        var newPurchase = ds.Tables["old_purchases"].NewRow();
+        newPurchase["student_id"] = student_id.Value;
+        newPurchase["location_id"] = lstLocation.SelectedValue;
+        newPurchase["instructor_id"] = lstInstructor.SelectedValue;
+        newPurchase["class_id"] = lstClass.SelectedValue;
+        newPurchase["quantity"] = NumberOfClasses.Value;
+        newPurchase["payment_type_id"] = lstPaymentType.SelectedValue;
         // purchased_on is set to GETDATE() as a SQL Server default
-        // srcPayments.InsertParameters["source_ip"].DefaultValue = Request.UserHostAddress;
-        // srcPayments.InsertParameters["quantity"].DefaultValue = Math.Abs(srcPayments.InsertParameters["quantity"].DefaultValue);
-        srcPayments.Insert();
-        gvStudents.DataBind(); // Refresh to show increased quantity
+        ds.Tables["old_purchases"].Rows.Add(newPurchase);
+        new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
+        da.Update(ds, "old_purchases");
+        conn.Close();
+        searchForStudent(SearchText.Text); // Refresh to show increased quantity
         ScriptManager.RegisterStartupScript(this, this.GetType(), "PurchaseClassesHide", "purchaseClassesHide();", true);
     }
 

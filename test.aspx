@@ -311,20 +311,6 @@
                         </InsertParameters>
                     </asp:SqlDataSource>
 
-                    <asp:SqlDataSource ID="srcPayments" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id) VALUES (@student_id::uuid, @location_id::uuid, @instructor_id::uuid, @class_id::uuid, @quantity, @payment_type_id::uuid)" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>">
-                        <InsertParameters>
-                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
-                            <asp:ControlParameter Name="location_id"  DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="quantity" DbType="Int16" ControlID="NumberOfClasses" PropertyName="Value" />
-                            <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
-                        </InsertParameters>
-                    </asp:SqlDataSource>
-
                 </ContentTemplate>
             </asp:UpdatePanel>
 
