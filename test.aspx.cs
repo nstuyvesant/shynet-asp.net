@@ -3,6 +3,8 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using NpgsqlConnection;
+using NpgsqlCommand;
 
 public partial class test : System.Web.UI.Page
 {
@@ -11,16 +13,18 @@ public partial class test : System.Web.UI.Page
         if (!IsPostBack)
         {
             // Define the connection
-            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString();
             conn.Open();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            lstClass.DataSource = ds;
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            lstClass.DataSource = reader;
             lstClass.DataTextField = "name";
             lstClass.DataValueField = "id";
-            lstClass.Databind();
+            lstClass.DataBind();
+            reader.Close();
             conn.Close();
+
+            
             // Populate the classes, instructors, locations picklists
 
                     // lstClass
