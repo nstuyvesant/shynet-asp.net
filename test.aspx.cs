@@ -2,6 +2,7 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
 
 public partial class test : System.Web.UI.Page
 {
@@ -9,6 +10,55 @@ public partial class test : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
+            // Define the connection
+            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+            conn.Open();
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+            lstClass.DataSource = ds;
+            lstClass.DataTextField = "name";
+            lstClass.DataValueField = "id";
+            lstClass.Databind();
+            conn.Close();
+            // Populate the classes, instructors, locations picklists
+
+                    // lstClass
+                    // <asp:SqlDataSource ID="srcClasses" runat="server" 
+                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"  
+                    //     SelectCommand="SELECT id, name FROM old_classes WHERE active=true ORDER BY name"
+                    //     DataSourceMode="DataReader"
+                    // />
+
+                    // lstInstructor
+                    // <asp:SqlDataSource ID="srcInstructors" runat="server" 
+                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"          
+                    //     SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname"
+                    //     DataSourceMode="DataReader"
+                    // />
+
+                    // lstLocation
+                    // <asp:SqlDataSource ID="srcLocations" runat="server" 
+                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
+                    //     SelectCommand="SELECT id, name FROM old_locations WHERE active=true ORDER BY name"
+                    //     DataSourceMode="DataReader"
+                    // />
+
+                    // lstPaymentType
+                    // <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
+                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
+                    //     SelectCommand="SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal"
+                    //     DataSourceMode="DataReader"
+                    // />
+
+
+
+
+
             txtClassDate.Text = DateTime.Today.ToString("MM/dd/yyyy");
             gvStudents.DataBind();
         }

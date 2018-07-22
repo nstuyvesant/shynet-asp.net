@@ -155,7 +155,7 @@
                                         <asp:Literal ID="AttendeeAlert" runat="server"/>
                                         <div class="form-group">
                                             <label class="sr-only" for="lstClass">Class</label>
-                                            <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="srcClasses" DataTextField="name" DataValueField="id" AutoPostBack="True"  EnableViewState="False">
+                                            <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AppendDataBoundItems="true" AutoPostBack="True">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select a class</asp:ListItem>
                                             </asp:dropdownlist>
                                         </div>
@@ -176,12 +176,12 @@
                                     <div class="col-xs-12">
                                         <div class="input-group">
                                             <label class="sr-only" for="lstLocation">Location</label>
-                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcLocations" DataTextField="name" DataValueField="id" AutoPostBack="True"  EnableViewState="False">
+                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcLocations" DataTextField="name" DataValueField="id" AutoPostBack="True">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select Location</asp:ListItem>
                                             </asp:dropdownlist>
                                             <span class="input-group-addon">&nbsp;</span>
                                             <label class="sr-only" for="lstInstructor">Instructor</label>
-                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcInstructors" DataTextField="name" DataValueField="id" AutoPostBack="True" EnableViewState="False">
+                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcInstructors" DataTextField="name" DataValueField="id" AutoPostBack="True">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select instructor</asp:ListItem>
                                             </asp:dropdownlist>
                                         </div>
@@ -257,27 +257,6 @@
                         </InsertParameters>
                     </asp:SqlDataSource>
 
-                    <asp:SqlDataSource ID="srcClasses" runat="server" 
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"  
-                        SelectCommand="SELECT id, name FROM old_classes WHERE active=true ORDER BY name"
-                        DataSourceMode="DataReader"
-                    />
-
-                    <asp:SqlDataSource ID="srcInstructors" runat="server" 
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"          
-                        SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname"
-                        DataSourceMode="DataReader"
-                    />
-
-                    <asp:SqlDataSource ID="srcLocations" runat="server" 
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                        SelectCommand="SELECT id, name FROM old_locations WHERE active=true ORDER BY name"
-                        DataSourceMode="DataReader"
-                    />
-
                     <asp:SqlDataSource ID="srcPayments" runat="server"
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id) VALUES (@student_id::uuid, @location_id::uuid, @instructor_id::uuid, @class_id::uuid, @quantity, @payment_type_id::uuid)" 
@@ -291,13 +270,6 @@
                             <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
                         </InsertParameters>
                     </asp:SqlDataSource>
-
-                    <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                        SelectCommand="SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal"
-                        DataSourceMode="DataReader"
-                    />
 
                     <asp:SqlDataSource ID="srcStudentBalances" runat="server"
                       ConnectionString="<%$ ConnectionStrings:Heroku %>"
