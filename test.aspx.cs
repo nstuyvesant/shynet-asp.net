@@ -11,9 +11,10 @@ public partial class test : System.Web.UI.Page
     {
         if (!IsPostBack)
         {
-            // Define the connection
+            // Populate dropdowns only once using ViewState to retain their contents
             NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
             conn.Open();
+
             NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
             NpgsqlDataReader reader = cmd.ExecuteReader();
             lstClass.DataSource = reader;
@@ -48,47 +49,8 @@ public partial class test : System.Web.UI.Page
 
             conn.Close();
 
-            
-            // Populate the classes, instructors, locations picklists
-
-                    // lstClass
-                    // <asp:SqlDataSource ID="srcClasses" runat="server" 
-                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"  
-                    //     SelectCommand="SELECT id, name FROM old_classes WHERE active=true ORDER BY name"
-                    //     DataSourceMode="DataReader"
-                    // />
-
-                    // lstInstructor
-                    // <asp:SqlDataSource ID="srcInstructors" runat="server" 
-                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"          
-                    //     SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname"
-                    //     DataSourceMode="DataReader"
-                    // />
-
-                    // lstLocation
-                    // <asp:SqlDataSource ID="srcLocations" runat="server" 
-                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                    //     SelectCommand="SELECT id, name FROM old_locations WHERE active=true ORDER BY name"
-                    //     DataSourceMode="DataReader"
-                    // />
-
-                    // lstPaymentType
-                    // <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
-                    //     ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                    //     ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
-                    //     SelectCommand="SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal"
-                    //     DataSourceMode="DataReader"
-                    // />
-
-
-
-
-
             txtClassDate.Text = DateTime.Today.ToString("MM/dd/yyyy");
-            gvStudents.DataBind();
+            //gvStudents.DataBind();
         }
         else
         {
@@ -104,12 +66,18 @@ public partial class test : System.Web.UI.Page
 
         if (SearchText.Text != "")
         {
-            // gvStudents.DataSourceID = "lnqStudents";
-            gvStudents.DataSourceID = "srcStudentBalances";
+            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+            conn.Open();
+            DataSet ds = new DataSet();
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
+            da.SelectCommand.Parameters.AddWithValue("@search", SearchText.Text);
+            da.Fill(ds, "old_student_balances");
+            gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
             gvStudents.DataBind();
+            conn.Close();
         }
-        else
-            gvStudents.DataSourceID = "";
+        // else
+        //     gvStudents.DataSourceID = "";
     }
 
     protected void NewStudentCancel_Click(Object sender, EventArgs e)

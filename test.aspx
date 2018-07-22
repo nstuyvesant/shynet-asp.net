@@ -228,74 +228,6 @@
                         </div>
                     </div>
 
-                    <asp:SqlDataSource ID="srcAttendees" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-                        SelectCommand="SELECT id, name, student_id
-                                            FROM old_attendees
-                                            WHERE 
-                                                class_date = @class_date AND
-                                                instructor_id = @instructor_id AND
-                                                class_id = @class_id AND
-                                                location_id = @location_id
-                                            ORDER BY name"
-                        InsertCommand="INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id::uuid, @class_id::uuid, @location_id::uuid, @class_date::date, @student_id::uuid)"                
-                        DeleteCommand="DELETE FROM old_attendances WHERE id = @id::uuid"
-                    >
-                        <SelectParameters>
-                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
-                        </SelectParameters>
-                        <InsertParameters>
-                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
-                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
-                        </InsertParameters>
-                    </asp:SqlDataSource>
-
-                    <asp:SqlDataSource ID="srcPayments" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
-                        InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id) VALUES (@student_id::uuid, @location_id::uuid, @instructor_id::uuid, @class_id::uuid, @quantity, @payment_type_id::uuid)" 
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>">
-                        <InsertParameters>
-                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
-                            <asp:ControlParameter Name="location_id"  DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue" />
-                            <asp:ControlParameter Name="quantity" DbType="Int16" ControlID="NumberOfClasses" PropertyName="Value" />
-                            <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
-                        </InsertParameters>
-                    </asp:SqlDataSource>
-
-                    <asp:SqlDataSource ID="srcStudentBalances" runat="server"
-                      ConnectionString="<%$ ConnectionStrings:Heroku %>"
-                      ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
-                      SelectCommand="SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search_text) || '%' OR lower(firstname) LIKE lower(@search_text) || '%'"
-                      EnableViewState="False"
-                      DataSourceMode="DataSet"
-                      >
-                      <SelectParameters>
-                        <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
-                      </SelectParameters>
-                    </asp:SqlDataSource>
-
-                    <asp:SqlDataSource ID="srcStudents" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
-                        InsertCommand="INSERT INTO old_students (firstname, lastname) VALUES (@firstname, @lastname)"
-                        EnableViewState="False"
-                        DataSourceMode="DataSet"
-                        >
-                        <InsertParameters>
-                            <asp:ControlParameter Name="firstname" DbType="String" ControlID="firstName" PropertyName="Text" />
-                            <asp:ControlParameter Name="lastName" DbType="String" ControlID="lastName" PropertyName="Text" />
-                        </InsertParameters>
-                    </asp:SqlDataSource>
-
                     <asp:Panel ID="pnlNewStudent" DefaultButton="NewStudentOK" runat="server">
                         <div id="NewStudent" class="modal">
                             <div class="modal-dialog">
@@ -349,6 +281,62 @@
                             </div>
                         </div>
                     </asp:Panel>
+
+                    <asp:SqlDataSource ID="srcAttendees" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
+                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+                        SelectCommand="SELECT id, name, student_id
+                                            FROM old_attendees
+                                            WHERE 
+                                                class_date = @class_date AND
+                                                instructor_id = @instructor_id AND
+                                                class_id = @class_id AND
+                                                location_id = @location_id
+                                            ORDER BY name"
+                        InsertCommand="INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id::uuid, @class_id::uuid, @location_id::uuid, @class_date::date, @student_id::uuid)"                
+                        DeleteCommand="DELETE FROM old_attendances WHERE id = @id::uuid"
+                    >
+                        <SelectParameters>
+                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
+                        </SelectParameters>
+                        <InsertParameters>
+                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
+                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
+                        </InsertParameters>
+                    </asp:SqlDataSource>
+
+                    <asp:SqlDataSource ID="srcPayments" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+                        InsertCommand="INSERT INTO old_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id) VALUES (@student_id::uuid, @location_id::uuid, @instructor_id::uuid, @class_id::uuid, @quantity, @payment_type_id::uuid)" 
+                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>">
+                        <InsertParameters>
+                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
+                            <asp:ControlParameter Name="location_id"  DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="quantity" DbType="Int16" ControlID="NumberOfClasses" PropertyName="Value" />
+                            <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
+                        </InsertParameters>
+                    </asp:SqlDataSource>
+
+                    <asp:SqlDataSource ID="srcStudents" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
+                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
+                        InsertCommand="INSERT INTO old_students (firstname, lastname) VALUES (@firstname, @lastname)"
+                        EnableViewState="False"
+                        DataSourceMode="DataSet"
+                        >
+                        <InsertParameters>
+                            <asp:ControlParameter Name="firstname" DbType="String" ControlID="firstName" PropertyName="Text" />
+                            <asp:ControlParameter Name="lastName" DbType="String" ControlID="lastName" PropertyName="Text" />
+                        </InsertParameters>
+                    </asp:SqlDataSource>
 
                 </ContentTemplate>
             </asp:UpdatePanel>
