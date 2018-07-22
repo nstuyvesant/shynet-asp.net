@@ -95,7 +95,7 @@ public partial class test : System.Web.UI.Page
         DataSet ds = new DataSet();
         NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname from old_students where 0 = 1", conn);
         da.Fill(ds, "old_students");
-        var newStudent = dataSet.Tables["old_students"].NewRow();
+        var newStudent = ds.Tables["old_students"].NewRow();
         newStudent["firstname"] = firstName.Text;
         newStudent["lastname"] = lastName.Text;
         ds.Tables["old_students"].Rows.Add(newStudent);
