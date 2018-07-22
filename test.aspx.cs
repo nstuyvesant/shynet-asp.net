@@ -7,7 +7,7 @@ using Npgsql;
 
 public partial class test : System.Web.UI.Page
 {
-    private const string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
+    private string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
 
     protected void Page_Load(Object sender, EventArgs e)
     {
