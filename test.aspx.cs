@@ -12,7 +12,7 @@ public partial class test : System.Web.UI.Page
         if (!IsPostBack)
         {
             // Define the connection
-            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString();
+            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
             conn.Open();
             NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
             NpgsqlDataReader reader = cmd.ExecuteReader();
