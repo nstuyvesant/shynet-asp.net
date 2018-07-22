@@ -7,12 +7,14 @@ using Npgsql;
 
 public partial class test : System.Web.UI.Page
 {
+    private const string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
+
     protected void Page_Load(Object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
             // Populate dropdowns only once using ViewState to retain their contents
-            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+            NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
 
             NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
@@ -61,7 +63,7 @@ public partial class test : System.Web.UI.Page
     protected void searchForStudent(String searchText) {
         if (searchText != "")
         {
-            NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+            NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
             DataSet ds = new DataSet();
             NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
@@ -90,7 +92,7 @@ public partial class test : System.Web.UI.Page
 
     protected void NewStudentOK_Click(Object sender, EventArgs e)
     {
-        NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
         NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname from old_students where 0 = 1", conn);
         DataSet ds = new DataSet();
@@ -118,7 +120,7 @@ public partial class test : System.Web.UI.Page
 
     protected void PurchaseClassesOK_Click(Object sender, EventArgs e)
     {
-        NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
         NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT student_id, location_id, instructor_id, class_id, quantity, payment_type_id FROM old_purchases where 0 = 1", conn);
         DataSet ds = new DataSet();
@@ -139,9 +141,35 @@ public partial class test : System.Web.UI.Page
         ScriptManager.RegisterStartupScript(this, this.GetType(), "PurchaseClassesHide", "purchaseClassesHide();", true);
     }
 
+
+    // // Used to be srcAttendees
+    // NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+    // conn.Open();
+    // NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, name, student_id FROM old_attendees WHERE class_date = @when::date AND instructor_id = @instructor::uuid AND class_id = @class::uuid AND location_id = @location::uuid ORDER BY name", conn);
+    // da.SelectCommand.Parameters.AddWithValue("@when", txtClassDate.Text);
+    // da.SelectCommand.Parameters.AddWithValue("@instructor", lstInstructor.SelectedValue);
+    // da.SelectCommand.Parameters.AddWithValue("@class", lstClass.SelectedValue);
+    // da.SelectCommand.Parameters.AddWithValue("@location", lstLocation.SelectedValue);
+    // // If deleting
+    // da.DeleteCommand = "DELETE FROM old_attendances WHERE id = @student::uuid";
+    // da.DeleteCommand.Parameters.AddWithValue("@student", student_id.Value);
+    // // If inserting
+    // da.InsertCommand = "INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor::uuid, @class::uuid, @location::uuid, @when::date, @student::uuid)";
+    // da.InsertCommand.Parameters.AddWithValue("@when", txtClassDate.Text);
+    // da.InsertCommand.Parameters.AddWithValue("@instructor", lstInstructor.SelectedValue);
+    // da.InsertCommand.Parameters.AddWithValue("@class", lstClass.SelectedValue);
+    // da.InsertCommand.Parameters.AddWithValue("@location", lstLocation.SelectedValue);
+    // da.InsertCommand.Parameters.AddWithValue("@student", student_id.Value);
+
+    // DataSet ds = new DataSet();
+    // da.Fill(ds, "old_purchases");
+
+    // da.Update(ds, "old_purchases");
+    // conn.Close();
+
     protected void gvStudents_RowCommand(Object sender, GridViewCommandEventArgs e)
     {
-        // If a pager control or sort column is clicked, bail out of this right away
+        // If a pager control or sort column is clicked, bail out
         if (e.CommandName != "Select" && e.CommandName != "Purchase")
             return;
 
@@ -181,7 +209,7 @@ public partial class test : System.Web.UI.Page
                 srcAttendees.Insert();
 
                 // Refresh data bindings
-                gvStudents.DataBind(); // Updates the student's balance
+                searchForStudent(SearchText.Text); // Updates the student's balance
 
                 break;
 
@@ -208,7 +236,7 @@ public partial class test : System.Web.UI.Page
 
     protected void gvAttendees_RowDeleted(Object sender, EventArgs e)
     {
-        gvStudents.DataBind(); // Updates the student's balance
+        searchForStudent(SearchText.Text); // Refresh to show updated balance
     }
 
     private string alert(string message, string criticality = "danger")
