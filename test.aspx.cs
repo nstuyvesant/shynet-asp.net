@@ -3,8 +3,7 @@ using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
-using NpgsqlConnection;
-using NpgsqlCommand;
+using Npgsql;
 
 public partial class test : System.Web.UI.Page
 {
