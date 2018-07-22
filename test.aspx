@@ -261,7 +261,6 @@
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"  
                         SelectCommand="SELECT id, name FROM old_classes WHERE active=true ORDER BY name"
-                        EnableCaching="True" CacheDuration="86400"
                         DataSourceMode="DataReader"
                     />
 
@@ -269,7 +268,6 @@
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"          
                         SelectCommand="SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname"
-                        EnableCaching="True" CacheDuration="86400"
                         DataSourceMode="DataReader"
                     />
 
@@ -277,7 +275,6 @@
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
                         SelectCommand="SELECT id, name FROM old_locations WHERE active=true ORDER BY name"
-                        EnableCaching="True" CacheDuration="86400"
                         DataSourceMode="DataReader"
                     />
 
