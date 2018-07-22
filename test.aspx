@@ -296,7 +296,6 @@
                         ConnectionString="<%$ ConnectionStrings:Heroku %>" 
                         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"    
                         SelectCommand="SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal"
-                        EnableCaching="True" CacheDuration="86400"
                         DataSourceMode="DataReader"
                     />
 
