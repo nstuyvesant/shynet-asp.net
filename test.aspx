@@ -176,12 +176,12 @@
                                     <div class="col-xs-12">
                                         <div class="input-group">
                                             <label class="sr-only" for="lstLocation">Location</label>
-                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcLocations" DataTextField="name" DataValueField="id" AutoPostBack="True">
+                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" AutoPostBack="True">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select Location</asp:ListItem>
                                             </asp:dropdownlist>
                                             <span class="input-group-addon">&nbsp;</span>
                                             <label class="sr-only" for="lstInstructor">Instructor</label>
-                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcInstructors" DataTextField="name" DataValueField="id" AutoPostBack="True">
+                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" AutoPostBack="True">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select instructor</asp:ListItem>
                                             </asp:dropdownlist>
                                         </div>
@@ -338,7 +338,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="lstPaymentType">Payment method</label>
-                                            <asp:DropDownList ID="lstPaymentType" CssClass="form-control" runat="server" DataSourceID="srcPaymentTypes" DataTextField="name" DataValueField="id" />
+                                            <asp:DropDownList ID="lstPaymentType" CssClass="form-control" runat="server" />
                                         </div>
                                     </div>
                                     <div class="modal-footer">

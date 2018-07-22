@@ -21,6 +21,31 @@ public partial class test : System.Web.UI.Page
             lstClass.DataValueField = "id";
             lstClass.DataBind();
             reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
+            reader = cmd.ExecuteReader();
+            lstInstructor.DataSource = reader;
+            lstInstructor.DataTextField = "name";
+            lstInstructor.DataValueField = "id";
+            lstInstructor.DataBind();
+            reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
+            reader = cmd.ExecuteReader();
+            lstLocation.DataSource = reader;
+            lstLocation.DataTextField = "name";
+            lstLocation.DataValueField = "id";
+            lstLocation.DataBind();
+            reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
+            reader = cmd.ExecuteReader();
+            lstPaymentType.DataSource = reader;
+            lstPaymentType.DataTextField = "name";
+            lstPaymentType.DataValueField = "id";
+            lstPaymentType.DataBind();
+            reader.Close();
+
             conn.Close();
 
             
