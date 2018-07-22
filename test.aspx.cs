@@ -50,7 +50,6 @@ public partial class test : System.Web.UI.Page
             conn.Close();
 
             txtClassDate.Text = DateTime.Today.ToString("MM/dd/yyyy");
-            //gvStudents.DataBind();
         }
         else
         {
@@ -59,25 +58,26 @@ public partial class test : System.Web.UI.Page
         }
     }
 
-    protected void FindStudent_Click(Object sender, EventArgs e)
-    {
-        // Reset page index to zero for each new search so we're not stuck on an out of range page
-        gvStudents.PageIndex = 0;
-
-        if (SearchText.Text != "")
+    protected void searchForStudent(String searchText) {
+        if (searchText != "")
         {
             NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
             conn.Open();
             DataSet ds = new DataSet();
             NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
-            da.SelectCommand.Parameters.AddWithValue("@search", SearchText.Text);
+            da.SelectCommand.Parameters.AddWithValue("@search", searchText);
             da.Fill(ds, "old_student_balances");
             gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
             gvStudents.DataBind();
             conn.Close();
         }
-        // else
-        //     gvStudents.DataSourceID = "";
+    }
+
+    protected void FindStudent_Click(Object sender, EventArgs e)
+    {
+        // Reset page index to zero for each new search so we're not stuck on an out of range page
+        gvStudents.PageIndex = 0;
+        searchForStudent(SearchText.Text);
     }
 
     protected void NewStudentCancel_Click(Object sender, EventArgs e)
@@ -90,10 +90,23 @@ public partial class test : System.Web.UI.Page
 
     protected void NewStudentOK_Click(Object sender, EventArgs e)
     {
-        srcStudents.Insert();
-        gvStudents.DataBind(); // So we can see the newly added student immediately without a new search
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "NewStudentHide", "newStudentHide();", true);
+        NpgsqlConnection conn = new NpgsqlConnection(ConfigurationManager.ConnectionStrings["Heroku"].ToString());
+        conn.Open();
+        DataSet ds = new DataSet();
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname from old_students where 0 = 1", conn);
+        da.Fill(ds, "old_students");
+        var newStudent = dataSet.Tables["old_students"].NewRow();
+        newStudent["firstname"] = firstName.Text;
+        newStudent["lastname"] = lastName.Text;
+        ds.Tables["old_students"].Rows.Add(newStudent);
+        new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
+        da.Update(ds);
+        conn.Close();
+
+        // Search for the newly added user to make selection easier
         SearchText.Text = lastName.Text;
+        searchForStudent(SearchText.Text);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "NewStudentHide", "newStudentHide();", true);
         firstName.Text = "";
         lastName.Text = "";
     }

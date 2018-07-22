@@ -325,19 +325,6 @@
                         </InsertParameters>
                     </asp:SqlDataSource>
 
-                    <asp:SqlDataSource ID="srcStudents" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"           
-                        InsertCommand="INSERT INTO old_students (firstname, lastname) VALUES (@firstname, @lastname)"
-                        EnableViewState="False"
-                        DataSourceMode="DataSet"
-                        >
-                        <InsertParameters>
-                            <asp:ControlParameter Name="firstname" DbType="String" ControlID="firstName" PropertyName="Text" />
-                            <asp:ControlParameter Name="lastName" DbType="String" ControlID="lastName" PropertyName="Text" />
-                        </InsertParameters>
-                    </asp:SqlDataSource>
-
                 </ContentTemplate>
             </asp:UpdatePanel>
 
