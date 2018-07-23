@@ -323,7 +323,24 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Used by history.aspx
-CREATE OR REPLACE FUNCTION old_show_history (uuid) RETURNS setof record AS $$
+CREATE OR REPLACE FUNCTION public.old_show_history(
+	uuid)
+    RETURNS TABLE (
+      transaction_type char,
+      id uuid,
+      transaction_date date,
+      "Description" varchar(1024),
+      "Quantity" smallint,
+      "Balance" smallint,
+      instructor_id uuid,
+      class_id uuid,
+      location_id uuid,
+      payment_type_id uuid
+	  )
+    LANGUAGE 'plpgsql'
+
+AS $BODY$
+
 BEGIN
   -- Create temp table for student's history
   CREATE TEMPORARY TABLE IF NOT EXISTS old_history_temp (
@@ -395,4 +412,5 @@ BEGIN
 
   DROP TABLE old_history_temp;
 END;
-$$ LANGUAGE plpgsql;
+
+$BODY$;
