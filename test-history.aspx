@@ -73,9 +73,8 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="Description">
                     <EditItemTemplate>
-                        <asp:Label ID="lblInstructor" runat="server" Text='<%# Bind("instructor_id") %>'></asp:Label>
                         <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AutoPostBack="true" />
-                        <asp:Label ID="lblClass" runat="server" Text='<%# Bind("class_id") %>'></asp:Label>
+                        <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AutoPostBack="true" />
                         <asp:Label ID="lblLocation" runat="server" Text='<%# Bind("location_id") %>'></asp:Label>
                         <asp:Label ID="lblPaymentType" runat="server" Text='<%# Bind("payment_type_id") %>'></asp:Label>
                         <!-- Where the original DropdownLists go -->

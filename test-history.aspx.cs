@@ -49,7 +49,7 @@ public partial class shynet_test_history : System.Web.UI.Page
           if (e.Row.RowState == DataControlRowState.Edit)
           {
             // <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
-            // <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" SelectedValue='<%# Bind("class_id") %>' AutoPostBack="true" />
+            // 
             // <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
             // <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
             // Populate dropdowns only once using ViewState to retain their contents
@@ -67,14 +67,15 @@ public partial class shynet_test_history : System.Web.UI.Page
             DataRowView dr = e.Row.DataItem as DataRowView;
             lstInstructor.SelectedValue = dr["instructor_id"].ToString();
 
-            // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-            // reader = cmd.ExecuteReader();
-            // DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
-            // lstClass.DataSource = reader;
-            // lstClass.DataTextField = "name";
-            // lstClass.DataValueField = "id";
-            // lstClass.DataBind();
-            // reader.Close();
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+            reader = cmd.ExecuteReader();
+            DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
+            lstClass.DataSource = reader;
+            lstClass.DataTextField = "name";
+            lstClass.DataValueField = "id";
+            lstClass.DataBind();
+            reader.Close();
+            lsClass.SelectedValue = dr["class_id"].ToString();
 
             // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
             // reader = cmd.ExecuteReader();
