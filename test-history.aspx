@@ -78,7 +78,7 @@
                         <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("description") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("what") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" />
                 </asp:TemplateField>
