@@ -75,7 +75,7 @@ public partial class shynet_test_history : System.Web.UI.Page
             lstClass.DataValueField = "id";
             lstClass.DataBind();
             reader.Close();
-            lsClass.SelectedValue = dr["class_id"].ToString();
+            lstClass.SelectedValue = dr["class_id"].ToString();
 
             // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
             // reader = cmd.ExecuteReader();
