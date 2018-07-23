@@ -118,7 +118,7 @@
                                             ItemStyle-HorizontalAlign="Right"
                                             ItemStyle-Width="81px">
                                             <ItemTemplate>
-                                                <a href="history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%> <%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %>&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt hide"></span></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="glyphicon glyphicon-plus-sign text-success"></span></asp:LinkButton>
+                                                <a href="test-history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%> <%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %>&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt hide"></span></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="glyphicon glyphicon-plus-sign text-success"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <HeaderStyle CssClass="text-center" />
                                             <ItemStyle HorizontalAlign="Right" Width="81px" />
