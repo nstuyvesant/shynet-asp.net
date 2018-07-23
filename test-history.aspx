@@ -19,7 +19,7 @@
         <asp:SqlDataSource ID="srcHistory" runat="server" 
             ConnectionString="<%$ ConnectionStrings:Heroku %>" 
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-            SelectCommand="SELECT * FROM old_show_history()" 
+            SelectCommand="SELECT * FROM old_show_history(@student_id)" 
             SelectCommandType="Text"
             DeleteCommand="old_delete_history"
             DeleteCommandType="StoredProcedure"
@@ -27,7 +27,7 @@
             UpdateCommandType="StoredProcedure"
             >
             <SelectParameters>
-                <asp:Parameter DbType="Guid" Direction="Input" />
+                <asp:Parameter Name="student_id" DbType="Guid" Direction="Input" />
             </SelectParameters>
             <DeleteParameters>
                 <asp:Parameter DbType="String" Direction="Input" />
