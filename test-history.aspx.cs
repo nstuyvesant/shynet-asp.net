@@ -63,6 +63,8 @@ public partial class shynet_test_history : System.Web.UI.Page
             lstInstructor.DataValueField = "id";
             lstInstructor.DataBind();
             reader.Close();
+            DataRowView dr = e.Row.DataItem as DataRowView;
+            lstInstructor.SelectedValue = dr["instructor_id"].ToString();
 
             // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
             // reader = cmd.ExecuteReader();
