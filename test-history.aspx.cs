@@ -90,9 +90,9 @@ public partial class shynet_test_history : System.Web.UI.Page
             conn.Close();
             // DropDownList lstPaymentTypes = (DropDownList)e.Row.FindControl("lstPaymentTypes");
             if (dgHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A")
-                lstPaymentTypes.Visible = false;
+                lstPaymentType.Visible = false;
             else
-                lstPaymentTypes.Visible = true;
+                lstPaymentType.Visible = true;
           }
     }
     }
