@@ -19,8 +19,8 @@
         <asp:SqlDataSource ID="srcHistory" runat="server" 
             ConnectionString="<%$ ConnectionStrings:Heroku %>" 
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-            SelectCommand="old_show_history" 
-            SelectCommandType="StoredProcedure"
+            SelectCommand="SELECT * FROM old_show_history()" 
+            SelectCommandType="Text"
             DeleteCommand="old_delete_history"
             DeleteCommandType="StoredProcedure"
             UpdateCommand="old_update_history"
@@ -78,12 +78,12 @@
                         <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
                     </EditItemTemplate>
                     <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
+                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("description") %>'></asp:Label>
                     </ItemTemplate>
                     <HeaderStyle HorizontalAlign="Left" />
                 </asp:TemplateField>
-                <asp:BoundField DataField="Quantity" HeaderText="Qty" ControlStyle-CssClass="form-control" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" />
-                <asp:BoundField DataField="Balance" HeaderText="Balance" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" ReadOnly="True" />
+                <asp:BoundField DataField="quantity" HeaderText="Qty" ControlStyle-CssClass="form-control" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" />
+                <asp:BoundField DataField="balance" HeaderText="Balance" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" ReadOnly="True" />
             </Columns>
         </asp:GridView>
     </form>

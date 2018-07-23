@@ -323,33 +323,32 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Used by history.aspx
-CREATE OR REPLACE FUNCTION public.old_show_history(
+CREATE OR REPLACE FUNCTION public.old_show_history (
 	uuid)
     RETURNS TABLE (
-      transaction_type char,
+      transaction_type char(1),
       id uuid,
       transaction_date date,
-      "Description" varchar(1024),
-      "Quantity" smallint,
-      "Balance" smallint,
+      what varchar(256),
+      quantity smallint,
+      balance integer,
       instructor_id uuid,
       class_id uuid,
       location_id uuid,
       payment_type_id uuid
-	  )
+    ) 
     LANGUAGE 'plpgsql'
-
 AS $BODY$
 
 BEGIN
   -- Create temp table for student's history
   CREATE TEMPORARY TABLE IF NOT EXISTS old_history_temp (
+    ord serial,
+    transaction_type char(1),
 		id uuid,
-		ord serial,
-		transaction_type char(1),
-		transaction_date date,
+    transaction_date date,
 		what varchar(256),
-		quantity integer,
+		quantity smallint,
 		instructor_id uuid,
 		class_id uuid,
 		location_id uuid,
@@ -363,10 +362,10 @@ BEGIN
 			old_purchases.purchased_on::date AS transaction_date,
 			'<span class="text-success">Purchased</span> ' || to_char(old_purchases.quantity,'FM999MI') || ' class pass (' || old_payment_types.name || ')' AS what,
 			old_purchases.quantity,
-			COALESCE(instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
-			COALESCE(class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
-			COALESCE(location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
-			COALESCE(payment_type_id,'{3f9b38fc-48c9-4c1b-a71f-516b3b602b13}')
+			COALESCE(old_purchases.instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
+			COALESCE(old_purchases.class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
+			COALESCE(old_purchases.location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
+			COALESCE(old_purchases.payment_type_id,'{3f9b38fc-48c9-4c1b-a71f-516b3b602b13}')
 		FROM
 			old_purchases INNER JOIN
 			old_payment_types ON old_purchases.payment_type_id = old_payment_types.id
@@ -379,9 +378,9 @@ BEGIN
 			old_attendances.class_date AS transaction_date,
 			'<span class="text-danger">Attended</span> ' || old_classes.name || ' (' || old_locations.name || '/' || old_instructors.lastname || ')' AS what,
 			- 1 AS quantity,
-			COALESCE(instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
-			COALESCE(class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
-			COALESCE(location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
+			COALESCE(old_attendances.instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
+			COALESCE(old_attendances.class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
+			COALESCE(old_attendances.location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
 			'{3f9b38fc-48c9-4c1b-a71f-516b3b602b13}'
 		FROM
 			old_attendances INNER JOIN
@@ -392,19 +391,19 @@ BEGIN
 			old_attendances.student_id = $1
 	ORDER BY
 		transaction_date DESC;
-
+  
+  -- Return with running total
 	RETURN QUERY SELECT
-		transaction_type,
-		id,
+		b.transaction_type,
+		b.id,
 		b.transaction_date,
-		b.what AS "Description",
-		b.quantity AS "Quantity",
-		(SELECT SUM(a.quantity) FROM old_history_temp AS a WHERE
-			a.ord >= b.ord) AS "Balance",
-		instructor_id,
-		class_id,
-		location_id,
-		payment_type_id
+		b.what,
+		b.quantity,
+		(SELECT SUM(a.quantity) FROM old_history_temp AS a WHERE a.ord >= b.ord)::integer,
+		b.instructor_id,
+		b.class_id,
+		b.location_id,
+		b.payment_type_id
 	FROM
 		old_history_temp AS b
 	ORDER BY
