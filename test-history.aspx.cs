@@ -55,8 +55,8 @@ public partial class shynet_test_history : System.Web.UI.Page
             NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
 
-            cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
-            reader = cmd.ExecuteReader();
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
+            NpgsqlDataReader reader = cmd.ExecuteReader();
             DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
             lstInstructor.DataSource = reader;
             lstInstructor.DataTextField = "name";
@@ -64,8 +64,8 @@ public partial class shynet_test_history : System.Web.UI.Page
             lstInstructor.DataBind();
             reader.Close();
 
-            // NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-            // NpgsqlDataReader reader = cmd.ExecuteReader();
+            // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+            // reader = cmd.ExecuteReader();
             // DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
             // lstClass.DataSource = reader;
             // lstClass.DataTextField = "name";
