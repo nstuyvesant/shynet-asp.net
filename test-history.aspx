@@ -17,13 +17,13 @@
         <b><asp:Literal ID="litHeading" runat="server" /></b><br/>
 
         <asp:SqlDataSource ID="srcHistory" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
-            SelectCommand="sp_show_history" 
+            ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+            ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+            SelectCommand="old_show_history" 
             SelectCommandType="StoredProcedure"
-            DeleteCommand="sp_delete_history"
+            DeleteCommand="old_delete_history"
             DeleteCommandType="StoredProcedure"
-            UpdateCommand="sp_update_history"
+            UpdateCommand="old_update_history"
             UpdateCommandType="StoredProcedure"
             >
             <SelectParameters>

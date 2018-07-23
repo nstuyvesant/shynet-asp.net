@@ -6,50 +6,9 @@ using Npgsql;
 public partial class shynet_test_history : System.Web.UI.Page
 {
     private string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
-    
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!IsPostBack)
-        {
-            // Populate dropdowns only once using ViewState to retain their contents
-            NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
-            conn.Open();
-
-            NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-            NpgsqlDataReader reader = cmd.ExecuteReader();
-            lstClass.DataSource = reader;
-            lstClass.DataTextField = "name";
-            lstClass.DataValueField = "id";
-            lstClass.DataBind();
-            reader.Close();
-
-            cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
-            reader = cmd.ExecuteReader();
-            lstInstructor.DataSource = reader;
-            lstInstructor.DataTextField = "name";
-            lstInstructor.DataValueField = "id";
-            lstInstructor.DataBind();
-            reader.Close();
-
-            cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
-            reader = cmd.ExecuteReader();
-            lstLocation.DataSource = reader;
-            lstLocation.DataTextField = "name";
-            lstLocation.DataValueField = "id";
-            lstLocation.DataBind();
-            reader.Close();
-
-            cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
-            reader = cmd.ExecuteReader();
-            lstPaymentType.DataSource = reader;
-            lstPaymentType.DataTextField = "name";
-            lstPaymentType.DataValueField = "id";
-            lstPaymentType.DataBind();
-            reader.Close();
-
-            conn.Close();
-        }
-
         srcHistory.SelectParameters[0].DefaultValue = Request.QueryString["id"];
         litHeading.Text = Request.QueryString["name"];
 
@@ -76,6 +35,43 @@ public partial class shynet_test_history : System.Web.UI.Page
 
     protected void dgHistory_RowEditing(object sender, GridViewEditEventArgs e)
     {
+        // Populate dropdowns only once using ViewState to retain their contents
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+        conn.Open();
+
+        NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+        NpgsqlDataReader reader = cmd.ExecuteReader();
+        lstClass.DataSource = reader;
+        lstClass.DataTextField = "name";
+        lstClass.DataValueField = "id";
+        lstClass.DataBind();
+        reader.Close();
+
+        cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
+        reader = cmd.ExecuteReader();
+        lstInstructor.DataSource = reader;
+        lstInstructor.DataTextField = "name";
+        lstInstructor.DataValueField = "id";
+        lstInstructor.DataBind();
+        reader.Close();
+
+        cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
+        reader = cmd.ExecuteReader();
+        lstLocation.DataSource = reader;
+        lstLocation.DataTextField = "name";
+        lstLocation.DataValueField = "id";
+        lstLocation.DataBind();
+        reader.Close();
+
+        cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
+        reader = cmd.ExecuteReader();
+        lstPaymentType.DataSource = reader;
+        lstPaymentType.DataTextField = "name";
+        lstPaymentType.DataValueField = "id";
+        lstPaymentType.DataBind();
+        reader.Close();
+
+        conn.Close();
 
         if (dgHistory.DataKeys[e.NewEditIndex].Values["transaction_type"].ToString() == "A")
             ((BoundField)dgHistory.Columns[4]).ReadOnly = true;
