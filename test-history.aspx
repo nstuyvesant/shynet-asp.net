@@ -21,7 +21,7 @@
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
             SelectCommand="SELECT * FROM old_show_history(@student_id)" 
             SelectCommandType="Text"
-            DeleteCommand="old_delete_history(@transaction_type, @id)"
+            DeleteCommand="SELECT FROM old_delete_history(@transaction_type, @id)"
             DeleteCommandType="Text"
             UpdateCommand="old_update_history"
             UpdateCommandType="StoredProcedure"
