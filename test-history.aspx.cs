@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using System.Data;
 using Npgsql;
 
 public partial class shynet_test_history : System.Web.UI.Page
