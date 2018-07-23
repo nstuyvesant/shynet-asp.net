@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using Npgsql;
 
 public partial class shynet_test_history : System.Web.UI.Page
 {
+    private string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -45,7 +49,7 @@ public partial class shynet_test_history : System.Web.UI.Page
 
             conn.Close();
         }
-        
+
         srcHistory.SelectParameters[0].DefaultValue = Request.QueryString["id"];
         litHeading.Text = Request.QueryString["name"];
 
