@@ -47,6 +47,10 @@ public partial class shynet_test_history : System.Web.UI.Page
         {
           if (e.Row.RowState == DataControlRowState.Edit)
           {
+            // <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
+            // <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" SelectedValue='<%# Bind("class_id") %>' AutoPostBack="true" />
+            // <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
+            // <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
             // Populate dropdowns only once using ViewState to retain their contents
             // NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             // conn.Open();
