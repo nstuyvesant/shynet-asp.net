@@ -21,8 +21,8 @@
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
             SelectCommand="SELECT * FROM old_show_history(@student_id)" 
             SelectCommandType="Text"
-            DeleteCommand="old_delete_history"
-            DeleteCommandType="StoredProcedure"
+            DeleteCommand="PERFORM old_delete_history(@transaction_type, @id)"
+            DeleteCommandType="Text"
             UpdateCommand="old_update_history"
             UpdateCommandType="StoredProcedure"
             >
@@ -30,8 +30,8 @@
                 <asp:Parameter Name="student_id" DbType="Guid" Direction="Input" />
             </SelectParameters>
             <DeleteParameters>
-                <asp:Parameter DbType="String" Direction="Input" />
-                <asp:Parameter DbType="Guid" Direction="Input" />
+                <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
+                <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
             </DeleteParameters>
             <UpdateParameters>
                 <asp:Parameter DbType="String" Direction="Input" />

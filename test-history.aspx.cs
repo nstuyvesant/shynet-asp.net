@@ -23,7 +23,7 @@ public partial class shynet_test_history : System.Web.UI.Page
     protected void gvHistory_RowDeleting(object sender, GridViewDeleteEventArgs e)
     {
         srcHistory.DeleteParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
-        srcHistory.DeleteParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // id
+        srcHistory.DeleteParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
         //TODO: Rebind main DataView in case class was deleted from currently displayed one
     }
 
