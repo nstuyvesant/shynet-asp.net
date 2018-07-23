@@ -23,7 +23,7 @@
             SelectCommandType="Text"
             DeleteCommand="SELECT FROM old_delete_history(@transaction_type, @id)"
             DeleteCommandType="Text"
-            UpdateCommand="SELECT FROM old_update_history(@transaction_type, @id, @when, @instructor_id, @location_id, @class_id, @quantity, @payment_type_id)"
+            UpdateCommand="SELECT FROM old_update_history(@transaction_type, @id, @transaction_date, @instructor_id, @location_id, @class_id, @quantity, @payment_type_id)"
             UpdateCommandType="Text"
             >
             <SelectParameters>
@@ -36,7 +36,7 @@
             <UpdateParameters>
                 <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
                 <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
-                <asp:Parameter Name="when" DbType="Date" Direction="Input" />
+                <asp:Parameter Name="transaction_date" DbType="Date" Direction="Input" />
                 <asp:Parameter Name="instructor_id" DbType="Guid" Direction="Input" />
                 <asp:Parameter Name="location_id" DbType="Guid" Direction="Input" />
                 <asp:Parameter Name="class_id" DbType="Guid" Direction="Input" />
