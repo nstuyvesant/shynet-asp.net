@@ -76,10 +76,10 @@
                         <asp:Label ID="lblClass" runat="server" Text='<%# Bind("class_id") %>'></asp:Label>
                         <asp:Label ID="lblLocation" runat="server" Text='<%# Bind("location_id") %>'></asp:Label>
                         <asp:Label ID="lblPaymentType" runat="server" Text='<%# Bind("payment_type_id") %>'></asp:Label>
-                        <!-- <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" SelectedValue='<%# Bind("class_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" /> -->
+                        <!-- <asp:dropdownlist id="lstInstructor" CssClass="form-control" xrunat="server" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
+                        <asp:dropdownlist id="lstClass" CssClass="form-control" xrunat="server" SelectedValue='<%# Bind("class_id") %>' AutoPostBack="true" />
+                        <asp:dropdownlist id="lstLocation" CssClass="form-control" xrunat="server" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
+                        <asp:dropdownlist id="lstPaymentType" CssClass="form-control" xrunat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" /> -->
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblWhat" runat="server" Text='<%# Bind("what") %>'></asp:Label>
