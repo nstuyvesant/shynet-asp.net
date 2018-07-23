@@ -27,7 +27,7 @@
             UpdateCommandType="StoredProcedure"
             >
             <SelectParameters>
-                <asp:Parameter Name="student_id" DbType="Guid" Direction="Input" />
+                <asp:Parameter DbType="Guid" Direction="Input" />
             </SelectParameters>
             <DeleteParameters>
                 <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
