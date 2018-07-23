@@ -75,9 +75,8 @@
                     <EditItemTemplate>
                         <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AutoPostBack="true" />
                         <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AutoPostBack="true" />
-                        <asp:Label ID="lblLocation" runat="server" Text='<%# Bind("location_id") %>'></asp:Label>
-                        <asp:Label ID="lblPaymentType" runat="server" Text='<%# Bind("payment_type_id") %>'></asp:Label>
-                        <!-- Where the original DropdownLists go -->
+                        <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AutoPostBack="true" />
+                        <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" AutoPostBack="true" />
                     </EditItemTemplate>
                     <ItemTemplate>
                         <asp:Label ID="lblWhat" runat="server" Text='<%# Bind("what") %>'></asp:Label>

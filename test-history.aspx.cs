@@ -48,10 +48,6 @@ public partial class shynet_test_history : System.Web.UI.Page
         {
           if (e.Row.RowState == DataControlRowState.Edit)
           {
-            // <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
-            // 
-            // <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
-            // <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
             // Populate dropdowns only once using ViewState to retain their contents
             NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
@@ -77,30 +73,32 @@ public partial class shynet_test_history : System.Web.UI.Page
             reader.Close();
             lstClass.SelectedValue = dr["class_id"].ToString();
 
-            // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
-            // reader = cmd.ExecuteReader();
-            // DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
-            // lstLocation.DataSource = reader;
-            // lstLocation.DataTextField = "name";
-            // lstLocation.DataValueField = "id";
-            // lstLocation.DataBind();
-            // reader.Close();
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
+            reader = cmd.ExecuteReader();
+            DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
+            lstLocation.DataSource = reader;
+            lstLocation.DataTextField = "name";
+            lstLocation.DataValueField = "id";
+            lstLocation.DataBind();
+            reader.Close();
+            lstLocation.SelectedValue = dr["location_id"].ToString();
 
-            // cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
-            // reader = cmd.ExecuteReader();
-            // DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
-            // lstPaymentType.DataSource = reader;
-            // lstPaymentType.DataTextField = "name";
-            // lstPaymentType.DataValueField = "id";
-            // lstPaymentType.DataBind();
-            // reader.Close();
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
+            reader = cmd.ExecuteReader();
+            DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
+            lstPaymentType.DataSource = reader;
+            lstPaymentType.DataTextField = "name";
+            lstPaymentType.DataValueField = "id";
+            lstPaymentType.DataBind();
+            reader.Close();
+            lstPaymentType.SelectedValue = dr["payment_type_id"].ToString();
 
             conn.Close();
 
-            // if (gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A")
-            //     lstPaymentType.Visible = false;
-            // else
-            //     lstPaymentType.Visible = true;
+            if (gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A")
+                lstPaymentType.Visible = false;
+            else
+                lstPaymentType.Visible = true;
           }
         }
     }
