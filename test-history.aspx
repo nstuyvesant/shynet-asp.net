@@ -77,10 +77,10 @@
           </asp:TemplateField>
           <asp:TemplateField HeaderText="Description">
             <EditItemTemplate>
-              <asp:label id='lblInstructor' Text='<%# Bind("instructor_id") %>'></asp:label> |
-              <asp:label id='lblClass' Text='<%# Bind("class_id") %>'></asp:label> |
-              <asp:label id='lblLocation' Text='<%# Bind("location_id") %>'></asp:label> |
-              <asp:label id='lblPaymentType' Text='<%# Bind("payment_type_id") %>'></asp:label> |
+              <asp:label id='lblInstructor' Text='<%# Bind("instructor_id") %>' runat="server" ></asp:label> |
+              <asp:label id='lblClass' Text='<%# Bind("class_id") %>' runat="server"></asp:label> |
+              <asp:label id='lblLocation' Text='<%# Bind("location_id") %>' runat="server"></asp:label> |
+              <asp:label id='lblPaymentType' Text='<%# Bind("payment_type_id") %>' runat="server"></asp:label> |
               <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AutoPostBack="true" />
               <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AutoPostBack="true" />
               <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AutoPostBack="true" />
