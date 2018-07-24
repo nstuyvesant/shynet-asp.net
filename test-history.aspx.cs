@@ -37,7 +37,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
     srcHistory.UpdateParameters[3].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["instructor_id"].ToString();
     srcHistory.UpdateParameters[4].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["location_id"].ToString();
     srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
-    srcHistory.UpdateParameters[6].DefaultValue = (int)gvHistory.DataKeys[e.RowIndex].Values["quantity"];
+    srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
     srcHistory.UpdateParameters[7].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["payment_type_id"].ToString();
   }
 
