@@ -50,8 +50,8 @@ public partial class shynet_test_history : System.Web.UI.Page {
   protected void gvHistory_RowDataBound(object sender, GridViewRowEventArgs e) {
     if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowState == DataControlRowState.Edit) {
       // Populate dropdowns only once using ViewState to retain their contents
-      // NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
-      // conn.Open();
+      NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+      conn.Open();
       // NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
       // NpgsqlDataReader reader = cmd.ExecuteReader();
       // DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
