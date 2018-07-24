@@ -28,7 +28,7 @@
         SelectCommandType="Text"
         DeleteCommand="SELECT FROM old_delete_history(@transaction_type, @id)"
         DeleteCommandType="Text"
-        UpdateCommand="SELECT FROM old_update_history(@transaction_type, @id, @transaction_date, @instructor_id, @location_id, @class_id, @quantity, @payment_type_id)"
+        UpdateCommand="SELECT FROM old_update_history(@transaction_type, @id, @transaction_date::date, @instructor_id, @location_id, @class_id, @quantity::smallint, @payment_type_id)"
         UpdateCommandType="Text"
         >
         <SelectParameters>
@@ -61,13 +61,18 @@
         AutoGenerateEditButton="True" 
         OnRowDeleting="gvHistory_RowDeleting"
         OnRowEditing="gvHistory_RowEditing"
-        OnRowUpdating="gvHistory_RowUpdating"
+        
         OnRowDataBound="gvHistory_RowDataBound"
         PagerSettings-PageButtonCount="5"
         runat="server">
         <Columns>
           <asp:BoundField DataField="transaction_type" Visible="false" ReadOnly="true" />
           <asp:BoundField DataField="id" Visible="false" ReadOnly="true" />
+          <asp:BoundField DataField="transaction_date" Visible="false" />
+          <asp:BoundField DataField="instructor_id" Visible="false" />
+          <asp:BoundField DataField="location_id" Visible="false" />
+          <asp:BoundField DataField="class_id" Visible="false" />
+          <asp:BoundField DataField="payment_type_id" Visible="false" />
           <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
             <EditItemTemplate>
               <asp:TextBox ID="txtClassDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
