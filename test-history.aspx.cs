@@ -30,7 +30,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
       ((BoundField)gvHistory.Columns[4]).ReadOnly = false;
   }
 
-  private void bindDropDown(NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
+  private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
     NpgsqlCommand cmd = new NpgsqlCommand(sql, cn);
     DropDownList thisDropDown = (DropDownList)e.Row.FindControl(downDownName);
     NpgsqlDataReader reader = cmd.ExecuteReader();
@@ -52,10 +52,10 @@ public partial class shynet_test_history : System.Web.UI.Page {
       // Populate dropdowns only once using ViewState to retain their contents
       NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
       conn.Open();
-      bindDropDown(conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", "lstInstructor", "instructor_id");
-      bindDropDown(conn, "SELECT id, name FROM old_classes WHERE active=true ORDER BY name", "lstClass", "class_id");
-      bindDropDown(conn, "SELECT id, name FROM old_locations WHERE active=true ORDER BY name", "lstLocation", "location_id");
-      bindDropDown(conn, "SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", "lstPaymentType", "payment_type_id");
+      bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", "lstInstructor", "instructor_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_classes WHERE active=true ORDER BY name", "lstClass", "class_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_locations WHERE active=true ORDER BY name", "lstLocation", "location_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", "lstPaymentType", "payment_type_id");
       conn.Close();
     }
   }
