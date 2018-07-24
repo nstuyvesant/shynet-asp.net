@@ -32,7 +32,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
     NpgsqlCommand cmd = new NpgsqlCommand(sql, cn);
-    DropDownList thisDropDown = (DropDownList)e.Row.FindControl(downDownName);
+    DropDownList thisDropDown = (DropDownList)e.Row.FindControl(dropDownName);
     NpgsqlDataReader reader = cmd.ExecuteReader();
     thisDropDown.DataSource = reader;
     thisDropDown.DataTextField = "name";
