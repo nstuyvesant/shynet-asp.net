@@ -48,55 +48,57 @@ public partial class shynet_test_history : System.Web.UI.Page {
   }
 
   protected void gvHistory_RowDataBound(object sender, GridViewRowEventArgs e) {
-    if (e.Row.RowType == DataControlRowType.DataRow && e.Row.RowState == DataControlRowState.Edit) {
-      // Populate dropdowns only once using ViewState to retain their contents
-      NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
-      conn.Open();
-      // NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
-      // NpgsqlDataReader reader = cmd.ExecuteReader();
-      // DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
-      // lstInstructor.DataSource = reader;
-      // lstInstructor.DataTextField = "name";
-      // lstInstructor.DataValueField = "id";
-      // lstInstructor.DataBind();
-      // reader.Close();
-      // DataRowView dr = e.Row.DataItem as DataRowView;
-      // lstInstructor.SelectedValue = dr["instructor_id"].ToString();
+    if (e.Row.RowType == DataControlRowType.DataRow) {
+      if ((e.Row.RowState & DataControlRowState.Edit) > 0) {
+        // Populate dropdowns only once using ViewState to retain their contents
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+        conn.Open();
+        // NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
+        // NpgsqlDataReader reader = cmd.ExecuteReader();
+        // DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
+        // lstInstructor.DataSource = reader;
+        // lstInstructor.DataTextField = "name";
+        // lstInstructor.DataValueField = "id";
+        // lstInstructor.DataBind();
+        // reader.Close();
+        // DataRowView dr = e.Row.DataItem as DataRowView;
+        // lstInstructor.SelectedValue = dr["instructor_id"].ToString();
 
-      // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-      // reader = cmd.ExecuteReader();
-      // DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
-      // lstClass.DataSource = reader;
-      // lstClass.DataTextField = "name";
-      // lstClass.DataValueField = "id";
-      // lstClass.DataBind();
-      // reader.Close();
-      // lstClass.SelectedValue = dr["class_id"].ToString();
+        // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+        // reader = cmd.ExecuteReader();
+        // DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
+        // lstClass.DataSource = reader;
+        // lstClass.DataTextField = "name";
+        // lstClass.DataValueField = "id";
+        // lstClass.DataBind();
+        // reader.Close();
+        // lstClass.SelectedValue = dr["class_id"].ToString();
 
-      // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
-      // reader = cmd.ExecuteReader();
-      // DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
-      // lstLocation.DataSource = reader;
-      // lstLocation.DataTextField = "name";
-      // lstLocation.DataValueField = "id";
-      // lstLocation.DataBind();
-      // reader.Close();
-      // lstLocation.SelectedValue = dr["location_id"].ToString();
+        // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
+        // reader = cmd.ExecuteReader();
+        // DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
+        // lstLocation.DataSource = reader;
+        // lstLocation.DataTextField = "name";
+        // lstLocation.DataValueField = "id";
+        // lstLocation.DataBind();
+        // reader.Close();
+        // lstLocation.SelectedValue = dr["location_id"].ToString();
 
-      // cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
-      // reader = cmd.ExecuteReader();
-      // DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
-      // lstPaymentType.DataSource = reader;
-      // lstPaymentType.DataTextField = "name";
-      // lstPaymentType.DataValueField = "id";
-      // lstPaymentType.DataBind();
-      // reader.Close();
-      // lstPaymentType.SelectedValue = dr["payment_type_id"].ToString();
-      bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors ORDER BY lastname", "lstInstructor", "instructor_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_classes ORDER BY name", "lstClass", "class_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_locations ORDER BY name", "lstLocation", "location_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_payment_types ORDER BY ordinal", "lstPaymentType", "payment_type_id");
-      conn.Close();
+        // cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
+        // reader = cmd.ExecuteReader();
+        // DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
+        // lstPaymentType.DataSource = reader;
+        // lstPaymentType.DataTextField = "name";
+        // lstPaymentType.DataValueField = "id";
+        // lstPaymentType.DataBind();
+        // reader.Close();
+        // lstPaymentType.SelectedValue = dr["payment_type_id"].ToString();
+        bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors ORDER BY lastname", "lstInstructor", "instructor_id");
+        bindDropDown(e, conn, "SELECT id, name FROM old_classes ORDER BY name", "lstClass", "class_id");
+        bindDropDown(e, conn, "SELECT id, name FROM old_locations ORDER BY name", "lstLocation", "location_id");
+        bindDropDown(e, conn, "SELECT id, name FROM old_payment_types ORDER BY ordinal", "lstPaymentType", "payment_type_id");
+        conn.Close();
+      }
     }
   }
 
