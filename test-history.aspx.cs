@@ -39,6 +39,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
     srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
     srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
     srcHistory.UpdateParameters[7].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["payment_type_id"].ToString();
+    srcHistory.Update();
   }
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
