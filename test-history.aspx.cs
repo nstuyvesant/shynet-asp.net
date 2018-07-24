@@ -33,7 +33,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
   protected void gvHistory_RowUpdating(object sender, GridViewDeleteEventArgs e) {
     srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
     srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
-    srcHistory.UpdateParameters[2].DefaultValue = (DateTime)gvHistory.DataKeys[e.RowIndex].Values["transaction_date"];
+    srcHistory.UpdateParameters[2].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_date"].ToString();
     srcHistory.UpdateParameters[3].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["instructor_id"].ToString();
     srcHistory.UpdateParameters[4].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["location_id"].ToString();
     srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
