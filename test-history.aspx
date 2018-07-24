@@ -66,13 +66,13 @@
         PagerSettings-PageButtonCount="5"
         runat="server">
         <Columns>
-          <asp:BoundField DataField="transaction_type" Visible="false" ReadOnly="true" />
-          <asp:BoundField DataField="id" Visible="false" ReadOnly="true" />
-          <asp:BoundField DataField="transaction_date" Visible="false" />
-          <asp:BoundField DataField="instructor_id" Visible="false" />
-          <asp:BoundField DataField="location_id" Visible="false" />
-          <asp:BoundField DataField="class_id" Visible="false" />
-          <asp:BoundField DataField="payment_type_id" Visible="false" />
+          <asp:BoundField DataField="transaction_type" Visible="true" ReadOnly="true" />
+          <asp:BoundField DataField="id" Visible="true" ReadOnly="true" />
+          <asp:BoundField DataField="transaction_date" Visible="true" />
+          <asp:BoundField DataField="instructor_id" Visible="true" />
+          <asp:BoundField DataField="location_id" Visible="true" />
+          <asp:BoundField DataField="class_id" Visible="true" />
+          <asp:BoundField DataField="payment_type_id" Visible="true" />
           <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
             <EditItemTemplate>
               <asp:TextBox ID="txtClassDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
