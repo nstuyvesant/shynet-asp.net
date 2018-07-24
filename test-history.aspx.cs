@@ -24,7 +24,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
   }
 
   protected void gvHistory_RowEditing(object sender, GridViewEditEventArgs e) {
-    // Make editable for purchases only
+    // Make quantity editable for purchases only
     if (gvHistory.DataKeys[e.NewEditIndex].Values["transaction_type"].ToString() == "A") // Attendance
       ((BoundField)gvHistory.Columns[9]).ReadOnly = true; // quantity is read-only
     else
