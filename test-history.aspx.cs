@@ -92,10 +92,10 @@ public partial class shynet_test_history : System.Web.UI.Page {
       // lstPaymentType.DataBind();
       // reader.Close();
       // lstPaymentType.SelectedValue = dr["payment_type_id"].ToString();
-      bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE ORDER BY lastname", "lstInstructor", "instructor_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_classes WHERE ORDER BY name", "lstClass", "class_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_locations WHERE ORDER BY name", "lstLocation", "location_id");
-      bindDropDown(e, conn, "SELECT id, name FROM old_payment_types WHERE ORDER BY ordinal", "lstPaymentType", "payment_type_id");
+      bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors ORDER BY lastname", "lstInstructor", "instructor_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_classes ORDER BY name", "lstClass", "class_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_locations ORDER BY name", "lstLocation", "location_id");
+      bindDropDown(e, conn, "SELECT id, name FROM old_payment_types ORDER BY ordinal", "lstPaymentType", "payment_type_id");
       conn.Close();
     }
   }
