@@ -26,9 +26,9 @@ public partial class shynet_test_history : System.Web.UI.Page {
   protected void gvHistory_RowEditing(object sender, GridViewEditEventArgs e) {
     // Make editable for purchases only
     if (gvHistory.DataKeys[e.NewEditIndex].Values["transaction_type"].ToString() == "A") // Attendance
-      ((BoundField)gvHistory.Columns[10]).ReadOnly = true; // quantity is read-only
+      ((BoundField)gvHistory.Columns[9]).ReadOnly = true; // quantity is read-only
     else
-      ((BoundField)gvHistory.Columns[10]).ReadOnly = false; // quantity is editable
+      ((BoundField)gvHistory.Columns[9]).ReadOnly = false; // quantity is editable
   }
 
   // protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
