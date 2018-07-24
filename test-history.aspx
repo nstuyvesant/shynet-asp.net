@@ -77,7 +77,6 @@
           </asp:TemplateField>
           <asp:TemplateField HeaderText="Description">
             <EditItemTemplate>
-              <asp:label id='lblTransactionType' Text='<%# Bind("transaction_type") %>'></asp:label> |
               <asp:label id='lblInstructor' Text='<%# Bind("instructor_id") %>'></asp:label> |
               <asp:label id='lblClass' Text='<%# Bind("class_id") %>'></asp:label> |
               <asp:label id='lblLocation' Text='<%# Bind("location_id") %>'></asp:label> |
