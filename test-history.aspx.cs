@@ -32,10 +32,10 @@ public partial class shynet_test_history : System.Web.UI.Page {
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
     DropDownList thisDropDown = (DropDownList)e.Row.FindControl(dropDownName);
-    if (dropDownName == "lstPaymentType" && gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A")
+    if (dropDownName == "lstPaymentType" && gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A") {
       thisDropDown.Visible = false;
       return;
-    else
+    }
     NpgsqlCommand cmd = new NpgsqlCommand(sql, cn);
     NpgsqlDataReader reader = cmd.ExecuteReader();
     thisDropDown.DataSource = reader;
