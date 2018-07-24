@@ -32,7 +32,13 @@ public partial class shynet_test_history : System.Web.UI.Page {
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
     DropDownList thisDropDown = (DropDownList)e.Row.FindControl(dropDownName);
+    // Do not show Payment Type for Attendances
     if (dropDownName == "lstPaymentType" && gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "A") {
+      thisDropDown.Visible = false;
+      return;
+    }
+    // Show only Payment Types for Purchases
+    if (dropDownName != "lstPaymentType" && gvHistory.DataKeys[e.Row.RowIndex].Values["transaction_type"].ToString() == "P") {
       thisDropDown.Visible = false;
       return;
     }
@@ -53,46 +59,6 @@ public partial class shynet_test_history : System.Web.UI.Page {
         // Populate dropdowns only once using ViewState to retain their contents
         NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
-        // NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
-        // NpgsqlDataReader reader = cmd.ExecuteReader();
-        // DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
-        // lstInstructor.DataSource = reader;
-        // lstInstructor.DataTextField = "name";
-        // lstInstructor.DataValueField = "id";
-        // lstInstructor.DataBind();
-        // reader.Close();
-        // DataRowView dr = e.Row.DataItem as DataRowView;
-        // lstInstructor.SelectedValue = dr["instructor_id"].ToString();
-
-        // cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
-        // reader = cmd.ExecuteReader();
-        // DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
-        // lstClass.DataSource = reader;
-        // lstClass.DataTextField = "name";
-        // lstClass.DataValueField = "id";
-        // lstClass.DataBind();
-        // reader.Close();
-        // lstClass.SelectedValue = dr["class_id"].ToString();
-
-        // cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
-        // reader = cmd.ExecuteReader();
-        // DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
-        // lstLocation.DataSource = reader;
-        // lstLocation.DataTextField = "name";
-        // lstLocation.DataValueField = "id";
-        // lstLocation.DataBind();
-        // reader.Close();
-        // lstLocation.SelectedValue = dr["location_id"].ToString();
-
-        // cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
-        // reader = cmd.ExecuteReader();
-        // DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
-        // lstPaymentType.DataSource = reader;
-        // lstPaymentType.DataTextField = "name";
-        // lstPaymentType.DataValueField = "id";
-        // lstPaymentType.DataBind();
-        // reader.Close();
-        // lstPaymentType.SelectedValue = dr["payment_type_id"].ToString();
         bindDropDown(e, conn, "SELECT id, lastname || ', ' || firstname AS name FROM old_instructors ORDER BY lastname", "lstInstructor", "instructor_id");
         bindDropDown(e, conn, "SELECT id, name FROM old_classes ORDER BY name", "lstClass", "class_id");
         bindDropDown(e, conn, "SELECT id, name FROM old_locations ORDER BY name", "lstLocation", "location_id");
