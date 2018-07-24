@@ -30,7 +30,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
       ((BoundField)gvHistory.Columns[4]).ReadOnly = false; // quantity is editable
   }
 
-  protected void gvHistory_RowUpdating(object sender, GridViewDeleteEventArgs e) {
+  protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
     srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
     srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
     srcHistory.UpdateParameters[2].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_date"].ToString();
