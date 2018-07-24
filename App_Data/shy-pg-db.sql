@@ -325,19 +325,12 @@ $$ LANGUAGE plpgsql;
 -- Used by history.aspx
 CREATE OR REPLACE FUNCTION public.old_show_history (
 	uuid)
-    RETURNS TABLE (
-      transaction_type char(1),
-      id uuid,
-      transaction_date date,
-      what varchar(256),
-      quantity smallint,
-      balance integer,
-      instructor_id uuid,
-      class_id uuid,
-      location_id uuid,
-      payment_type_id uuid
-    ) 
+    RETURNS TABLE(transaction_type character, id uuid, transaction_date date, what varchar(256), quantity smallint, balance integer, instructor_id uuid, class_id uuid, location_id uuid, payment_type_id uuid) 
     LANGUAGE 'plpgsql'
+
+    COST 100
+    VOLATILE 
+    ROWS 1000
 AS $BODY$
 
 BEGIN
@@ -362,10 +355,10 @@ BEGIN
 			old_purchases.purchased_on::date AS transaction_date,
 			'<span class="text-success">Purchased</span> ' || to_char(old_purchases.quantity,'FM999MI') || ' class pass (' || old_payment_types.name || ')' AS what,
 			old_purchases.quantity,
-			COALESCE(old_purchases.instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
-			COALESCE(old_purchases.class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
-			COALESCE(old_purchases.location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
-			COALESCE(old_purchases.payment_type_id,'{3f9b38fc-48c9-4c1b-a71f-516b3b602b13}')
+			old_purchases.instructor_id,
+			old_purchases.class_id,
+			old_purchases.location_id,
+			old_purchases.payment_type_id
 		FROM
 			old_purchases INNER JOIN
 			old_payment_types ON old_purchases.payment_type_id = old_payment_types.id
@@ -378,10 +371,10 @@ BEGIN
 			old_attendances.class_date AS transaction_date,
 			'<span class="text-danger">Attended</span> ' || old_classes.name || ' (' || old_locations.name || '/' || old_instructors.lastname || ')' AS what,
 			- 1 AS quantity,
-			COALESCE(old_attendances.instructor_id,'{f6609ffa-1814-4405-b359-140a4bfee954}'),
-			COALESCE(old_attendances.class_id,'{22f89403-6871-4201-9eb1-014872f61238}'),
-			COALESCE(old_attendances.location_id,'{65afdb35-fffc-420f-8d39-2e587cd8e558}'),
-			'{3f9b38fc-48c9-4c1b-a71f-516b3b602b13}'
+			old_attendances.instructor_id,
+			old_attendances.class_id,
+			old_attendances.location_id,
+			NULL
 		FROM
 			old_attendances INNER JOIN
 			old_classes ON old_attendances.class_id = old_classes.id INNER JOIN
@@ -399,7 +392,7 @@ BEGIN
 		b.transaction_date,
 		b.what,
 		b.quantity,
-		(SELECT SUM(a.quantity) FROM old_history_temp AS a WHERE a.ord >= b.ord)::integer,
+		(SELECT SUM(a.quantity) FROM old_history_temp AS a WHERE a.ord >= b.ord)::int,
 		b.instructor_id,
 		b.class_id,
 		b.location_id,
