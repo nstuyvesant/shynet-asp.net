@@ -65,7 +65,7 @@
           PagerSettings-PageButtonCount="5"
           runat="server">
           <Columns>
-              <asp:BoundField DataField="transaction_type" Visible="false" ReadOnly="true" />
+              <asp:BoundField DataField="transaction_type" Visible="true" ReadOnly="true" />
               <asp:BoundField DataField="id" Visible="false" ReadOnly="true" />
               <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
                   <EditItemTemplate>
