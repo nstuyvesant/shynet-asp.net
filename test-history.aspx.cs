@@ -24,10 +24,21 @@ public partial class shynet_test_history : System.Web.UI.Page {
   }
 
   protected void gvHistory_RowEditing(object sender, GridViewEditEventArgs e) {
-    if (gvHistory.DataKeys[e.NewEditIndex].Values["transaction_type"].ToString() == "A")
-      ((BoundField)gvHistory.Columns[4]).ReadOnly = true;
+    if (gvHistory.DataKeys[e.NewEditIndex].Values["transaction_type"].ToString() == "A") // Attendance
+      ((BoundField)gvHistory.Columns[4]).ReadOnly = true; // quantity is read-only
     else
-      ((BoundField)gvHistory.Columns[4]).ReadOnly = false;
+      ((BoundField)gvHistory.Columns[4]).ReadOnly = false; // quantity is editable
+  }
+
+  protected void gvHistory_RowUpdating(object sender, GridViewDeleteEventArgs e) {
+    srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
+    srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
+    srcHistory.UpdateParameters[2].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_date"];
+    srcHistory.UpdateParameters[3].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["instructor_id"].ToString();
+    srcHistory.UpdateParameters[4].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["location_id"].ToString();
+    srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
+    srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"];
+    srcHistory.UpdateParameters[7].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["payment_type_id"].ToString();
   }
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {

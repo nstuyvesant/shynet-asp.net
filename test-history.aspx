@@ -61,6 +61,7 @@
         AutoGenerateEditButton="True" 
         OnRowDeleting="gvHistory_RowDeleting"
         OnRowEditing="gvHistory_RowEditing"
+        OnRowUpdating="gvHistory_RowUpdating"
         OnRowDataBound="gvHistory_RowDataBound"
         PagerSettings-PageButtonCount="5"
         runat="server">
