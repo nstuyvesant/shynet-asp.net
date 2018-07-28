@@ -61,7 +61,6 @@
         AutoGenerateEditButton="True" 
         OnRowDeleting="gvHistory_RowDeleting"
         OnRowEditing="gvHistory_RowEditing"
-        
         OnRowDataBound="gvHistory_RowDataBound"
         PagerSettings-PageButtonCount="5"
         runat="server">
@@ -69,7 +68,7 @@
           <asp:BoundField DataField="transaction_type" HeaderText="transaction_type" Visible="false" ReadOnly="true" />
           <asp:BoundField DataField="id" Visible="false" HeaderText="id" ReadOnly="true" />
           <asp:BoundField DataField="transaction_date" HeaderText="transaction_date" Visible="false" />
-          <asp:BoundField DataField="instructor_id" HeaderText="instructor_id" Visible="false" />
+          <asp:BoundField DataField="instructor_id" HeaderText="instructor_id" Visible="true" />
           <asp:BoundField DataField="location_id" HeaderText="location_id" Visible="false" />
           <asp:BoundField DataField="class_id" HeaderText="class_id" Visible="false" />
           <asp:BoundField DataField="payment_type_id" HeaderText="payment_type_id" Visible="false" />
