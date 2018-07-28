@@ -323,86 +323,53 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Used by history.aspx
-CREATE OR REPLACE FUNCTION public.old_show_history (
+CREATE OR REPLACE FUNCTION public.old_show_history(
 	uuid)
-    RETURNS TABLE(transaction_type character, id uuid, transaction_date date, what varchar(256), quantity smallint, balance integer, instructor_id uuid, class_id uuid, location_id uuid, payment_type_id uuid) 
+    RETURNS TABLE(id uuid, transaction_type character, transaction_date date, what character varying, quantity smallint, balance bigint, instructor_id uuid, class_id uuid, location_id uuid, payment_type_id uuid) 
     LANGUAGE 'plpgsql'
 
     COST 100
     VOLATILE 
     ROWS 1000
 AS $BODY$
-
 BEGIN
-  -- Create temp table for student's history
-  CREATE TEMPORARY TABLE IF NOT EXISTS old_history_temp (
-    ord serial,
-    transaction_type char(1),
-		id uuid,
-    transaction_date date,
-		what varchar(256),
-		quantity smallint,
-		instructor_id uuid,
-		class_id uuid,
-		location_id uuid,
-		payment_type_id uuid
-  );
-
-	INSERT INTO old_history_temp (id,transaction_type,transaction_date,what,quantity,instructor_id,class_id,location_id,payment_type_id)
-		SELECT
-			old_purchases.id,
-			'P',
-			old_purchases.purchased_on::date AS transaction_date,
-			'<span class="text-success">Purchased</span> ' || to_char(old_purchases.quantity,'FM999MI') || ' class pass (' || old_payment_types.name || ')' AS what,
-			old_purchases.quantity,
-			old_purchases.instructor_id,
-			old_purchases.class_id,
-			old_purchases.location_id,
-			old_purchases.payment_type_id
-		FROM
-			old_purchases INNER JOIN
-			old_payment_types ON old_purchases.payment_type_id = old_payment_types.id
-		WHERE
-			old_purchases.student_id = $1
+  RETURN QUERY
+    WITH history AS (
+	  SELECT
+        old_purchases.id AS transaction_id,
+	    'P'::character AS transaction_type,
+        old_purchases.purchased_on::date AS transaction_date,
+        '<span class="text-success">Purchased</span> ' || to_char(old_purchases.quantity,'FM999MI') || ' class pass (' || old_payment_types.name || ')' AS what,
+        old_purchases.quantity::smallint,
+        old_purchases.instructor_id,
+        old_purchases.class_id,
+        old_purchases.location_id,
+        old_purchases.payment_type_id
+      FROM
+        old_purchases INNER JOIN
+          old_payment_types ON old_purchases.payment_type_id = old_payment_types.id
+      WHERE
+        old_purchases.student_id = $1
 	  UNION ALL
-		SELECT
-			old_attendances.id,
-			'A',
-			old_attendances.class_date AS transaction_date,
-			'<span class="text-danger">Attended</span> ' || old_classes.name || ' (' || old_locations.name || '/' || old_instructors.lastname || ')' AS what,
-			- 1 AS quantity,
-			old_attendances.instructor_id,
-			old_attendances.class_id,
-			old_attendances.location_id,
-			NULL
-		FROM
-			old_attendances INNER JOIN
-			old_classes ON old_attendances.class_id = old_classes.id INNER JOIN
-			old_instructors ON old_attendances.instructor_id = old_instructors.id INNER JOIN
-			old_locations ON old_attendances.location_id = old_locations.id
-		WHERE
-			old_attendances.student_id = $1
-	ORDER BY
-		transaction_date DESC;
-  
-  -- Return with running total
-	RETURN QUERY SELECT
-		b.transaction_type,
-		b.id,
-		b.transaction_date,
-		b.what,
-		b.quantity,
-		(SELECT SUM(a.quantity) FROM old_history_temp AS a WHERE a.ord >= b.ord)::int,
-		b.instructor_id,
-		b.class_id,
-		b.location_id,
-		b.payment_type_id
-	FROM
-		old_history_temp AS b
-	ORDER BY
-		transaction_date DESC;
-
-  DROP TABLE old_history_temp;
+      SELECT
+        old_attendances.id AS transaction_id,
+        'A'::character AS transaction_type,
+        old_attendances.class_date AS transaction_date,
+        '<span class="text-danger">Attended</span> ' || old_classes.name || ' (' || old_locations.name || '/' || old_instructors.lastname || ')' AS what,
+        -1::smallint AS quantity,
+        old_attendances.instructor_id,
+        old_attendances.class_id,
+        old_attendances.location_id,
+        NULL
+      FROM
+        old_attendances INNER JOIN
+        old_locations ON old_attendances.location_id = old_locations.id INNER JOIN
+        old_classes ON old_attendances.class_id = old_classes.id INNER JOIN
+        old_instructors ON old_attendances.instructor_id = old_instructors.id 
+      WHERE
+        old_attendances.student_id = $1
+    )
+	SELECT history.transaction_id, history.transaction_type, history.transaction_date, history.what::varchar(256), history.quantity, SUM(history.quantity) OVER (ORDER BY history.transaction_date ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS balance, history.instructor_id, history.class_id, history.location_id, history.payment_type_id
+    FROM history ORDER BY history.transaction_date DESC;
 END;
-
 $BODY$;
