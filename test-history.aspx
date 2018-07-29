@@ -66,12 +66,7 @@
         runat="server">
         <Columns>
           <asp:BoundField DataField="transaction_type" HeaderText="transaction_type" Visible="false" ReadOnly="true" />
-          <asp:BoundField DataField="id" Visible="false" HeaderText="id" ReadOnly="true" />
-          <asp:BoundField DataField="transaction_date" HeaderText="transaction_date" Visible="false" />
-          <asp:BoundField DataField="instructor_id" HeaderText="instructor_id" Visible="true" />
-          <asp:BoundField DataField="location_id" HeaderText="location_id" Visible="true" />
-          <asp:BoundField DataField="class_id" HeaderText="class_id" Visible="true" />
-          <asp:BoundField DataField="payment_type_id" HeaderText="payment_type_id" Visible="true" />
+          <asp:BoundField DataField="id" HeaderText="id" Visible="false" ReadOnly="true" />
           <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
             <EditItemTemplate>
               <asp:TextBox ID="txtClassDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
