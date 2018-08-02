@@ -32,7 +32,8 @@ public partial class shynet_test_history : System.Web.UI.Page {
   }
 
   protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-    srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
+    string transactionType = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString();
+    srcHistory.UpdateParameters[0].DefaultValue = transactionType; // Transaction type (P or A)
     srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
     GridViewRow row = gvHistory.Rows[e.RowIndex];
     TextBox txtTransactionDate = (TextBox)row.FindControl("txtTransactionDate");
@@ -44,8 +45,12 @@ public partial class shynet_test_history : System.Web.UI.Page {
     DropDownList lstClass = (DropDownList)row.FindControl("lstClass");
     srcHistory.UpdateParameters[5].DefaultValue = lstClass.SelectedValue;
 
+    if (transactionType == 'P') {
     // TextBox txtQuantity = (TextBox)row.Cells[2].Controls[0];
     // srcHistory.UpdateParameters[6].DefaultValue = txtQuantity.Text;
+    } else {
+      srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
+    }
 
     DropDownList lstPaymentType = (DropDownList)row.FindControl("lstPaymentType");
     srcHistory.UpdateParameters[7].DefaultValue = lstPaymentType.SelectedValue;
