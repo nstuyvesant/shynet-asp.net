@@ -34,16 +34,18 @@ public partial class shynet_test_history : System.Web.UI.Page {
   protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
     srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
     srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
-    TextBox txtTransactionDate = (TextBox)gvHistory.Rows[e.RowIndex].FindControl("txtTransactionDate");
+    GridViewRow row = gvHistory.Rows[e.RowIndex];
+    TextBox txtTransactionDate = (TextBox)row.FindControl("txtTransactionDate");
     srcHistory.UpdateParameters[2].DefaultValue = txtTransactionDate.Text;
-    DropDownList lstInstructor = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstInstructor");
+    DropDownList lstInstructor = (DropDownList)row.FindControl("lstInstructor");
     srcHistory.UpdateParameters[3].DefaultValue = lstInstructor.SelectedValue;
-    DropDownList lstLocation = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstLocation");
+    DropDownList lstLocation = (DropDownList)row.FindControl("lstLocation");
     srcHistory.UpdateParameters[4].DefaultValue = lstLocation.SelectedValue;
-    DropDownList lstClass = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstClass");
+    DropDownList lstClass = (DropDownList)row.FindControl("lstClass");
     srcHistory.UpdateParameters[5].DefaultValue = lstClass.SelectedValue;
-    srcHistory.UpdateParameters[6].DefaultValue =  e.NewValues["quantity"].ToString();
-    DropDownList lstPaymentType = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstPaymentType");
+    TextBox txtQuantity = (TextBox)row.Cells[3].Controls[0];
+    srcHistory.UpdateParameters[6].DefaultValue = txtQuantity.Text;
+    DropDownList lstPaymentType = (DropDownList)row.FindControl("lstPaymentType");
     srcHistory.UpdateParameters[7].DefaultValue = lstPaymentType.SelectedValue;
     srcHistory.Update();
   }
