@@ -46,7 +46,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
     srcHistory.UpdateParameters[5].DefaultValue = lstClass.SelectedValue;
 
     if (transactionType == "P") {
-      srcHistory.UpdateParameters[6].DefaultValue = ((TextBox)row.Cells[3].Controls[0]).Text;
+      srcHistory.UpdateParameters[6].DefaultValue = ((TextBox)row.Cells[5].Controls[0]).Text;
     } else {
       srcHistory.UpdateParameters[6].DefaultValue = "-1";
     }
