@@ -31,17 +31,17 @@ public partial class shynet_test_history : System.Web.UI.Page {
       ((BoundField)gvHistory.Columns[4]).ReadOnly = false; // quantity is editable
   }
 
-  // protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
-  //   srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
-  //   srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
-  //   srcHistory.UpdateParameters[2].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_date"].ToString();
-  //   srcHistory.UpdateParameters[3].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["instructor_id"].ToString();
-  //   srcHistory.UpdateParameters[4].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["location_id"].ToString();
-  //   srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
-  //   srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
-  //   srcHistory.UpdateParameters[7].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["payment_type_id"].ToString();
-  //   srcHistory.Update();
-  // }
+  protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
+    srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
+    srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
+    srcHistory.UpdateParameters[2].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_date"].ToString();
+    srcHistory.UpdateParameters[3].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["instructor_id"].ToString();
+    srcHistory.UpdateParameters[4].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["location_id"].ToString();
+    srcHistory.UpdateParameters[5].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["class_id"].ToString();
+    srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
+    srcHistory.UpdateParameters[7].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["payment_type_id"].ToString();
+    srcHistory.Update();
+  }
 
   private void bindDropDown(GridViewRowEventArgs e, NpgsqlConnection cn, string sql, string dropDownName, string selectedValueField) {
     DropDownList thisDropDown = (DropDownList)e.Row.FindControl(dropDownName);

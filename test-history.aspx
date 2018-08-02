@@ -62,6 +62,7 @@
         OnRowDeleting="gvHistory_RowDeleting"
         OnRowEditing="gvHistory_RowEditing"
         OnRowDataBound="gvHistory_RowDataBound"
+        OnRowUpdating="gvHistory_RowUpdating"
         PagerSettings-PageButtonCount="5"
         runat="server">
         <Columns>
