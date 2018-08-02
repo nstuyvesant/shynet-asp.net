@@ -42,7 +42,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
     srcHistory.UpdateParameters[4].DefaultValue = lstLocation.SelectedValue;
     DropDownList lstClass = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstClass");
     srcHistory.UpdateParameters[5].DefaultValue = lstClass.SelectedValue;
-    srcHistory.UpdateParameters[6].DefaultValue =  Convert.ToInt16(e.NewValues["quantity"]);// gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
+    srcHistory.UpdateParameters[6].DefaultValue =  e.NewValues["quantity"];// gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
     DropDownList lstPaymentType = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstPaymentType");
     srcHistory.UpdateParameters[7].DefaultValue = lstPaymentType.SelectedValue;
     srcHistory.Update();
