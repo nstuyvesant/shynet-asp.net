@@ -70,7 +70,7 @@
           <asp:BoundField DataField="id" HeaderText="id" Visible="false" ReadOnly="true" />
           <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
             <EditItemTemplate>
-              <asp:TextBox ID="txtClassDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
+              <asp:TextBox ID="txtTransactionDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
             </EditItemTemplate>
             <ItemTemplate>
               <asp:Label ID="transaction_date" runat="server" Text='<%# Bind("transaction_date","{0:d}") %>'></asp:Label>
