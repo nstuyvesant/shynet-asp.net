@@ -49,7 +49,7 @@ public partial class shynet_test_history : System.Web.UI.Page {
     // TextBox txtQuantity = (TextBox)row.Cells[2].Controls[0];
     // srcHistory.UpdateParameters[6].DefaultValue = txtQuantity.Text;
     } else {
-      srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
+      srcHistory.UpdateParameters[6].DefaultValue = "-1";
     }
 
     DropDownList lstPaymentType = (DropDownList)row.FindControl("lstPaymentType");
