@@ -34,16 +34,16 @@ public partial class shynet_test_history : System.Web.UI.Page {
   protected void gvHistory_RowUpdating(object sender, GridViewUpdateEventArgs e) {
     srcHistory.UpdateParameters[0].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["transaction_type"].ToString(); // Transaction type (P or A)
     srcHistory.UpdateParameters[1].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["id"].ToString();  // attendance or purchase ID
-    TextBox txtTransactionDate = (TextBox)e.Row.FindControl("txtTransactionDate");
+    TextBox txtTransactionDate = (TextBox)gvHistory.Rows[e.RowIndex].FindControl("txtTransactionDate");
     srcHistory.UpdateParameters[2].DefaultValue = txtTransactionDate.Text;
-    DropDownList lstInstructor = (DropDownList)e.Row.FindControl("lstInstructor");
+    DropDownList lstInstructor = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstInstructor");
     srcHistory.UpdateParameters[3].DefaultValue = lstInstructor.SelectedValue;
-    DropDownList lstLocation = (DropDownList)e.Row.FindControl("lstLocation");
+    DropDownList lstLocation = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstLocation");
     srcHistory.UpdateParameters[4].DefaultValue = lstLocation.SelectedValue;
-    DropDownList lstClass = (DropDownList)e.Row.FindControl("lstClass");
+    DropDownList lstClass = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstClass");
     srcHistory.UpdateParameters[5].DefaultValue = lstClass.SelectedValue;
     srcHistory.UpdateParameters[6].DefaultValue = gvHistory.DataKeys[e.RowIndex].Values["quantity"].ToString();
-    DropDownList lstPaymentType = (DropDownList)e.Row.FindControl("lstPaymentType");
+    DropDownList lstPaymentType = (DropDownList)gvHistory.Rows[e.RowIndex].FindControl("lstPaymentType");
     srcHistory.UpdateParameters[7].DefaultValue = lstPaymentType.SelectedValue;
     srcHistory.Update();
   }
