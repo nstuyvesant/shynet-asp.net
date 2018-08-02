@@ -12,12 +12,4 @@ public partial class adminTest : System.Web.UI.Page
     protected void FindStudent_Click(object sender, ImageClickEventArgs e) {
         gvStudents.DataBind();
     }
-
-    protected void dvSubscribers_ItemInserted(object sender, DetailsViewInsertedEventArgs e) {
-        //gvSubscribers.DataBind();
-    }
-
-    protected void FindSubscriber_Click(object sender, EventArgs e) {
-        gvSubscribers.DataBind();
-    }
 }
