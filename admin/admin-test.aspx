@@ -217,11 +217,11 @@
         </div>
 
         <asp:SqlDataSource ID="srcStudents" runat="server"
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>"
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
-            SelectCommand="SELECT [id], [active], [firstname], [lastname] FROM [students] WHERE lastname LIKE @search_text + '%' OR firstname LIKE @search_text + '%' order by lastname,firstname"
-            InsertCommand="INSERT INTO [students] ([active], [firstname], [lastname]) VALUES (@active, @firstname, @lastname)"
-            UpdateCommand="UPDATE [students] SET [active] = @active, [firstname] = @firstname, [lastname] = @lastname WHERE [id] = @id"
+            ConnectionString="<%$ ConnectionStrings:Herok %>"
+            ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+            SelectCommand="SELECT [id], [active], [firstname], [lastname] FROM old_students WHERE lastname LIKE @search_text + '%' OR firstname LIKE @search_text + '%' order by lastname,firstname"
+            InsertCommand="INSERT INTO [old_students] ([active], [firstname], [lastname]) VALUES (@active, @firstname, @lastname)"
+            UpdateCommand="UPDATE [old_students] SET [active] = @active, [firstname] = @firstname, [lastname] = @lastname WHERE [id] = @id"
             DeleteCommand="EXEC sp_delete_student @id" >
             <SelectParameters>
                 <asp:ControlParameter Name="search_text" DbType="String" ControlID="StudentSearch" PropertyName="Text" />
