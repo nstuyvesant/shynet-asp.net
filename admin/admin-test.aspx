@@ -16,24 +16,26 @@
                 <asp:UpdatePanel ID="updatePanel1" runat="server">
                     <ContentTemplate>
                         <h2>Students</h2>
-                        <b>Search for students</b><br />
+
+                        <h3>Search for students</h3>
                         <asp:TextBox ID="StudentSearch" placeholder="Search on first or last name..." runat="server" MaxLength="20" width="296" BorderWidth="1" /><asp:ImageButton ID="FindStudent" runat="server" ImageUrl="find.gif" ImageAlign="AbsMiddle" ViewStateMode="Disabled" OnClick="FindStudent_Click" /><br />
+
                         <asp:GridView ID="gvStudents" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
                             <Columns>
                                 <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
+                                  <HeaderStyle HorizontalAlign="Center" />
+                                  <ItemStyle HorizontalAlign="Center" />
                                 </asp:CheckBoxField>
                                 <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                             </Columns>
+                            <AlternatingRowStyle BackColor="White" />
                             <EditRowStyle BackColor="#2461BF" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -46,19 +48,18 @@
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView><br />
 
-                        <b>Add new student</b><br />
+                        <h3>Add new student</h3>
                         <asp:DetailsView ID="dvStudent" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
-
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <Fields>
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
                                 <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
                                 <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
                                 <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
                             </Fields>
+                            <AlternatingRowStyle BackColor="White" />
+                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
+                            <EditRowStyle BackColor="#2461BF" />
+                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
@@ -66,20 +67,21 @@
                         </asp:DetailsView>
 
                         <h2>Classes</h2>
-                        <b>Edit classes</b><br />
+                        <h3>Edit classes</h3>
+
                         <asp:GridView ID="gvClasses" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcClasses" EmptyDataText="There are no data records to display." Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
                             <Columns>
                                 <asp:CommandField ShowEditButton="True" />
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
+                                  <HeaderStyle HorizontalAlign="Center" />
+                                  <ItemStyle HorizontalAlign="Center" />
                                 </asp:CheckBoxField>
                                 <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                             </Columns>
+                            <AlternatingRowStyle BackColor="White" />
                             <EditRowStyle BackColor="#2461BF" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -92,20 +94,20 @@
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView><br />
 
-                        <b>Add new class</b><br />
+                        <h3>Add new class</h3>
                         <asp:DetailsView ID="dvClasses" runat="server" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcClasses" DefaultMode="Insert" ForeColor="#333333" GridLines="None" Height="50px" Width="436px" AllowPaging="True" DataMember="DefaultView">
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <Fields>
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" SortExpression="id" Visible="False" />
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
                                 <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" >
-                                <ControlStyle Width="300px" />
+                                  <ControlStyle Width="300px" />
                                 </asp:BoundField>
                                 <asp:CommandField ButtonType="Button" InsertText="Save" ShowEditButton="True" ShowInsertButton="True" />
                             </Fields>
+                            <AlternatingRowStyle BackColor="White" />
+                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
+                            <EditRowStyle BackColor="#2461BF" />
+                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
@@ -114,26 +116,26 @@
                         <br />
 
                         <h2>Instructors</h2>
-                        <b>Edit instructors</b><br />
+                        <h3>Edit instructors</h3>
                         <asp:GridView ID="gvInstructors" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcInstructors" EmptyDataText="There are no data records to display." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
                             <Columns>
                                 <asp:CommandField ShowEditButton="True" />
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
+                                  <HeaderStyle HorizontalAlign="Center" />
+                                  <ItemStyle HorizontalAlign="Center" />
                                 </asp:CheckBoxField>
                                 <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                                 <asp:BoundField DataField="email" HeaderText="Email" visible="false" SortExpression="email" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                             </Columns>
+                            <AlternatingRowStyle BackColor="White" />
                             <EditRowStyle BackColor="#2461BF" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -146,13 +148,8 @@
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView><br />
 
-                        <b>Add new instructor</b><br />
+                        <h3>Add new instructor</h3>
                         <asp:DetailsView ID="dvInstructor" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcInstructors" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
-
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <Fields>
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
                                 <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
@@ -160,6 +157,10 @@
                                 <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
                                 <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
                             </Fields>
+                            <AlternatingRowStyle BackColor="White" />
+                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
+                            <EditRowStyle BackColor="#2461BF" />
+                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
@@ -167,20 +168,20 @@
                         </asp:DetailsView>
 
                         <h2>Locations</h2>
-                        <b>Edit locations</b><br />
+                        <h3>Edit locations</h3>
                         <asp:GridView ID="gvLocations" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcLocations" EmptyDataText="There are no data records to display." Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
                             <Columns>
                                 <asp:CommandField ShowEditButton="True" />
                                 <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="False" SortExpression="id" />
                                 <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                <HeaderStyle HorizontalAlign="Center" />
-                                <ItemStyle HorizontalAlign="Center" />
+                                  <HeaderStyle HorizontalAlign="Center" />
+                                  <ItemStyle HorizontalAlign="Center" />
                                 </asp:CheckBoxField>
                                 <asp:BoundField DataField="name" HeaderText="Name" SortExpression="name" >
-                                <HeaderStyle HorizontalAlign="Left" />
+                                  <HeaderStyle HorizontalAlign="Left" />
                                 </asp:BoundField>
                             </Columns>
+                            <AlternatingRowStyle BackColor="White" />
                             <EditRowStyle BackColor="#2461BF" />
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
@@ -193,19 +194,19 @@
                             <SortedDescendingHeaderStyle BackColor="#4870BE" />
                         </asp:GridView><br />
 
-                        <b>Add new location</b><br />
+                        <h3>Add new location</h3>
                         <asp:DetailsView ID="dvLocations" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcLocations" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
+                            <Fields>
+                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                <asp:BoundField DataField="name" HeaderText="Location" SortExpression="name">
+                                  <ControlStyle Width="300px" />
+                                </asp:BoundField>
+                                <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
+                            </Fields>
                             <AlternatingRowStyle BackColor="White" />
                             <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
                             <EditRowStyle BackColor="#2461BF" />
                             <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
-                            <Fields>
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                <asp:BoundField DataField="name" HeaderText="Location" SortExpression="name">
-                                <ControlStyle Width="300px" />
-                                </asp:BoundField>
-                                <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
-                            </Fields>
                             <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
                             <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
@@ -219,10 +220,10 @@
         <asp:SqlDataSource ID="srcStudents" runat="server"
             ConnectionString="<%$ ConnectionStrings:Herok %>"
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-            SelectCommand="SELECT [id], [active], [firstname], [lastname] FROM old_students WHERE lastname LIKE @search_text + '%' OR firstname LIKE @search_text + '%' order by lastname,firstname"
-            InsertCommand="INSERT INTO [old_students] ([active], [firstname], [lastname]) VALUES (@active, @firstname, @lastname)"
-            UpdateCommand="UPDATE [old_students] SET [active] = @active, [firstname] = @firstname, [lastname] = @lastname WHERE [id] = @id"
-            DeleteCommand="EXEC sp_delete_student @id" >
+            SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lastname LIKE @search_text || '%' OR firstname LIKE @search_text || '%' ORDER BY lastname, firstname"
+            InsertCommand="INSERT INTO old_students (active, firstname, lastname) VALUES (@active, @firstname, @lastname)"
+            UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname WHERE id = @id::uuid"
+            DeleteCommand="SELECT FROM old_delete_student(@id)" >
             <SelectParameters>
                 <asp:ControlParameter Name="search_text" DbType="String" ControlID="StudentSearch" PropertyName="Text" />
             </SelectParameters>
@@ -242,12 +243,13 @@
             </DeleteParameters>
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="srcClasses" runat="server" ConnectionString="<%$ ConnectionStrings:SHYnet %>"
-            DeleteCommand="DELETE FROM [classes] WHERE [id] = @id"
-            InsertCommand="INSERT INTO [classes] ([active], [name]) VALUES (@active, @name)"
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
-            SelectCommand="SELECT [id], [active], [name] FROM [classes] order by name"
-            UpdateCommand="UPDATE [classes] SET [active] = @active, [name] = @name WHERE [id] = @id">
+        <asp:SqlDataSource ID="srcClasses" runat="server"
+            ConnectionString="<%$ ConnectionStrings:Heroku %>"
+            ProviderName="<%$ ConnectionStrings:SHYnet.Heroku %>"
+            DeleteCommand="DELETE FROM old_classes WHERE id = @id::uuid"
+            InsertCommand="INSERT INTO old_classes (active, name) VALUES (@active, @name)"
+            SelectCommand="SELECT id, active, name FROM old_classes ORDER BY name"
+            UpdateCommand="UPDATE old_classes SET active = @active, name = @name WHERE id = @id::uuid">
             <InsertParameters>
                 <asp:Parameter Name="active" Type="Boolean" />
                 <asp:Parameter Name="name" Type="String" />
@@ -262,9 +264,13 @@
             </DeleteParameters>
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="srcInstructors" runat="server" ConnectionString="<%$ ConnectionStrings:SHYnet %>"
-            DeleteCommand="DELETE FROM [instructors] WHERE [id] = @id"
-            InsertCommand="INSERT INTO [instructors] ([active], [firstname], [lastname], [email]) VALUES (@active, @firstname, @lastname, @email)" ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>" SelectCommand="SELECT [id], [active], [firstname], [lastname], [email] FROM [instructors] ORDER BY lastname,firstname" UpdateCommand="UPDATE [instructors] SET [active] = @active, [firstname] = @firstname, [lastname] = @lastname, [email] = @email WHERE [id] = @id">
+        <asp:SqlDataSource ID="srcInstructors" runat="server"
+            ConnectionString="<%$ ConnectionStrings:Heroku %>"
+            ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+            DeleteCommand="DELETE FROM old_instructors WHERE id = @id"
+            InsertCommand="INSERT INTO old_instructors (active, firstname, lastname, email) VALUES (@active, @firstname, @lastname, @email)"
+             SelectCommand="SELECT id, active, firstname, lastname, email FROM old_instructors ORDER BY lastname, firstname"
+             UpdateCommand="UPDATE old_instructors SET active = @active, firstname = @firstname, lastname = @lastname, email = @email WHERE id = @id::uuid">
             <InsertParameters>
                 <asp:Parameter Name="active" Type="Boolean" />
                 <asp:Parameter Name="firstname" Type="String" />
@@ -283,12 +289,13 @@
             </DeleteParameters>
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="srcLocations" runat="server" ConnectionString="<%$ ConnectionStrings:SHYnet %>"
-            DeleteCommand="DELETE FROM [locations] WHERE [id] = @id"
-            InsertCommand="INSERT INTO [locations] ([active], [name]) VALUES (@active, @name)"
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
-            SelectCommand="SELECT [id], [active], [name] FROM [locations] order by name"
-            UpdateCommand="UPDATE [locations] SET [active] = @active, [name] = @name WHERE [id] = @id">
+        <asp:SqlDataSource ID="srcLocations" runat="server"
+            ConnectionString="<%$ ConnectionStrings:Heroku %>"
+            ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+            DeleteCommand="DELETE FROM old_locations WHERE id = @id::uuid"
+            InsertCommand="INSERT INTO old_locations (active, name) VALUES (@active, @name)"
+            SelectCommand="SELECT id, active, name FROM old_locations ORDER BY name"
+            UpdateCommand="UPDATE old_locations SET active = @active, name = @name WHERE id = @id::uuid">
             <InsertParameters>
                 <asp:Parameter Name="active" Type="Boolean" />
                 <asp:Parameter Name="name" Type="String" />
