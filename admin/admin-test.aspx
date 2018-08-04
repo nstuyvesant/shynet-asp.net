@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-top:20px;">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Classes</div>
@@ -93,7 +93,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-top:20px;">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Instructors</div>
@@ -129,7 +129,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row" style="margin-top:20px;">
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">Locations</div>
