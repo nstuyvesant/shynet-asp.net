@@ -321,7 +321,7 @@
     <asp:SqlDataSource ID="srcSubscribers" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT _id, &quot;firstname&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
+        SelectCommand="SELECT _id, &quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
         InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot;) VALUES ( @firstname, @lastname, @phone, lower(@email), @opt_out)"
         UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstname, &quot;lastName&quot; = @lastname, phone = @phone, email = lower(@email), &quot;optOut&quot; = @opt_out WHERE _id = @id"
         DeleteCommand="DELETE FROM &quot;Users&quot; WHERE _id = @id" >
