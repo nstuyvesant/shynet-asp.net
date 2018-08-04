@@ -27,7 +27,7 @@
                             <div class="card">
                                 <div class="card-header">Students</div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    <asp:panel ID="StudentSearchPanel" CssClass="form-group" runat="server" DefaultButton="FindStudent">		
                                         <label class="sr-only" for="StudentSearch">Find Student</label>
                                         <div class="input-group">
                                             <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" />
@@ -35,7 +35,7 @@
                                                 <asp:LinkButton id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
                                             </span>
                                         </div>
-                                    </div>
+                                    </asp:panel>
                                     <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
                                         <Columns>
                                             <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
