@@ -1,60 +1,66 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Debug="true" CodeFile="admin-test.aspx.cs" Inherits="adminTest" %>
 <!DOCTYPE html>
 <html lang="en">
-    <head runat="server">
-        <title>SHY Administration</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta http-equiv="x-ua-compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha256-NJWeQ+bs82iAeoT5Ktmqbi3NXwxcHlfaVejzJI2dklU=" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
-    </head>
-    <body>
-        <div class="container" style="margin-top:15px;">
-            <form id="form1" runat="server">
-                <asp:ScriptManager ID="ScriptManager1" runat="server" />
-                <asp:UpdatePanel ID="updatePanel1" runat="server">
-                    <ContentTemplate>
-                        <h2>Students</h2>
-                        
-                        <h3>Search for students</h3>
-                        <div class="form-group">
-                          <label class="sr-only" for="SearchText">Find Student</label>
-                          <div class="input-group">
-                              <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
-                              <span class="input-group-btn">
-                                  <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
-                              </span>
-                          </div>
-                        </div>
+  <head runat="server">
+    <title>SHY Administration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha256-NJWeQ+bs82iAeoT5Ktmqbi3NXwxcHlfaVejzJI2dklU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
+  </head>
+  <body>
+    <div class="container" style="margin-top:15px;">
+      <form id="form1" runat="server">
+        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+        <asp:UpdatePanel ID="updatePanel1" runat="server">
+          <ContentTemplate>
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h4>Students</h4>
+              </div>
+              <div class="panel-body">
+                <h3>Search for students</h3>
+                <div class="form-group">
+                  <label class="sr-only" for="StudentSearch">Find Student</label>
+                  <div class="input-group">
+                    <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
+                    <span class="input-group-btn">
+                      <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                    </span>
+                  </div>
+                </div>
+                <asp:GridView ID="gvStudents" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
+                  <Columns>
+                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                    <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
+                      <HeaderStyle HorizontalAlign="Center" />
+                      <ItemStyle HorizontalAlign="Center" />
+                    </asp:CheckBoxField>
+                    <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
+                      <HeaderStyle HorizontalAlign="Left" />
+                    </asp:BoundField>
+                    <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
+                      <HeaderStyle HorizontalAlign="Left" />
+                    </asp:BoundField>
+                  </Columns>
+                  <AlternatingRowStyle BackColor="White" />
+                  <EditRowStyle BackColor="#2461BF" />
+                  <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                  <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                  <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+                  <RowStyle BackColor="#EFF3FB" />
+                  <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+                  <SortedAscendingCellStyle BackColor="#F5F7FB" />
+                  <SortedAscendingHeaderStyle BackColor="#6D95E1" />
+                  <SortedDescendingCellStyle BackColor="#E9EBEF" />
+                  <SortedDescendingHeaderStyle BackColor="#4870BE" />
+                </asp:GridView>
+              </div>
+            </div>
 
-                        <asp:GridView ID="gvStudents" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <Columns>
-                                <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                                <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                  <HeaderStyle HorizontalAlign="Center" />
-                                  <ItemStyle HorizontalAlign="Center" />
-                                </asp:CheckBoxField>
-                                <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                            </Columns>
-                            <AlternatingRowStyle BackColor="White" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                            <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                            <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                        </asp:GridView><br />
+
 
                         <h3>Add new student</h3>
                         <asp:DetailsView ID="dvStudent" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
