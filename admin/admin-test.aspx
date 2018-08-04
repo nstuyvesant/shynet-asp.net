@@ -1,216 +1,169 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" Debug="true" CodeFile="admin-test.aspx.cs" Inherits="adminTest" %>
 <!DOCTYPE html>
 <html lang="en">
-  <head runat="server">
+
+<head runat="server">
     <title>SHY Administration</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="x-ua-compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous" />
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="container" style="margin-top:15px;">
-      <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" />
-        <asp:UpdatePanel ID="updatePanel1" runat="server">
-          <ContentTemplate>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">Students</div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class="sr-only" for="StudentSearch">Find Student</label>
-                                <div class="input-group">
-                                    <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" />
-                                    <span class="input-group-btn">
-                                        <asp:LinkButton id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
-                                    </span>
+        <form id="form1" runat="server">
+            <asp:ScriptManager ID="ScriptManager1" runat="server" />
+            <asp:UpdatePanel ID="updatePanel1" runat="server">
+                <ContentTemplate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Students</div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="StudentSearch">Find Student</label>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" />
+                                            <span class="input-group-btn">
+                                                <asp:LinkButton id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
+                                        <Columns>
+                                            <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                                        </Columns>
+                                    </asp:GridView>
                                 </div>
                             </div>
-                            <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
-                                <Columns>
-                                    <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                                    <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                    <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                                    <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                                </Columns>
-                            </asp:GridView>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Add Student</div>
+                                <div class="card-body">
+                                    <asp:DetailsView ID="dvStudent" runat="server" CssClass="table table-striped" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" GridLines="None">
+                                        <Fields>
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                                            <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
+                                        </Fields>
+                                    </asp:DetailsView>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">Add Student</div>
-                        <div class="card-body">
-                            <asp:DetailsView ID="dvStudent" runat="server" CssClass="table table-striped" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" GridLines="None">
-                                <Fields>
-                                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                    <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                                    <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                                    <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
-                                </Fields>
-                            </asp:DetailsView>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Classes</div>
+                                <div class="card-body">
+                                    <asp:GridView ID="gvClasses" CssClass="table table-striped" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcClasses" EmptyDataText="There are no data records to display." GridLines="None">
+                                        <Columns>
+                                            <asp:CommandField ShowEditButton="True" />
+                                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Add Class</div>
+                                <div class="card-body">
+                                    <asp:DetailsView ID="dvClasses" CssClass="table table-striped" runat="server" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcClasses" DefaultMode="Insert" GridLines="None" AllowPaging="True" DataMember="DefaultView">
+                                        <Fields>
+                                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" SortExpression="id" Visible="False" />
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" />
+                                            <asp:CommandField ButtonType="Button" InsertText="Save" ShowEditButton="True" ShowInsertButton="True" />
+                                        </Fields>
+                                    </asp:DetailsView>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">Classes</div>
-                        <div class="card-body">
-                            <asp:GridView ID="gvClasses" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcClasses" EmptyDataText="There are no data records to display." GridLines="None">
-                                <Columns>
-                                    <asp:CommandField ShowEditButton="True" />
-                                    <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                    <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" />
-                                </Columns>
-                            </asp:GridView>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Instructors</div>
+                                <div class="card-body">
+                                    <asp:GridView ID="gvInstructors" CssClass="table table-striped" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcInstructors" EmptyDataText="There are no data records to display." AllowPaging="True" AllowSorting="True" GridLines="None">
+                                        <Columns>
+                                            <asp:CommandField ShowEditButton="True" />
+                                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                                            <asp:BoundField DataField="email" HeaderText="Email" visible="false" SortExpression="email" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Add Instructor</div>
+                                <div class="card-body">
+                                    <asp:DetailsView ID="dvInstructor" CssClass="table table-striped" runat="server" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcInstructors" DefaultMode="Insert" GridLines="None">
+                                        <Fields>
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
+                                            <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
+                                        </Fields>
+                                    </asp:DetailsView>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">Add Class</div>
-                        <div class="card-body">
-                            <asp:DetailsView ID="dvClasses" runat="server" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcClasses" DefaultMode="Insert" GridLines="None" AllowPaging="True" DataMember="DefaultView">
-                                <Fields>
-                                    <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" SortExpression="id" Visible="False" />
-                                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                    <asp:BoundField DataField="name" HeaderText="Class" SortExpression="name" />
-                                    <asp:CommandField ButtonType="Button" InsertText="Save" ShowEditButton="True" ShowInsertButton="True" />
-                                </Fields>
-                            </asp:DetailsView>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">Locations</div>
+                                <div class="card-body">
+                                    <asp:GridView ID="gvLocations" CssClass="table table-striped" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcLocations" EmptyDataText="There are no data records to display." GridLines="None">
+                                        <Columns>
+                                            <asp:CommandField ShowEditButton="True" />
+                                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="False" SortExpression="id" />
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="name" HeaderText="Name" SortExpression="name" />
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Add Location</div>
+                                <div class="card-body">
+                                    <asp:DetailsView ID="dvLocations" CssClass="table table-striped" runat="server" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcLocations" DefaultMode="Insert" GridLines="None">
+                                        <Fields>
+                                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                            <asp:BoundField DataField="name" HeaderText="Location" SortExpression="name" />
+                                            <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
+                                        </Fields>
+                                    </asp:DetailsView>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-header">Classes</div>
-                        <div class="card-body">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">Add Class</div>
-                        <div class="card-body">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-                        <h2>Instructors</h2>
-                        <h3>Edit instructors</h3>
-                        <asp:GridView ID="gvInstructors" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcInstructors" EmptyDataText="There are no data records to display." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <Columns>
-                                <asp:CommandField ShowEditButton="True" />
-                                <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                  <HeaderStyle HorizontalAlign="Center" />
-                                  <ItemStyle HorizontalAlign="Center" />
-                                </asp:CheckBoxField>
-                                <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="email" HeaderText="Email" visible="false" SortExpression="email" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                            </Columns>
-                            <AlternatingRowStyle BackColor="White" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                            <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                            <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                        </asp:GridView><br />
-
-                        <h3>Add new instructor</h3>
-                        <asp:DetailsView ID="dvInstructor" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcInstructors" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
-                            <Fields>
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                                <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                                <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" />
-                                <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
-                            </Fields>
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                        </asp:DetailsView>
-
-                        <h2>Locations</h2>
-                        <h3>Edit locations</h3>
-                        <asp:GridView ID="gvLocations" runat="server" AllowPaging="True" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcLocations" EmptyDataText="There are no data records to display." Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <Columns>
-                                <asp:CommandField ShowEditButton="True" />
-                                <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="False" SortExpression="id" />
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                                  <HeaderStyle HorizontalAlign="Center" />
-                                  <ItemStyle HorizontalAlign="Center" />
-                                </asp:CheckBoxField>
-                                <asp:BoundField DataField="name" HeaderText="Name" SortExpression="name" >
-                                  <HeaderStyle HorizontalAlign="Left" />
-                                </asp:BoundField>
-                            </Columns>
-                            <AlternatingRowStyle BackColor="White" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                            <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                            <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                            <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                            <SortedDescendingHeaderStyle BackColor="#4870BE" />
-                        </asp:GridView><br />
-
-                        <h3>Add new location</h3>
-                        <asp:DetailsView ID="dvLocations" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcLocations" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
-                            <Fields>
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                <asp:BoundField DataField="name" HeaderText="Location" SortExpression="name">
-                                  <ControlStyle Width="300px" />
-                                </asp:BoundField>
-                                <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
-                            </Fields>
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                        </asp:DetailsView>
-                    </ContentTemplate>
-                </asp:UpdatePanel>
-            </form>
-        </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </form>
+    </div>
 
     <asp:SqlDataSource ID="srcStudents" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
