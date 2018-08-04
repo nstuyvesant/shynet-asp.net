@@ -228,7 +228,7 @@
     <asp:SqlDataSource ID="srcStudents" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lastname LIKE @search_text || '%' OR firstname LIKE @search_text || '%' ORDER BY lastname, firstname"
+        SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
         InsertCommand="INSERT INTO old_students (active, firstname, lastname) VALUES (@active, @firstname, @lastname)"
         UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname WHERE id = @id::uuid"
         DeleteCommand="DELETE FROM old_students WHERE id = @id::uuid AND ((SELECT COUNT(*) FROM old_attendances WHERE student_id = @id::uuid) - (SELECT COUNT(*) FROM old_purchases WHERE student_id = @id::uuid)) = 0" >
@@ -321,9 +321,9 @@
     <asp:SqlDataSource ID="srcSubscribers" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT _id, &quot;firstname&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE &quot;lastName&quot; LIKE @search_text || '%' OR &quot;firstName&quot; LIKE @search_text || '%' OR email LIKE @search_text || '%' ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
-        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot;) VALUES ( @firstname, @lastname, @phone, @email, @opt_out)"
-        UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstname, &quot;lastName&quot; = @lastname, phone = @phone, email = @email, &quot;optOut&quot; = @opt_out WHERE _id = @id"
+        SelectCommand="SELECT _id, &quot;firstname&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
+        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot;) VALUES ( @firstname, @lastname, @phone, lower(@email), @opt_out)"
+        UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstname, &quot;lastName&quot; = @lastname, phone = @phone, email = lower(@email), &quot;optOut&quot; = @opt_out WHERE _id = @id"
         DeleteCommand="DELETE FROM &quot;Users&quot; WHERE _id = @id" >
         <SelectParameters>
             <asp:ControlParameter Name="search_text" DbType="String" ControlID="SubscriberSearch" PropertyName="Text" />
