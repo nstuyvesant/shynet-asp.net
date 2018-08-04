@@ -16,30 +16,32 @@
         <asp:UpdatePanel ID="updatePanel1" runat="server">
           <ContentTemplate>
             <div class="row">
-                <div class="card col-md-6">
-                    <div class="card-header">Students</div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <label class="sr-only" for="StudentSearch">Find Student</label>
-                            <div class="input-group">
-                                <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
-                                <span class="input-group-btn">
-                                    <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
-                                </span>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Students</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="sr-only" for="StudentSearch">Find Student</label>
+                                <div class="input-group">
+                                    <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
+                                    <span class="input-group-btn">
+                                        <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                                    </span>
+                                </div>
                             </div>
                         </div>
+                        <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
+                            <Columns>
+                                <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                                <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                                <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                                <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                            </Columns>
+                        </asp:GridView>
                     </div>
-                    <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
-                        <Columns>
-                            <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                        </Columns>
-                    </asp:GridView>
                 </div>
-                <div class="card col-md-4 offset-md-1">
+                <div class="card col-md-4">
                     <div class="card-header">Add Student</div>
                     <asp:DetailsView ID="dvStudent" runat="server" CssClass="table table-striped" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" GridLines="None">
                         <Fields>
