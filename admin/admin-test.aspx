@@ -35,7 +35,7 @@
                   <Columns>
                     <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
                     <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                    <asp:CheckBoxField DataField="active" CssClass="form-control" HeaderText="Active" SortExpression="active" />
+                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
                     <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
                     <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
                   </Columns>
