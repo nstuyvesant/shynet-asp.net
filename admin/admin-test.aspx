@@ -263,6 +263,36 @@
         </DeleteParameters>
     </asp:SqlDataSource>
 
+    <asp:SqlDataSource ID="srcSubscribers" runat="server"
+        ConnectionString="<%$ ConnectionStrings:Heroku %>"
+        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+        SelectCommand="SELECT _id, &quot;firstname&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE &quot;lastName&quot; LIKE @search_text || '%' OR &quot;firstName&quot; LIKE @search_text || '%' OR email LIKE @search_text || '%' ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
+        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot;) VALUES ( @firstname, @lastname, @phone, @email, @opt_out)"
+        UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstname, &quot;lastName&quot; = @lastname, phone = @phone, email = @email, &quot;optOut&quot; = @opt_out WHERE _id = @id"
+        DeleteCommand="DELETE FROM &quot;Users&quot; WHERE _id = @id" >
+        <SelectParameters>
+            <asp:ControlParameter Name="search_text" DbType="String" ControlID="SubscriberSearch" PropertyName="Text" />
+        </SelectParameters>
+        <InsertParameters>
+            <asp:Parameter Name="firstname" Type="String" />
+            <asp:Parameter Name="lastname" Type="String" />
+            <asp:Parameter Name="phone" Type="String" />
+            <asp:Parameter Name="email" Type="String" />
+            <asp:Parameter Name="opt_out" Type="Boolean" />
+        </InsertParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="firstname" Type="String" />
+            <asp:Parameter Name="lastname" Type="String" />
+            <asp:Parameter Name="phone" Type="String" />
+            <asp:Parameter Name="email" Type="String" />
+            <asp:Parameter Name="opt_out" Type="Boolean" />
+            <asp:Parameter Name="id" />
+        </UpdateParameters>
+        <DeleteParameters>
+            <asp:Parameter Name="id"/>
+        </DeleteParameters>
+    </asp:SqlDataSource>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js" integrity="sha256-EGs9T1xMHdvM1geM8jPpoo8EZ1V1VRsmcJz8OByENLA=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha256-VsEqElsCHSGmnmHXGQzvoWjWwoznFSZc6hs7ARLRacQ=" crossorigin="anonymous"></script>    </body>
