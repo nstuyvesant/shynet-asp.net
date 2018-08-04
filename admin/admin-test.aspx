@@ -245,7 +245,7 @@
 
         <asp:SqlDataSource ID="srcClasses" runat="server"
             ConnectionString="<%$ ConnectionStrings:Heroku %>"
-            ProviderName="<%$ ConnectionStrings:SHYnet.Heroku %>"
+            ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
             DeleteCommand="DELETE FROM old_classes WHERE id = @id::uuid"
             InsertCommand="INSERT INTO old_classes (active, name) VALUES (@active, @name)"
             SelectCommand="SELECT id, active, name FROM old_classes ORDER BY name"
