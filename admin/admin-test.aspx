@@ -17,7 +17,7 @@
           <ContentTemplate>
             <div class="row">
                 <div class="card col-md-6">
-                    <h4 class="card-header">Students</h4>
+                    <div class="card-header">Students</div>
                     <div class="card-body">
                         <div class="form-group">
                             <label class="sr-only" for="StudentSearch">Find Student</label>
@@ -39,8 +39,8 @@
                         </Columns>
                     </asp:GridView>
                 </div>
-                <div class="card col-md-6">
-                    <h4 class="card-header">Add Student</h4>
+                <div class="card col-md-4 offset-md-1">
+                    <div class="card-header">Add Student</div>
                     <asp:DetailsView ID="dvStudent" runat="server" CssClass="table table-striped" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" GridLines="None">
                         <Fields>
                             <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
