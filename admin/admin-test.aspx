@@ -15,6 +15,7 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <asp:UpdatePanel ID="updatePanel1" runat="server">
           <ContentTemplate>
+
             <div class="panel panel-primary">
               <div class="panel-heading">
                 <h4>Students</h4>
@@ -33,13 +34,10 @@
                 <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True">
                   <Columns>
                     <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                    <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                    <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" >
-                    </asp:CheckBoxField>
-                    <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" >
-                    </asp:BoundField>
-                    <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" >
-                    </asp:BoundField>
+                    <asp:BoundField DataField="id"  CssClass="form-control" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                    <asp:CheckBoxField DataField="active" CssClass="form-control" HeaderText="Active" SortExpression="active" />
+                    <asp:BoundField DataField="firstname"  CssClass="form-control" HeaderText="First" SortExpression="firstname" />
+                    <asp:BoundField DataField="lastname"  CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
                   </Columns>
                 </asp:GridView>
               </div>
