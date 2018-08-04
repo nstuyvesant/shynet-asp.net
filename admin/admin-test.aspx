@@ -16,9 +16,17 @@
                 <asp:UpdatePanel ID="updatePanel1" runat="server">
                     <ContentTemplate>
                         <h2>Students</h2>
-
+                        
                         <h3>Search for students</h3>
-                        <asp:TextBox ID="StudentSearch" placeholder="Search on first or last name..." runat="server" MaxLength="20" width="296" BorderWidth="1" /><asp:ImageButton ID="FindStudent" runat="server" ImageUrl="find.gif" ImageAlign="AbsMiddle" ViewStateMode="Disabled" OnClick="FindStudent_Click" /><br />
+                        <div class="form-group">
+                          <label class="sr-only" for="SearchText">Find Student</label>
+                          <div class="input-group">
+                              <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
+                              <span class="input-group-btn">
+                                  <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                              </span>
+                          </div>
+                        </div>
 
                         <asp:GridView ID="gvStudents" runat="server" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" Width="436px" CellPadding="4" ForeColor="#333333" GridLines="None">
                             <Columns>
