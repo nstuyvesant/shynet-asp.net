@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="admin-test.aspx.cs" Inherits="adminTest" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" Debug="true" CodeFile="admin-test.aspx.cs" Inherits="adminTest" %>
 <!DOCTYPE html>
 <html lang="en">
     <head runat="server">
@@ -218,7 +218,7 @@
         </div>
 
         <asp:SqlDataSource ID="srcStudents" runat="server"
-            ConnectionString="<%$ ConnectionStrings:Herok %>"
+            ConnectionString="<%$ ConnectionStrings:Heroku %>"
             ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
             SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lastname LIKE @search_text || '%' OR firstname LIKE @search_text || '%' ORDER BY lastname, firstname"
             InsertCommand="INSERT INTO old_students (active, firstname, lastname) VALUES (@active, @firstname, @lastname)"

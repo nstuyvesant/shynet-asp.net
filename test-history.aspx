@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Debug="true" AutoEventWireup="true" CodeFile="test-history.aspx.cs" Inherits="shynet_test_history" MaintainScrollPositionOnPostback="True" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="test-history.aspx.cs" Inherits="shynet_test_history" MaintainScrollPositionOnPostback="True" %>
 <!doctype html>
 <html lang="en-us">
 <head runat="server">
