@@ -23,9 +23,9 @@
                             <div class="form-group">
                                 <label class="sr-only" for="StudentSearch">Find Student</label>
                                 <div class="input-group">
-                                    <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
+                                    <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
                                     <span class="input-group-btn">
-                                        <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                                        <asp:Button id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:Button>
                                     </span>
                                 </div>
                             </div>
