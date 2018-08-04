@@ -9,7 +9,7 @@ public partial class adminTest : System.Web.UI.Page
         }
     }
 
-    protected void FindStudent_Click(object sender, LinkButtonClickEventArgs e) {
+    protected void FindStudent_Click() {
         gvStudents.DataBind();
     }
 }
