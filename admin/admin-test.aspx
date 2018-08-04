@@ -15,49 +15,43 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         <asp:UpdatePanel ID="updatePanel1" runat="server">
           <ContentTemplate>
-
-            <div class="card">
-                <h4 class="card-header">Students</h4>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label class="sr-only" for="StudentSearch">Find Student</label>
-                        <div class="input-group">
-                            <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
-                            <span class="input-group-btn">
-                                <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
-                            </span>
+            <div class="row">
+                <div class="card col-md-6">
+                    <h4 class="card-header">Students</h4>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="sr-only" for="StudentSearch">Find Student</label>
+                            <div class="input-group">
+                                <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
+                                <span class="input-group-btn">
+                                    <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
+                                </span>
+                            </div>
                         </div>
                     </div>
+                    <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
+                        <Columns>
+                            <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
+                            <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
+                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                        </Columns>
+                    </asp:GridView>
                 </div>
-                <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True">
-                    <Columns>
-                        <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
-                        <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" Visible="false" SortExpression="id" />
-                        <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                        <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                        <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                    </Columns>
-                </asp:GridView>
+                <div class="card col-md-6">
+                    <h4 class="card-header">Add Student</h4>
+                    <asp:DetailsView ID="dvStudent" runat="server" CssClass="table table-striped" AutoGenerateRows="False" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" GridLines="None">
+                        <Fields>
+                            <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
+                            <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
+                            <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
+                            <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
+                        </Fields>
+                    </asp:DetailsView>
+                </div>
             </div>
 
-
-                        <h3>Add new student</h3>
-                        <asp:DetailsView ID="dvStudent" runat="server" Height="50px" Width="436px" AutoGenerateRows="False" CellPadding="4" DataKeyNames="id" DataSourceID="srcStudents" DefaultMode="Insert" ForeColor="#333333" GridLines="None">
-                            <Fields>
-                                <asp:CheckBoxField DataField="active" HeaderText="Active" SortExpression="active" />
-                                <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" />
-                                <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" />
-                                <asp:CommandField ButtonType="Button" InsertText="Save" ShowInsertButton="True" />
-                            </Fields>
-                            <AlternatingRowStyle BackColor="White" />
-                            <CommandRowStyle BackColor="#D1DDF1" Font-Bold="True" />
-                            <EditRowStyle BackColor="#2461BF" />
-                            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" />
-                            <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#EFF3FB" />
-                        </asp:DetailsView>
 
                         <h2>Classes</h2>
                         <h3>Edit classes</h3>
