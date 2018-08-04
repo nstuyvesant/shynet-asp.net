@@ -185,7 +185,6 @@
                                         AutoGenerateColumns="False"		
                                         DataKeyNames="_id"		
                                         DataSourceID="srcSubscribers"
-                                        OnItemInserted="gvSubscribers_ItemInserted"	
                                         EmptyDataText="No subscribers' last names matched the search."		
                                         CssClass="table table-striped table-hover table-condensed table-bordered"		
                                         AllowPaging="True">		
