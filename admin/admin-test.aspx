@@ -57,7 +57,7 @@
                                             <asp:CheckBoxField DataField="active" ControlStyle-CssClass="form-control" HeaderText="Active" SortExpression="active" />
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
-                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn btn-success" InsertText="Save" ShowInsertButton="True" />
+                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
                                 </div>
@@ -90,7 +90,7 @@
                                             <asp:BoundField DataField="id" HeaderText="id" ReadOnly="True" SortExpression="id" Visible="False" />
                                             <asp:CheckBoxField DataField="active" ControlStyle-CssClass="form-control" HeaderText="Active" SortExpression="active" />
                                             <asp:BoundField DataField="name" ControlStyle-CssClass="form-control" HeaderText="Class" SortExpression="name" />
-                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn btn-success" InsertText="Save" ShowEditButton="True" ShowInsertButton="True" />
+                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowEditButton="True" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
                                 </div>
@@ -126,7 +126,7 @@
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
                                             <asp:BoundField DataField="email" ControlStyle-CssClass="form-control" HeaderText="Email" SortExpression="email" />
-                                            <asp:CommandField ButtonType="Button"  ControlStyle-CssClass="btn btn-success" InsertText="Save" ShowInsertButton="True" />
+                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
                                 </div>
@@ -158,7 +158,7 @@
                                         <Fields>
                                             <asp:CheckBoxField DataField="active" ControlStyle-CssClass="form-control" HeaderText="Active" SortExpression="active" />
                                             <asp:BoundField DataField="name" ControlStyle-CssClass="form-control" HeaderText="Location" SortExpression="name" />
-                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="form-control" InsertText="Save" ShowInsertButton="True" />
+                                            <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
                                 </div>
@@ -171,20 +171,21 @@
                             <div class="card">
                                 <div class="card-header">Subscribers</div>
                                 <div class="card-body">
-                                    <asp:panel ID="SubscriberSearchPanel" Visible="false" CssClass="form-group" runat="server" DefaultButton="FindSubscriber">		
+                                    <asp:panel ID="SubscriberSearchPanel" CssClass="form-group" runat="server" DefaultButton="FindSubscriber">		
                                         <label for="SubscriberSearch" class="sr-only">Find existing subscribers</label>		
-                                        <div class="input-group">		
+                                        <div class="input-group">
                                             <asp:TextBox ID="SubscriberSearch" CssClass="form-control" placeholder="Email, first or last name..." runat="server" />		
                                             <span class="input-group-btn">		
                                                 <asp:LinkButton id="FindSubscriber" class="btn btn-primary" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
                                             </span>		
                                         </div>		
                                     </asp:panel>
-                                    <asp:GridView ID="gvSubscribers" Visible="false"  runat="server"		
+                                    <asp:GridView ID="gvSubscribers" runat="server"		
                                         AllowSorting="True"		
                                         AutoGenerateColumns="False"		
-                                        DataKeyNames="id"		
-                                        DataSourceID="srcSubscribers"		
+                                        DataKeyNames="_id"		
+                                        DataSourceID="srcSubscribers"
+                                        OnItemInserted="gvSubscribers_ItemInserted"	
                                         EmptyDataText="No subscribers' last names matched the search."		
                                         CssClass="table table-striped table-hover table-condensed table-bordered"		
                                         AllowPaging="True">		
@@ -205,14 +206,14 @@
                             <div class="card">
                                 <div class="card-header">Add Subscriber</div>
                                 <div class="card-body">
-                                    <asp:DetailsView ID="dvSubscribers" runat="server" Visible="false" CssClass="table table-striped" DataSourceID="srcSubscribers" GridLines="None" AutoGenerateRows="False" DataKeyNames="id" DefaultMode="Insert" OnItemInserted="dvSubscribers_ItemInserted">		
+                                    <asp:DetailsView ID="dvSubscribers" runat="server" CssClass="table table-striped" DataSourceID="srcSubscribers" GridLines="None" AutoGenerateRows="False" DataKeyNames="id" DefaultMode="Insert" OnItemInserted="dvSubscribers_ItemInserted">		
                                         <Fields>		
                                             <asp:BoundField DataField="firstname" HeaderText="First" SortExpression="firstname" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="lastname" HeaderText="Last" SortExpression="lastname" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
                                             <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="opt_out" ControlStyle-CssClass="form-control" />		
-                                            <asp:CommandField ButtonType="Button" ShowInsertButton="True" InsertText="Save" ControlStyle-CssClass="btn btn-success" />		
+                                            <asp:CommandField ButtonType="Button" ShowInsertButton="True" InsertText="Save" ControlStyle-CssClass="btn" />		
                                         </Fields>		
                                     </asp:DetailsView>
                                 </div>

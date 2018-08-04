@@ -17,7 +17,7 @@ public partial class adminTest : System.Web.UI.Page
         gvSubscribers.DataBind();
     }
 
-    protected void dvSubscribers_ItemInserted(object sender, DetailsViewInsertedEventArgs e) {		
+    protected void gvSubscribers_ItemInserted(object sender, DetailsViewInsertedEventArgs e) {		
          gvSubscribers.DataBind();		
      }
 }
