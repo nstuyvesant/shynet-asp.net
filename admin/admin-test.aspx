@@ -176,7 +176,7 @@
         SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lastname LIKE @search_text || '%' OR firstname LIKE @search_text || '%' ORDER BY lastname, firstname"
         InsertCommand="INSERT INTO old_students (active, firstname, lastname) VALUES (@active, @firstname, @lastname)"
         UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname WHERE id = @id::uuid"
-        DeleteCommand="SELECT FROM old_delete_student(@id)" >
+        DeleteCommand="DELETE FROM old_students WHERE id = @id::uuid AND ((SELECT COUNT(*) FROM old_attendances WHERE student_id = @id::uuid) - (SELECT COUNT(*) FROM old_purchases WHERE student_id = @id::uuid)) = 0" >
         <SelectParameters>
             <asp:ControlParameter Name="search_text" DbType="String" ControlID="StudentSearch" PropertyName="Text" />
         </SelectParameters>
