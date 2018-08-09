@@ -9,15 +9,15 @@ public partial class admin : System.Web.UI.Page
         }
     }
 
-    protected void FindStudent_Click(object sender, ImageClickEventArgs e) {
+    protected void FindStudent_Click(object sender, EventArgs e) {
         gvStudents.DataBind();
-    }
-
-    protected void dvSubscribers_ItemInserted(object sender, DetailsViewInsertedEventArgs e) {
-        //gvSubscribers.DataBind();
     }
 
     protected void FindSubscriber_Click(object sender, EventArgs e) {
         gvSubscribers.DataBind();
     }
+
+    protected void dvSubscribers_ItemInserted(object sender, DetailsViewInsertedEventArgs e) {		
+         gvSubscribers.DataBind();		
+     }
 }
