@@ -147,7 +147,7 @@
                                   </div>
                                   <label class="sr-only" for="txtClassDate">Class Date</label>
                                   <div class="input-group date">
-                                      <asp:TextBox ID="txtClassDate" data-provide="datepicker" class="form-control" runat="server" AutoPostBack="True" />
+                                      <asp:TextBox ID="txtClassDate" data-provide="datepicker" data-date-autoclose="true" class="form-control" runat="server" AutoPostBack="True" />
                                       <div class="input-group-append">
                                           <div class="input-group-text"><span class="fas fa-th"></span></div>
                                       </div>
