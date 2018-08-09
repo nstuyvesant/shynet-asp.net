@@ -2,15 +2,57 @@
 using System.Data;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Configuration;
+using Npgsql;
 
-public partial class shynet_default : System.Web.UI.Page
+public partial class editor : System.Web.UI.Page
 {
+    private string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["Heroku"].ToString();
+
     protected void Page_Load(Object sender, EventArgs e)
     {
         if (!IsPostBack)
         {
+            gvStudents.DataBind(); // Makes the message "No students found matching the search criteria" appear
+            // Populate dropdowns only once using ViewState to retain their contents
+            NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+            conn.Open();
+
+            NpgsqlCommand cmd = new NpgsqlCommand("SELECT id, name FROM old_classes WHERE active=true ORDER BY name", conn);
+            NpgsqlDataReader reader = cmd.ExecuteReader();
+            lstClass.DataSource = reader;
+            lstClass.DataTextField = "name";
+            lstClass.DataValueField = "id";
+            lstClass.DataBind();
+            reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, lastname || ', ' || firstname AS name FROM old_instructors WHERE active=true ORDER BY lastname", conn);
+            reader = cmd.ExecuteReader();
+            lstInstructor.DataSource = reader;
+            lstInstructor.DataTextField = "name";
+            lstInstructor.DataValueField = "id";
+            lstInstructor.DataBind();
+            reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_locations WHERE active=true ORDER BY name", conn);
+            reader = cmd.ExecuteReader();
+            lstLocation.DataSource = reader;
+            lstLocation.DataTextField = "name";
+            lstLocation.DataValueField = "id";
+            lstLocation.DataBind();
+            reader.Close();
+
+            cmd = new NpgsqlCommand("SELECT id, name FROM old_payment_types WHERE active=true ORDER BY ordinal", conn);
+            reader = cmd.ExecuteReader();
+            lstPaymentType.DataSource = reader;
+            lstPaymentType.DataTextField = "name";
+            lstPaymentType.DataValueField = "id";
+            lstPaymentType.DataBind();
+            reader.Close();
+
+            conn.Close();
+
             txtClassDate.Text = DateTime.Today.ToString("MM/dd/yyyy");
-            gvStudents.DataBind();
         }
         else
         {
@@ -19,18 +61,26 @@ public partial class shynet_default : System.Web.UI.Page
         }
     }
 
+    protected void searchForStudent(String searchText) {
+        if (searchText != "")
+        {
+            NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+            conn.Open();
+            DataSet ds = new DataSet();
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
+            da.SelectCommand.Parameters.AddWithValue("@search", searchText);
+            da.Fill(ds, "old_student_balances");
+            gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
+            gvStudents.DataBind();
+            conn.Close();
+        }
+    }
+
     protected void FindStudent_Click(Object sender, EventArgs e)
     {
         // Reset page index to zero for each new search so we're not stuck on an out of range page
         gvStudents.PageIndex = 0;
-
-        if (SearchText.Text != "")
-        {
-            gvStudents.DataSourceID = "lnqStudents";
-            gvStudents.DataBind();
-        }
-        else
-            gvStudents.DataSourceID = "";
+        searchForStudent(SearchText.Text);
     }
 
     protected void NewStudentCancel_Click(Object sender, EventArgs e)
@@ -43,10 +93,23 @@ public partial class shynet_default : System.Web.UI.Page
 
     protected void NewStudentOK_Click(Object sender, EventArgs e)
     {
-        srcStudents.Insert();
-        gvStudents.DataBind(); // So we can see the newly added student immediately without a new search
-        ScriptManager.RegisterStartupScript(this, this.GetType(), "NewStudentHide", "newStudentHide();", true);
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+        conn.Open();
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname from old_students where 0 = 1", conn);
+        DataSet ds = new DataSet();
+        da.Fill(ds, "old_students");
+        var newStudent = ds.Tables["old_students"].NewRow();
+        newStudent["firstname"] = firstName.Text;
+        newStudent["lastname"] = lastName.Text;
+        ds.Tables["old_students"].Rows.Add(newStudent);
+        new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
+        da.Update(ds, "old_students");
+        conn.Close();
+
+        // Search for the newly added user to make selection easier
         SearchText.Text = lastName.Text;
+        searchForStudent(SearchText.Text);
+        ScriptManager.RegisterStartupScript(this, this.GetType(), "NewStudentHide", "newStudentHide();", true);
         firstName.Text = "";
         lastName.Text = "";
     }
@@ -58,17 +121,30 @@ public partial class shynet_default : System.Web.UI.Page
 
     protected void PurchaseClassesOK_Click(Object sender, EventArgs e)
     {
+        NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
+        conn.Open();
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT student_id, location_id, instructor_id, class_id, quantity, payment_type_id FROM old_purchases where 0 = 1", conn);
+        DataSet ds = new DataSet();
+        da.Fill(ds, "old_purchases");
+        var newPurchase = ds.Tables["old_purchases"].NewRow();
+        newPurchase["student_id"] = student_id.Value;
+        newPurchase["location_id"] = lstLocation.SelectedValue;
+        newPurchase["instructor_id"] = lstInstructor.SelectedValue;
+        newPurchase["class_id"] = lstClass.SelectedValue;
+        newPurchase["quantity"] = NumberOfClasses.Value;
+        newPurchase["payment_type_id"] = lstPaymentType.SelectedValue;
         // purchased_on is set to GETDATE() as a SQL Server default
-        srcPayments.InsertParameters["source_ip"].DefaultValue = Request.UserHostAddress;
-        //srcPayments.InsertParameters["quantity"].DefaultValue = Math.Abs(srcPayments.InsertParameters["quantity"].DefaultValue);
-        srcPayments.Insert();
-        gvStudents.DataBind(); // Refresh to show increased quantity
+        ds.Tables["old_purchases"].Rows.Add(newPurchase);
+        new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
+        da.Update(ds, "old_purchases");
+        conn.Close();
+        searchForStudent(SearchText.Text); // Refresh to show increased quantity
         ScriptManager.RegisterStartupScript(this, this.GetType(), "PurchaseClassesHide", "purchaseClassesHide();", true);
     }
 
     protected void gvStudents_RowCommand(Object sender, GridViewCommandEventArgs e)
     {
-        // If a pager control or sort column is clicked, bail out of this right away
+        // If a pager control or sort column is clicked, bail out
         if (e.CommandName != "Select" && e.CommandName != "Purchase")
             return;
 
@@ -108,7 +184,7 @@ public partial class shynet_default : System.Web.UI.Page
                 srcAttendees.Insert();
 
                 // Refresh data bindings
-                gvStudents.DataBind(); // Updates the student's balance
+                searchForStudent(SearchText.Text); // Updates the student's balance
 
                 break;
 
@@ -135,7 +211,7 @@ public partial class shynet_default : System.Web.UI.Page
 
     protected void gvAttendees_RowDeleted(Object sender, EventArgs e)
     {
-        gvStudents.DataBind(); // Updates the student's balance
+        searchForStudent(SearchText.Text); // Refresh to show updated balance
     }
 
     private string alert(string message, string criticality = "danger")

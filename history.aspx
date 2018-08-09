@@ -1,120 +1,104 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="history.aspx.cs" Inherits="shynet_history" MaintainScrollPositionOnPostback="True" %>
-<!DOCTYPE html>
-<html lang="en">
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="history.aspx.cs" Inherits="history" MaintainScrollPositionOnPostback="True" %>
+<!doctype html>
+<html lang="en-us">
 <head runat="server">
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student History</title>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Student History</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker3.min.css" integrity="sha256-mlKJFBS1jbZwwDrZD1ApO7YFS6MA1XDN37jZ9GDFC64=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <style>
+    .spacer {
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container body-content" style="margin-top:10px;">
+  <div class="container body-content spacer">
     <form runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" />
+      <asp:ScriptManager ID="ScriptManager1" runat="server" />
 
-        <b><asp:Literal ID="litHeading" runat="server" /></b><br/>
+      <b><asp:Literal ID="litHeading" runat="server" /></b><br/>
 
-        <asp:SqlDataSource ID="srcClasses" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"  
-            SelectCommand="SELECT id, name FROM classes ORDER BY name"
-            DataSourceMode="DataReader"
-        />
+      <asp:SqlDataSource ID="srcHistory" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:Heroku %>" 
+        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
+        SelectCommand="SELECT * FROM old_show_history(@student_id)" 
+        SelectCommandType="Text"
+        DeleteCommand="SELECT FROM old_delete_history(@transaction_type, @id)"
+        DeleteCommandType="Text"
+        UpdateCommand="SELECT FROM old_update_history(@transaction_type, @id, @transaction_date::date, @instructor_id, @location_id, @class_id, @quantity::smallint, @payment_type_id)"
+        UpdateCommandType="Text"
+        >
+        <SelectParameters>
+          <asp:Parameter Name="student_id" DbType="Guid" Direction="Input" />
+        </SelectParameters>
+        <DeleteParameters>
+          <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
+          <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
+        </DeleteParameters>
+        <UpdateParameters>
+          <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
+          <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
+          <asp:Parameter Name="transaction_date" DbType="Date" Direction="Input" />
+          <asp:Parameter Name="instructor_id" DbType="Guid" Direction="Input" />
+          <asp:Parameter Name="location_id" DbType="Guid" Direction="Input" />
+          <asp:Parameter Name="class_id" DbType="Guid" Direction="Input" />
+          <asp:Parameter Name="quantity" DbType="Int16" Direction="Input" />
+          <asp:Parameter Name="payment_type_id" DbType="Guid" Direction="Input" />
+        </UpdateParameters>
+      </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="srcInstructors" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"          
-            SelectCommand="SELECT id, lastname + ', ' + firstname AS name FROM instructors ORDER BY lastname"
-            DataSourceMode="DataReader"
-        />
-
-        <asp:SqlDataSource ID="srcLocations" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"    
-            SelectCommand="SELECT id, name FROM locations ORDER BY name"
-            DataSourceMode="DataReader"
-        />
-
-        <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"    
-            SelectCommand="SELECT id, name FROM payment_types ORDER BY ordinal"
-            DataSourceMode="DataReader"
-        />
-
-        <asp:SqlDataSource ID="srcHistory" runat="server" 
-            ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
-            ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
-            SelectCommand="sp_show_history" 
-            SelectCommandType="StoredProcedure"
-            DeleteCommand="sp_delete_history"
-            DeleteCommandType="StoredProcedure"
-            UpdateCommand="sp_update_history"
-            UpdateCommandType="StoredProcedure"
-            >
-            <SelectParameters>
-                <asp:Parameter Name="student_id" DbType="Guid" Direction="Input" />
-            </SelectParameters>
-            <DeleteParameters>
-                <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
-                <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
-            </DeleteParameters>
-            <UpdateParameters>
-                <asp:Parameter Name="transaction_type" DbType="String" Direction="Input" />
-                <asp:Parameter Name="id" DbType="Guid" Direction="Input" />
-                <asp:Parameter Name="transaction_date" Direction="Input" DbType="Date" />
-                <asp:Parameter Name="instructor_id" DbType="Guid" Direction="Input" />
-                <asp:Parameter Name="location_id" DbType="Guid" Direction="Input" />
-                <asp:Parameter Name="class_id" DbType="Guid" Direction="Input" />
-                <asp:Parameter Name="quantity" DbType="Int16" Direction="Input" />
-                <asp:Parameter Name="payment_type_id" DbType="Guid" Direction="Input" />
-            </UpdateParameters>
-        </asp:SqlDataSource>
-
-        <asp:GridView ID="dgHistory"
-            CssClass="table table-striped table-hover table-condensed table-bordered"
-            AllowPaging="True"
-            AutoGenerateColumns="False"
-            DataSourceID="srcHistory"
-            DataKeyNames="transaction_type,id"
-            PageSize="20" 
-            runat="server"
-            AutoGenerateDeleteButton="True"
-            AutoGenerateEditButton="True" 
-            onrowdeleting="dgHistory_RowDeleting"
-            onrowcancelingedit="dgHistory_RowCanceling"
-            onrowediting="dgHistory_RowEditing" onrowdatabound="dgHistory_RowDataBound"
-            PagerSettings-PageButtonCount="5">
-            <Columns>
-                <asp:BoundField DataField="transaction_type" Visible="false" ReadOnly="true" />
-                <asp:BoundField DataField="id" Visible="false" ReadOnly="true" />
-                <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
-                    <EditItemTemplate>
-                        <asp:TextBox ID="txtClassDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="transaction_date" runat="server" Text='<%# Bind("transaction_date","{0:d}") %>'></asp:Label>
-                    </ItemTemplate>
-                </asp:TemplateField>
-                <asp:TemplateField HeaderText="Description">
-                    <EditItemTemplate>
-                        <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" DataSourceID="srcInstructors" DataTextField="name" DataValueField="id" SelectedValue='<%# Bind("instructor_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstClasses" CssClass="form-control" runat="server" DataSourceID="srcClasses" DataTextField="name" DataValueField="id" SelectedValue='<%# Bind("class_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstLocations" CssClass="form-control" runat="server" DataSourceID="srcLocations" DataTextField="name" DataValueField="id" SelectedValue='<%# Bind("location_id") %>' AutoPostBack="true" />
-                        <asp:dropdownlist id="lstPaymentTypes" CssClass="form-control" runat="server" DataSourceID="srcPaymentTypes" DataTextField="name" DataValueField="id" SelectedValue='<%# Bind("payment_type_id") %>' AutoPostBack="true" />
-                    </EditItemTemplate>
-                    <ItemTemplate>
-                        <asp:Label ID="Label1" runat="server" Text='<%# Bind("Description") %>'></asp:Label>
-                    </ItemTemplate>
-                    <HeaderStyle HorizontalAlign="Left" />
-                </asp:TemplateField>
-                <asp:BoundField DataField="Quantity" HeaderText="Qty" ControlStyle-CssClass="form-control" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" />
-                <asp:BoundField DataField="Balance" HeaderText="Balance" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" ReadOnly="True" />
-            </Columns>
-        </asp:GridView>
+      <asp:GridView ID="gvHistory"
+        CssClass="table table-striped table-hover table-sm table-bordered"
+        AllowPaging="True"
+        AutoGenerateColumns="False"
+        DataSourceID="srcHistory"
+        DataKeyNames="transaction_type,id"
+        PageSize="20" 
+        AutoGenerateDeleteButton="True"
+        AutoGenerateEditButton="True" 
+        OnRowDeleting="gvHistory_RowDeleting"
+        OnRowEditing="gvHistory_RowEditing"
+        OnRowDataBound="gvHistory_RowDataBound"
+        OnRowUpdating="gvHistory_RowUpdating"
+        PagerSettings-PageButtonCount="5"
+        runat="server">
+        <Columns>
+          <asp:BoundField DataField="transaction_type" HeaderText="transaction_type" Visible="false" ReadOnly="true" />
+          <asp:BoundField DataField="id" HeaderText="id" Visible="false" ReadOnly="true" />
+          <asp:TemplateField HeaderText="Date" ItemStyle-Width="90px">
+            <EditItemTemplate>
+              <asp:TextBox ID="txtTransactionDate" CssClass="form-control" TextMode="Date" Text='<%# Bind("transaction_date","{0:yyyy-MM-dd}") %>' runat="server" Width="160px" AutoPostBack="True" />
+            </EditItemTemplate>
+            <ItemTemplate>
+              <asp:Label ID="transaction_date" runat="server" Text='<%# Bind("transaction_date","{0:d}") %>'></asp:Label>
+            </ItemTemplate>
+          </asp:TemplateField>
+          <asp:TemplateField HeaderText="Description">
+            <EditItemTemplate>
+              <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AutoPostBack="true" />
+              <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AutoPostBack="true" />
+              <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AutoPostBack="true" />
+              <asp:dropdownlist id="lstPaymentType" CssClass="form-control" runat="server" AutoPostBack="true" />
+            </EditItemTemplate>
+            <ItemTemplate>
+              <asp:Label ID="lblWhat" runat="server" Text='<%# Bind("what") %>'></asp:Label>
+            </ItemTemplate>
+            <HeaderStyle HorizontalAlign="Left" />
+          </asp:TemplateField>
+          <asp:BoundField DataField="quantity" HeaderText="Qty" ControlStyle-CssClass="form-control" HeaderStyle-CssClass="text-center" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" />
+          <asp:BoundField DataField="balance" HeaderText="Balance" ItemStyle-HorizontalAlign="Right" ItemStyle-Width="60px" ReadOnly="True" />
+        </Columns>
+      </asp:GridView>
     </form>
-    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js" integrity="sha256-EGs9T1xMHdvM1geM8jPpoo8EZ1V1VRsmcJz8OByENLA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha256-VsEqElsCHSGmnmHXGQzvoWjWwoznFSZc6hs7ARLRacQ=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js" integrity="sha256-tW5LzEC7QjhG0CiAvxlseMTs2qJS7u3DRPauDjFJ3zo=" crossorigin="anonymous"></script>
+
 </body>
 </html>

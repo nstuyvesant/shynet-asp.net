@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="test.aspx.cs" Inherits="test" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="shynet_default" %>
 <%@ Register Namespace="SHY" TagPrefix="shy" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,9 +8,9 @@
     <title>SHYnet</title>
 
     <!-- Load jQuery from Google CDN -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-    <!-- Latest compiled and minified CSS 4.1.2 -->
+    <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         
     <!-- Optional theme -->
@@ -104,6 +104,7 @@
                                     OnRowCommand="gvStudents_RowCommand"
                                     PageSize="25"
                                     runat="server"
+                                    ItemType="student_balance"
                                 >
                                     <Columns>
                                         <asp:TemplateField HeaderText="Student name" ItemStyle-Wrap="False">
@@ -118,7 +119,7 @@
                                             ItemStyle-HorizontalAlign="Right"
                                             ItemStyle-Width="81px">
                                             <ItemTemplate>
-                                                <a href="test-history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%> <%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %>&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt hide"></span></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="glyphicon glyphicon-plus-sign text-success"></span></asp:LinkButton>
+                                                <a href="history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%> <%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %>&nbsp;&nbsp;<span class="glyphicon glyphicon-list-alt hide"></span></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="glyphicon glyphicon-plus-sign text-success"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <HeaderStyle CssClass="text-center" />
                                             <ItemStyle HorizontalAlign="Right" Width="81px" />
@@ -155,7 +156,7 @@
                                         <asp:Literal ID="AttendeeAlert" runat="server"/>
                                         <div class="form-group">
                                             <label class="sr-only" for="lstClass">Class</label>
-                                            <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AppendDataBoundItems="true" AutoPostBack="True">
+                                            <asp:dropdownlist id="lstClass" CssClass="form-control" runat="server" AppendDataBoundItems="true" DataSourceID="srcClasses" DataTextField="name" DataValueField="id" AutoPostBack="True"  EnableViewState="False">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select a class</asp:ListItem>
                                             </asp:dropdownlist>
                                         </div>
@@ -176,12 +177,12 @@
                                     <div class="col-xs-12">
                                         <div class="input-group">
                                             <label class="sr-only" for="lstLocation">Location</label>
-                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" AutoPostBack="True">
+                                            <asp:dropdownlist id="lstLocation" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcLocations" DataTextField="name" DataValueField="id" AutoPostBack="True"  EnableViewState="False">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select Location</asp:ListItem>
                                             </asp:dropdownlist>
                                             <span class="input-group-addon">&nbsp;</span>
                                             <label class="sr-only" for="lstInstructor">Instructor</label>
-                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" AutoPostBack="True">
+                                            <asp:dropdownlist id="lstInstructor" CssClass="form-control" runat="server" AppendDataBoundItems="True" DataSourceID="srcInstructors" DataTextField="name" DataValueField="id" AutoPostBack="True" EnableViewState="False">
                                                 <asp:ListItem Value="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA" Selected="True">Select instructor</asp:ListItem>
                                             </asp:dropdownlist>
                                         </div>
@@ -228,6 +229,104 @@
                         </div>
                     </div>
 
+                    <asp:SqlDataSource ID="srcAttendees" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>"
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"
+                        SelectCommand="SELECT id, name, student_id
+                                            FROM attendees
+                                            WHERE 
+                                                class_date = @class_date AND
+                                                instructor_id = @instructor_id AND
+                                                class_id = @class_id AND
+                                                location_id = @location_id
+                                            ORDER BY name"
+                        InsertCommand="INSERT INTO attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id, @class_id, @location_id, @class_date, @student_id)"                
+                        DeleteCommand="DELETE FROM attendances WHERE id = @id"
+                    >
+                        <SelectParameters>
+                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
+                            <asp:ControlParameter Name="instructor_id" ControlID="lstInstructor" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="class_id" ControlID="lstClass" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="location_id" ControlID="lstLocation" PropertyName="SelectedValue"/>
+                        </SelectParameters>
+                        <InsertParameters>
+                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
+                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
+                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
+                        </InsertParameters>
+                    </asp:SqlDataSource>
+
+                    <asp:SqlDataSource ID="srcClasses" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"  
+                        SelectCommand="SELECT id, name FROM classes WHERE active=1 ORDER BY name"
+                        DataSourceMode="DataReader"
+                    />
+
+                    <asp:SqlDataSource ID="srcInstructors" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"          
+                        SelectCommand="SELECT id, lastname + ', ' + firstname AS name FROM instructors WHERE active=1 ORDER BY lastname"
+                        DataSourceMode="DataReader"
+                    />
+
+                    <asp:SqlDataSource ID="srcLocations" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"    
+                        SelectCommand="SELECT id, name FROM locations WHERE active=1 ORDER BY name"
+                        DataSourceMode="DataReader"
+                    />
+
+                    <asp:SqlDataSource ID="srcPayments" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
+                        InsertCommand="INSERT INTO class_purchases (student_id, location_id, instructor_id, class_id, quantity, payment_type_id, source_ip) VALUES (@student_id, @location_id, @instructor_id, @class_id, @quantity, @payment_type_id, @source_ip)" 
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>">
+                        <InsertParameters>
+                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
+                            <asp:ControlParameter Name="location_id"  DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue" />
+                            <asp:ControlParameter Name="quantity" DbType="Int16" ControlID="NumberOfClasses" PropertyName="Value" />
+                            <asp:ControlParameter Name="payment_type_id" DbType="Guid" ControlID="lstPaymentType" PropertyName="SelectedValue" />
+                            <asp:Parameter Name="source_ip" DbType="String" />
+                        </InsertParameters>
+                    </asp:SqlDataSource>
+
+                    <asp:SqlDataSource ID="srcPaymentTypes" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>" 
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"    
+                        SelectCommand="SELECT id, name FROM payment_types WHERE active=1 ORDER BY ordinal"
+                        DataSourceMode="DataReader"
+                    />
+
+                    <asp:LinqDataSource
+                        ID="lnqStudents"
+                        TableName="student_balances"
+                        OrderBy="lastname,firstname"
+                        runat="server"
+                        ContextTypeName="DataClassesDataContext"
+                        Where="@search_text == String.Empty || (lastname.StartsWith(@search_text) Or firstname.StartsWith(@search_text))"
+                     >
+                        <WhereParameters>
+                            <asp:ControlParameter ControlID="SearchText" ConvertEmptyStringToNull="false" Name="search_text" PropertyName="Text" Size="20" Type="String" />
+                        </WhereParameters>
+                    </asp:LinqDataSource>
+
+                    <asp:SqlDataSource ID="srcStudents" runat="server"
+                        ConnectionString="<%$ ConnectionStrings:SHYnet %>"
+                        ProviderName="<%$ ConnectionStrings:SHYnet.ProviderName %>"           
+                        InsertCommand="INSERT INTO students (firstname, lastname) VALUES (@firstname, @lastname)"
+                        EnableViewState="False"
+                        DataSourceMode="DataSet"
+                        >
+                        <InsertParameters>
+                            <asp:ControlParameter Name="firstname" DbType="String" ControlID="firstName" PropertyName="Text" />
+                            <asp:ControlParameter Name="lastName" DbType="String" ControlID="lastName" PropertyName="Text" />
+                        </InsertParameters>
+                    </asp:SqlDataSource>
+
                     <asp:Panel ID="pnlNewStudent" DefaultButton="NewStudentOK" runat="server">
                         <div id="NewStudent" class="modal">
                             <div class="modal-dialog">
@@ -270,7 +369,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="lstPaymentType">Payment method</label>
-                                            <asp:DropDownList ID="lstPaymentType" CssClass="form-control" runat="server" />
+                                            <asp:DropDownList ID="lstPaymentType" CssClass="form-control" runat="server" DataSourceID="srcPaymentTypes" DataTextField="name" DataValueField="id" />
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -281,35 +380,6 @@
                             </div>
                         </div>
                     </asp:Panel>
-
-                    <asp:SqlDataSource ID="srcAttendees" runat="server"
-                        ConnectionString="<%$ ConnectionStrings:Heroku %>"
-                        ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-                        SelectCommand="SELECT id, name, student_id
-                                            FROM old_attendees
-                                            WHERE 
-                                                class_date = @class_date AND
-                                                instructor_id = @instructor_id AND
-                                                class_id = @class_id AND
-                                                location_id = @location_id
-                                            ORDER BY name"
-                        InsertCommand="INSERT INTO old_attendances (instructor_id, class_id, location_id, class_date, student_id) VALUES (@instructor_id::uuid, @class_id::uuid, @location_id::uuid, @class_date::date, @student_id::uuid)"                
-                        DeleteCommand="DELETE FROM old_attendances WHERE id = @id::uuid"
-                    >
-                        <SelectParameters>
-                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
-                        </SelectParameters>
-                        <InsertParameters>
-                            <asp:ControlParameter Name="student_id" DbType="Guid" ControlID="student_id" PropertyName="Value" />                                
-                            <asp:ControlParameter Name="class_date" DbType="Date" ControlID="txtClassDate" PropertyName="Text"/>
-                            <asp:ControlParameter Name="instructor_id" DbType="Guid" ControlID="lstInstructor" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="class_id" DbType="Guid" ControlID="lstClass" PropertyName="SelectedValue"/>
-                            <asp:ControlParameter Name="location_id" DbType="Guid" ControlID="lstLocation" PropertyName="SelectedValue"/>
-                        </InsertParameters>
-                    </asp:SqlDataSource>
 
                 </ContentTemplate>
             </asp:UpdatePanel>
