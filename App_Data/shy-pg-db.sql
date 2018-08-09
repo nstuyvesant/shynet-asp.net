@@ -302,7 +302,7 @@ BEGIN
     SELECT
       id, balance
     FROM
-      student_balances WHERE balance > 0;
+      old_student_balances WHERE balance > 0;
   
   -- Eliminate students who bought a card within the last 6 months
 	DELETE FROM student_balances_temp WHERE id IN (SELECT DISTINCT student_id FROM old_purchases WHERE purchased_on >= cutoff);
