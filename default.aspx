@@ -227,6 +227,10 @@
                                           <label for="email">Email</label>
                                           <asp:TextBox ID="email" type="email" CssClass="form-control" runat="server" placeholder="Email address" MaxLength="255" />
                                       </div>
+                                      <div class="form-group form-check">
+                                          <asp:CheckBox ID="optOut" CssClass="form-check-input" runat="server" />
+                                          <label for="optOut" class="form-check-label">Opt out</label>
+                                      </div>
                                     </div>
                                     <div class="modal-footer">
                                         <asp:Button ID="NewStudentCancel" onclick="NewStudentCancel_Click" formnovalidate CssClass="btn btn-secondary" CausesValidation="false" Text="Cancel" runat="server" style="width:80px;" />

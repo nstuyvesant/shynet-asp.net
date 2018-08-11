@@ -67,7 +67,7 @@ public partial class editor : System.Web.UI.Page
             NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
             DataSet ds = new DataSet();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname, email FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname, email, &quot;optOut&quot; FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
             da.SelectCommand.Parameters.AddWithValue("@search", searchText);
             da.Fill(ds, "old_student_balances");
             gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
@@ -89,6 +89,8 @@ public partial class editor : System.Web.UI.Page
         // Reset the fields to blank for the next student we create.
         firstName.Text = "";
         lastName.Text = "";
+        email.Text = "";
+        optOut.Checked = false;
     }
 
     protected void NewStudentOK_Click(Object sender, EventArgs e)
@@ -102,6 +104,7 @@ public partial class editor : System.Web.UI.Page
         newStudent["firstname"] = firstName.Text;
         newStudent["lastname"] = lastName.Text;
         newStudent["email"] = email.Text;
+        newStudent["optOut"] = optOut.Checked;
         ds.Tables["old_students"].Rows.Add(newStudent);
         new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
         da.Update(ds, "old_students");
