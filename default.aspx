@@ -95,7 +95,7 @@
                                     <Columns>
                                         <asp:TemplateField HeaderText="Student name" ItemStyle-Wrap="False">
                                             <ItemTemplate>
-                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> <%# Eval("email") == "" ? "(email missing)" : "" %> <span class="fas fa-chevron-right"></span></asp:LinkButton>
+                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> <%# Eval("email") == null ? "(email missing)" : "" %> <span class="fas fa-chevron-right"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <ItemStyle Wrap="False" />
                                         </asp:TemplateField>
