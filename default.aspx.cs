@@ -67,7 +67,7 @@ public partial class editor : System.Web.UI.Page
             NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
             DataSet ds = new DataSet();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname, email, &quot;optOut&quot; FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname, email, \"optOut\" FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
             da.SelectCommand.Parameters.AddWithValue("@search", searchText);
             da.Fill(ds, "old_student_balances");
             gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
@@ -97,7 +97,7 @@ public partial class editor : System.Web.UI.Page
     {
         NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
-        NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT firstname, lastname, email, &quot;optOut&quot; from old_students where 0 = 1", conn);
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT firstname, lastname, email, \"optOut\" from old_students where 0 = 1", conn);
         DataSet ds = new DataSet();
         da.Fill(ds, "old_students");
         var newStudent = ds.Tables["old_students"].NewRow();
