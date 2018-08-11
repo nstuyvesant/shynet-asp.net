@@ -222,4 +222,13 @@ public partial class editor : System.Web.UI.Page
         return "<div class=\"alert alert-" + criticality + " alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" + message + "</div>";
     }
 
+  public string CheckForEmail(object myValue)
+  {
+    if (myValue == null)
+    {
+      return "(missing email)";
+    }
+
+    return "";
+  }
 }

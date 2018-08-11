@@ -95,7 +95,7 @@
                                     <Columns>
                                         <asp:TemplateField HeaderText="Student name" ItemStyle-Wrap="False">
                                             <ItemTemplate>
-                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> <%# Eval("email") == null ? "(email missing)" : "" %> <span class="fas fa-chevron-right"></span></asp:LinkButton>
+                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> <%# CheckForEmail(Eval("email")) %> <span class="fas fa-chevron-right"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <ItemStyle Wrap="False" />
                                         </asp:TemplateField>
@@ -105,7 +105,7 @@
                                             ItemStyle-HorizontalAlign="Right"
                                             ItemStyle-Width="81px">
                                             <ItemTemplate>
-                                                <a href="history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%> <%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="fas fa-plus-circle text-success"></span></asp:LinkButton>
+                                                <a href="history.aspx?id=<%#Eval("id")%>&name=<%#Eval("firstname")%>+<%#Eval("lastname")%>" target="_blank" rel="noopener noreferrer"><%# Eval("balance") %></a>&nbsp;&nbsp;<asp:LinkButton ID="PurchaseClassesLink" CommandName="Purchase" CommandArgument='<%# Container.DataItemIndex %>' ToolTip='<%# Eval("firstname") + " " + Eval("lastname") %>' runat="server"><span class="fas fa-plus-circle text-success"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <HeaderStyle CssClass="text-center" />
                                             <ItemStyle HorizontalAlign="Right" Width="81px" />
