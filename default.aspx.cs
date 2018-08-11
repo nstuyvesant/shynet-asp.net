@@ -224,7 +224,7 @@ public partial class editor : System.Web.UI.Page
 
   public string CheckForEmail(object myValue)
   {
-    if (myValue == null)
+    if (myValue.ToString == "")
     {
       return "(missing email)";
     }
