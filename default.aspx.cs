@@ -97,7 +97,7 @@ public partial class editor : System.Web.UI.Page
     {
         NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
-        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname, email from old_students where 0 = 1", conn);
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname, email, &quot;optOut&quot; from old_students where 0 = 1", conn);
         DataSet ds = new DataSet();
         da.Fill(ds, "old_students");
         var newStudent = ds.Tables["old_students"].NewRow();
@@ -116,6 +116,8 @@ public partial class editor : System.Web.UI.Page
         ScriptManager.RegisterStartupScript(this, this.GetType(), "NewStudentHide", "newStudentHide();", true);
         firstName.Text = "";
         lastName.Text = "";
+        email.Text = "";
+        optOut.Checked = false;
     }
 
     protected void PurchaseClassesCancel_Click(Object sender, EventArgs e)
