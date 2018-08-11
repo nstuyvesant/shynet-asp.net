@@ -160,9 +160,9 @@
             {
                 string template = "<li class=\"{class}\">";
                 if (isPageNumber)
-                    template = template.Replace("{class}", "active");
+                    template = template.Replace("{class}", "page-item active");
                 else
-                    template = template.Replace("{class}", "disabled");
+                    template = template.Replace("{class}", "page-item disabled");
                 Controls.Add(new Literal { Text = template });
                 Controls.Add(new HyperLink { Text = text });
             }
