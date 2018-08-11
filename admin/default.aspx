@@ -236,7 +236,7 @@
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
         SelectCommand="SELECT id, active, firstname, lastname, email, &quot;optOut&quot; FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
-        InsertCommand="INSERT INTO old_students (active, firstname, lastname, email, &quot;optOut&quot;) VALUES (@active, @firstname, @lastname, @email)"
+        InsertCommand="INSERT INTO old_students (active, firstname, lastname, email, &quot;optOut&quot;) VALUES (@active, @firstname, @lastname, @email, @optOut)"
         UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname, email = @email, &quot;optOut&quot; = @optOut WHERE id = @id::uuid"
         DeleteCommand="DELETE FROM old_students WHERE id = @id::uuid AND ((SELECT COUNT(*) FROM old_attendances WHERE student_id = @id::uuid) - (SELECT COUNT(*) FROM old_purchases WHERE student_id = @id::uuid)) = 0" >
         <SelectParameters>
