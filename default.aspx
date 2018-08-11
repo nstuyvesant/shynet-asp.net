@@ -62,7 +62,7 @@
 <!--Find/Create Student Form-->
                                 <asp:Panel DefaultButton="FindStudent" CssClass="form" role="form" runat="server">
                                     <label class="sr-only" for="SearchText">Find Student</label>
-                                    <div class="input-group mb-3">
+                                    <div class="input-group">
                                         <asp:TextBox ID="SearchText" CssClass="form-control" Text="" autofocus runat="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" runat="server" />
                                         <span class="input-group-append">
                                             <asp:LinkButton id="FindStudent" class="btn btn-warning" onclick="FindStudent_Click" runat="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
