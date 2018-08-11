@@ -232,9 +232,9 @@
     <asp:SqlDataSource ID="srcStudents" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT id, active, firstname, lastname FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
-        InsertCommand="INSERT INTO old_students (active, firstname, lastname) VALUES (@active, @firstname, @lastname)"
-        UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname WHERE id = @id::uuid"
+        SelectCommand="SELECT id, active, firstname, lastname, email FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
+        InsertCommand="INSERT INTO old_students (active, firstname, lastname, email) VALUES (@active, @firstname, @lastname, @email)"
+        UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname, email = @email WHERE id = @id::uuid"
         DeleteCommand="DELETE FROM old_students WHERE id = @id::uuid AND ((SELECT COUNT(*) FROM old_attendances WHERE student_id = @id::uuid) - (SELECT COUNT(*) FROM old_purchases WHERE student_id = @id::uuid)) = 0" >
         <SelectParameters>
             <asp:ControlParameter Name="search_text" DbType="String" ControlID="StudentSearch" PropertyName="Text" />
@@ -243,11 +243,13 @@
             <asp:Parameter Name="active" Type="Boolean" />
             <asp:Parameter Name="firstname" Type="String" />
             <asp:Parameter Name="lastname" Type="String" />
+            <asp:Parameter Name="email" Type="String" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="active" Type="Boolean" />
             <asp:Parameter Name="firstname" Type="String" />
             <asp:Parameter Name="lastname" Type="String" />
+            <asp:Parameter Name="email" Type="String" />
             <asp:Parameter Name="id" />
         </UpdateParameters>
         <DeleteParameters>
