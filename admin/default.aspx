@@ -31,7 +31,7 @@
                                     <asp:panel ID="SubscriberSearchPanel" CssClass="form" role="form" runat="server" DefaultButton="FindSubscriber">		
                                         <label for="SubscriberSearch" class="sr-only">Find existing subscribers</label>		
                                         <div class="input-group">
-                                            <asp:TextBox ID="SubscriberSearch" CssClass="form-control" placeholder="Email, first or last name..." runat="server" />		
+                                            <asp:TextBox ID="SubscriberSearch" CssClass="form-control" autofocus placeholder="Email, first or last name..." runat="server" />		
                                             <span class="input-group-append">		
                                                 <asp:LinkButton id="FindSubscriber" class="btn btn-warning" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
                                             </span>		
