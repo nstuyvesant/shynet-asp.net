@@ -33,7 +33,7 @@
                                         <div class="input-group">
                                             <asp:TextBox ID="SubscriberSearch" CssClass="form-control" placeholder="Email, first or last name..." runat="server" />		
                                             <span class="input-group-append">		
-                                                <asp:LinkButton id="FindSubscriber" class="btn btn-primary" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
+                                                <asp:LinkButton id="FindSubscriber" class="btn btn-warning" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
                                             </span>		
                                         </div>	
                                     </asp:panel><br/>
@@ -90,7 +90,7 @@
                                                 <asp:LinkButton id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
                                             </span>
                                         </div>
-                                    </asp:panel>
+                                    </asp:panel><br/>
                                     <asp:GridView ID="gvStudents" runat="server" CssClass="table table-striped" AutoGenerateColumns="False" DataKeyNames="id" DataSourceID="srcStudents" EmptyDataText="No students' name matched the search." AllowPaging="True" AllowSorting="True" GridLines="None">
                                         <Columns>
                                             <asp:CommandField ShowEditButton="True" ShowDeleteButton="True" />
