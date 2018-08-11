@@ -145,14 +145,14 @@
         {
             if (isEnabled)
             {
-                Controls.Add(new Literal { Text = "<li>" });
+                Controls.Add(new Literal { Text = "<li class=\"page-item\">" });
                 LinkButton button = new LinkButton
                 {
                     ID = "Page" + text,
                     CommandName = "Page",
                     CommandArgument = commandArgument,
                     Text = text,
-                    CssClass = "page-item"
+                    CssClass = "page-link"
                 };
                 Controls.Add(button);
             }
