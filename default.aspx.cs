@@ -198,10 +198,8 @@ public partial class editor : System.Web.UI.Page
 
     }
 
-    protected void gvAttendees_RowDataBound(Object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.Footer) // add the number of students to the footer of gvAttendees
-        {
+    protected void gvAttendees_RowDataBound(Object sender, GridViewRowEventArgs e) {
+        if (e.Row.RowType == DataControlRowType.Footer) { // add the number of students to the footer of gvAttendees
             int students = gvAttendees.Rows.Count;
             string footerText = " student";
             if (students > 1)
@@ -216,6 +214,7 @@ public partial class editor : System.Web.UI.Page
 
     protected void gvStudents_PageIndexChanging(Object sender, GridViewPageEventArgs e) {
       gvStudents.PageIndex = e.NewPageIndex;
+      searchForStudent(SearchText.Text);
       gvStudents.DataBind();
     }
 

@@ -86,11 +86,10 @@
                                     style="margin-bottom:0px;"
                                     AllowPaging="True"
                                     AutoGenerateColumns="False"
-                                    DataSourceID=""
                                     DataKeyNames="id"
                                     OnRowCommand="gvStudents_RowCommand"
                                     OnPageIndexChanging="gvStudents_PageIndexChanging"
-                                    PageSize="25"
+                                    PageSize="10"
                                     runat="server"
                                 >
                                     <Columns>
