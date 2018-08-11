@@ -214,7 +214,7 @@ public partial class editor : System.Web.UI.Page
         searchForStudent(SearchText.Text); // Refresh to show updated balance
     }
 
-    protected void gvStudents_PageIndexChanging(Object sender, EventArgs e) {
+    protected void gvStudents_PageIndexChanging(Object sender, GridViewPageEventArgs e) {
       gvStudents.PageIndex = e.NewPageIndex;
       gvStudents.DataBind();
     }
