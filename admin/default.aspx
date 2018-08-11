@@ -43,6 +43,7 @@
                                             <asp:CheckBoxField DataField="active" ControlStyle-CssClass="form-control" HeaderText="Active" SortExpression="active" />
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
+                                            <asp:BoundField DataField="email" ControlStyle-CssClass="form-control" HeaderText="Email" SortExpression="email" />
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -57,6 +58,7 @@
                                             <asp:CheckBoxField DataField="active" ControlStyle-CssClass="form-control" HeaderText="Active" SortExpression="active" />
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
+                                            <asp:BoundField DataField="email" ControlStyle-CssClass="form-control" HeaderText="Email" SortExpression="email" />
                                             <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
