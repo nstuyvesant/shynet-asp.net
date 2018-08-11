@@ -22,6 +22,64 @@
             <asp:ScriptManager ID="ScriptManager1" runat="server" />
             <asp:UpdatePanel ID="updatePanel1" runat="server">
                 <ContentTemplate>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">Subscribers</div>
+                                <div class="card-body">
+                                    <asp:panel ID="SubscriberSearchPanel" CssClass="form-group" runat="server" DefaultButton="FindSubscriber">		
+                                        <label for="SubscriberSearch" class="sr-only">Find existing subscribers</label>		
+                                        <div class="input-group">
+                                            <asp:TextBox ID="SubscriberSearch" CssClass="form-control" placeholder="Email, first or last name..." runat="server" />		
+                                            <span class="input-group-btn">		
+                                                <asp:LinkButton id="FindSubscriber" class="btn btn-primary" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
+                                            </span>		
+                                        </div>		
+                                    </asp:panel>
+                                    <asp:GridView ID="gvSubscribers" runat="server"		
+                                        AllowSorting="True"		
+                                        AutoGenerateColumns="False"		
+                                        DataKeyNames="_id"		
+                                        DataSourceID="srcSubscribers"
+                                        EmptyDataText="No subscribers' last names matched the search."		
+                                        CssClass="table table-striped table-hover table-condensed table-bordered"		
+                                        AllowPaging="True">		
+                                        <Columns>		
+                                            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />		
+                                            <asp:BoundField DataField="_id" HeaderText="id" ReadOnly="True" visible="false" SortExpression="_id" />		
+                                            <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
+                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
+                                        </Columns>		
+                                    </asp:GridView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">Add Subscriber</div>
+                                <div class="card-body">
+                                    <asp:DetailsView ID="dvSubscribers" runat="server" CssClass="table table-striped" DataSourceID="srcSubscribers" GridLines="None" AutoGenerateRows="False" DataKeyNames="_id" DefaultMode="Insert" OnItemInserted="dvSubscribers_ItemInserted">		
+                                        <Fields>		
+                                            <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
+                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
+                                            <asp:CommandField ButtonType="Button" ShowInsertButton="True" InsertText="Save" ControlStyle-CssClass="btn" />		
+                                        </Fields>		
+                                    </asp:DetailsView>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card">
@@ -49,6 +107,8 @@
                                 </div>
                             </div>
                         </div>
+                      </div>
+                      <div class="row"></div>
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">Add Student</div>
@@ -168,61 +228,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">Subscribers</div>
-                                <div class="card-body">
-                                    <asp:panel ID="SubscriberSearchPanel" CssClass="form-group" runat="server" DefaultButton="FindSubscriber">		
-                                        <label for="SubscriberSearch" class="sr-only">Find existing subscribers</label>		
-                                        <div class="input-group">
-                                            <asp:TextBox ID="SubscriberSearch" CssClass="form-control" placeholder="Email, first or last name..." runat="server" />		
-                                            <span class="input-group-btn">		
-                                                <asp:LinkButton id="FindSubscriber" class="btn btn-primary" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
-                                            </span>		
-                                        </div>		
-                                    </asp:panel>
-                                    <asp:GridView ID="gvSubscribers" runat="server"		
-                                        AllowSorting="True"		
-                                        AutoGenerateColumns="False"		
-                                        DataKeyNames="_id"		
-                                        DataSourceID="srcSubscribers"
-                                        EmptyDataText="No subscribers' last names matched the search."		
-                                        CssClass="table table-striped table-hover table-condensed table-bordered"		
-                                        AllowPaging="True">		
-                                        <Columns>		
-                                            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />		
-                                            <asp:BoundField DataField="_id" HeaderText="id" ReadOnly="True" visible="false" SortExpression="_id" />		
-                                            <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
-                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
-                                        </Columns>		
-                                    </asp:GridView>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">Add Subscriber</div>
-                                <div class="card-body">
-                                    <asp:DetailsView ID="dvSubscribers" runat="server" CssClass="table table-striped" DataSourceID="srcSubscribers" GridLines="None" AutoGenerateRows="False" DataKeyNames="_id" DefaultMode="Insert" OnItemInserted="dvSubscribers_ItemInserted">		
-                                        <Fields>		
-                                            <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
-                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
-                                            <asp:CommandField ButtonType="Button" ShowInsertButton="True" InsertText="Save" ControlStyle-CssClass="btn" />		
-                                        </Fields>		
-                                    </asp:DetailsView>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
 
                 </ContentTemplate>
             </asp:UpdatePanel>
