@@ -151,7 +151,8 @@
                     ID = "Page" + text,
                     CommandName = "Page",
                     CommandArgument = commandArgument,
-                    Text = text
+                    Text = text,
+                    CssClass = "page-item"
                 };
                 Controls.Add(button);
             }
