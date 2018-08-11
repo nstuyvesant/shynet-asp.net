@@ -164,7 +164,7 @@
                 else
                     template = template.Replace("{class}", "page-item disabled");
                 Controls.Add(new Literal { Text = template });
-                Controls.Add(new HyperLink { Text = text });
+                Controls.Add(new HyperLink { Text = text, CssClass = "page-link" });
             }
 
             Controls.Add(new Literal {Text = "</li>"});
