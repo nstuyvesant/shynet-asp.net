@@ -210,13 +210,16 @@ public partial class editor : System.Web.UI.Page
         }
     }
 
-    protected void gvAttendees_RowDeleted(Object sender, EventArgs e)
-    {
+    protected void gvAttendees_RowDeleted(Object sender, EventArgs e) {
         searchForStudent(SearchText.Text); // Refresh to show updated balance
     }
 
-    private string alert(string message, string criticality = "danger")
-    {
+    protected void gvStudents_PageIndexChanging(Object sender, EventArgs e) {
+      gvStudents.PageIndex = e.NewPageIndex;
+      gvStudents.DataBind();
+    }
+
+    private string alert(string message, string criticality = "danger") {
         return "<div class=\"alert alert-" + criticality + " alert-dismissable\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button>" + message + "</div>";
     }
 

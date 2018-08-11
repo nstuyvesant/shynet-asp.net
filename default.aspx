@@ -89,6 +89,7 @@
                                     DataSourceID=""
                                     DataKeyNames="id"
                                     OnRowCommand="gvStudents_RowCommand"
+                                    OnPageIndexChanging="gvStudents_PageIndexChanging"
                                     PageSize="25"
                                     runat="server"
                                 >
