@@ -50,7 +50,6 @@
                                             <asp:BoundField DataField="_id" HeaderText="id" ReadOnly="True" visible="false" SortExpression="_id" />		
                                             <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
                                             <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
                                         </Columns>		
@@ -68,8 +67,7 @@
                                         <Fields>		
                                             <asp:BoundField DataField="firstName" HeaderText="First" SortExpression="firstName" ControlStyle-CssClass="form-control" />		
                                             <asp:BoundField DataField="lastName" HeaderText="Last" SortExpression="lastName" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="phone" HeaderText="Phone" SortExpression="phone" ControlStyle-CssClass="form-control" />		
-                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />		
+                                            <asp:BoundField DataField="email" HeaderText="Email" SortExpression="email" ControlStyle-CssClass="form-control" />	
                                             <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />		
                                             <asp:CommandField ButtonType="Button" ShowInsertButton="True" InsertText="Save" ControlStyle-CssClass="btn" />		
                                         </Fields>		
@@ -79,9 +77,8 @@
                         </div>
                     </div>
 
-
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">Students</div>
                                 <div class="card-body">
@@ -102,6 +99,7 @@
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
                                             <asp:BoundField DataField="email" ControlStyle-CssClass="form-control" HeaderText="Email" SortExpression="email" />
+                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />	
                                         </Columns>
                                     </asp:GridView>
                                 </div>
@@ -119,6 +117,7 @@
                                             <asp:BoundField DataField="firstname" ControlStyle-CssClass="form-control" HeaderText="First" SortExpression="firstname" />
                                             <asp:BoundField DataField="lastname" ControlStyle-CssClass="form-control" HeaderText="Last" SortExpression="lastname" />
                                             <asp:BoundField DataField="email" ControlStyle-CssClass="form-control" HeaderText="Email" SortExpression="email" />
+                                            <asp:CheckBoxField DataField="optOut" HeaderText="Opt Out" SortExpression="optOut" ControlStyle-CssClass="form-control" />
                                             <asp:CommandField ButtonType="Button" ControlStyle-CssClass="btn" InsertText="Save" ShowInsertButton="True" />
                                         </Fields>
                                     </asp:DetailsView>
@@ -228,8 +227,6 @@
                         </div>
                     </div>
 
-
-
                 </ContentTemplate>
             </asp:UpdatePanel>
         </form>
@@ -238,9 +235,9 @@
     <asp:SqlDataSource ID="srcStudents" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT id, active, firstname, lastname, email FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
-        InsertCommand="INSERT INTO old_students (active, firstname, lastname, email) VALUES (@active, @firstname, @lastname, @email)"
-        UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname, email = @email WHERE id = @id::uuid"
+        SelectCommand="SELECT id, active, firstname, lastname, email, &quot;optOut&quot; FROM old_students WHERE lower(lastname) LIKE lower(@search_text || '%') OR lower(firstname) LIKE lower(@search_text || '%') ORDER BY lastname, firstname"
+        InsertCommand="INSERT INTO old_students (active, firstname, lastname, email, &quot;optOut&quot;) VALUES (@active, @firstname, @lastname, @email)"
+        UpdateCommand="UPDATE old_students SET active = @active, firstname = @firstname, lastname = @lastname, email = @email, &quot;optOut&quot; = @optOut WHERE id = @id::uuid"
         DeleteCommand="DELETE FROM old_students WHERE id = @id::uuid AND ((SELECT COUNT(*) FROM old_attendances WHERE student_id = @id::uuid) - (SELECT COUNT(*) FROM old_purchases WHERE student_id = @id::uuid)) = 0" >
         <SelectParameters>
             <asp:ControlParameter Name="search_text" DbType="String" ControlID="StudentSearch" PropertyName="Text" />
@@ -250,12 +247,14 @@
             <asp:Parameter Name="firstname" Type="String" />
             <asp:Parameter Name="lastname" Type="String" />
             <asp:Parameter Name="email" Type="String" />
+            <asp:Parameter Name="optOut" Type="Boolean" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="active" Type="Boolean" />
             <asp:Parameter Name="firstname" Type="String" />
             <asp:Parameter Name="lastname" Type="String" />
             <asp:Parameter Name="email" Type="String" />
+            <asp:Parameter Name="optOut" Type="Boolean" />
             <asp:Parameter Name="id" />
         </UpdateParameters>
         <DeleteParameters>
@@ -333,9 +332,9 @@
     <asp:SqlDataSource ID="srcSubscribers" runat="server"
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
-        SelectCommand="SELECT _id, &quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
-        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, phone, email, &quot;optOut&quot;) VALUES ( @firstName, @lastName, @phone, lower(@email), @optOut)"
-        UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstName, &quot;lastName&quot; = @lastName, phone = @phone, email = lower(@email), &quot;optOut&quot; = @optOut WHERE _id = @_id"
+        SelectCommand="SELECT _id, &quot;firstName&quot;, &quot;lastName&quot;, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
+        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, email, &quot;optOut&quot;) VALUES ( @firstName, @lastName, @phone, lower(@email), @optOut)"
+        UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstName, &quot;lastName&quot; = @lastName, email = lower(@email), &quot;optOut&quot; = @optOut WHERE _id = @_id"
         DeleteCommand="DELETE FROM &quot;Users&quot; WHERE _id = @_id" >
         <SelectParameters>
             <asp:ControlParameter Name="search_text" DbType="String" ControlID="SubscriberSearch" PropertyName="Text" />
@@ -343,14 +342,12 @@
         <InsertParameters>
             <asp:Parameter Name="firstName" Type="String" />
             <asp:Parameter Name="lastName" Type="String" />
-            <asp:Parameter Name="phone" Type="String" />
             <asp:Parameter Name="email" Type="String" />
             <asp:Parameter Name="optOut" Type="Boolean" />
         </InsertParameters>
         <UpdateParameters>
             <asp:Parameter Name="firstName" Type="String" />
             <asp:Parameter Name="lastName" Type="String" />
-            <asp:Parameter Name="phone" Type="String" />
             <asp:Parameter Name="email" Type="String" />
             <asp:Parameter Name="optOut" Type="Boolean" />
             <asp:Parameter Name="_id" />
