@@ -226,7 +226,7 @@ public partial class editor : System.Web.UI.Page
   {
     if (myValue.ToString() == "")
     {
-      return "(missing email)";
+      return " (missing email)";
     }
 
     return "";
