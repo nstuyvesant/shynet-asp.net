@@ -35,8 +35,8 @@
                                             <span class="input-group-append">		
                                                 <asp:LinkButton id="FindSubscriber" class="btn btn-primary" runat="server" OnClick="FindSubscriber_Click"><span class="fas fa-search"></span> Search</asp:LinkButton>		
                                             </span>		
-                                        </div>		
-                                    </asp:panel>
+                                        </div>	
+                                    </asp:panel><br/>
                                     <asp:GridView ID="gvSubscribers" runat="server"		
                                         AllowSorting="True"		
                                         AutoGenerateColumns="False"		
@@ -82,11 +82,11 @@
                             <div class="card">
                                 <div class="card-header">Students</div>
                                 <div class="card-body">
-                                    <asp:panel ID="StudentSearchPanel" CssClass="form-group" runat="server" DefaultButton="FindStudent">		
+                                    <asp:panel ID="StudentSearchPanel" CssClass="form" role="form" runat="server" DefaultButton="FindStudent">		
                                         <label class="sr-only" for="StudentSearch">Find Student</label>
                                         <div class="input-group">
-                                            <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" autofocus RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" />
-                                            <span class="input-group-btn">
+                                            <asp:TextBox ID="StudentSearch" CssClass="form-control" Text="" RunAt="server" MaxLength="20" placeholder="Student's first or last name" TextMode="SingleLine" />
+                                            <span class="input-group-append">
                                                 <asp:LinkButton id="FindStudent" CssClass="btn btn-warning" onClick="FindStudent_Click" RunAt="server"><span class="fas fa-search"></span> Search</asp:LinkButton>
                                             </span>
                                         </div>
