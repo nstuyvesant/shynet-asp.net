@@ -45,6 +45,67 @@
       .container {
           padding-top: 20px;
       }
+
+
+      .pagination-ys {
+        /*display: inline-block;*/
+        padding-left: 0;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+  
+      .pagination-ys table > tbody > tr > td {
+          display: inline;
+      }
+  
+      .pagination-ys table > tbody > tr > td > a,
+      .pagination-ys table > tbody > tr > td > span {
+          position: relative;
+          float: left;
+          padding: 8px 12px;
+          line-height: 1.42857143;
+          text-decoration: none;
+          color: #dd4814;
+          background-color: #ffffff;
+          border: 1px solid #dddddd;
+          margin-left: -1px;
+      }
+  
+      .pagination-ys table > tbody > tr > td > span {
+          position: relative;
+          float: left;
+          padding: 8px 12px;
+          line-height: 1.42857143;
+          text-decoration: none;    
+          margin-left: -1px;
+          z-index: 2;
+          color: #aea79f;
+          background-color: #f5f5f5;
+          border-color: #dddddd;
+          cursor: default;
+      }
+  
+      .pagination-ys table > tbody > tr > td:first-child > a,
+      .pagination-ys table > tbody > tr > td:first-child > span {
+          margin-left: 0;
+          border-bottom-left-radius: 4px;
+          border-top-left-radius: 4px;
+      }
+  
+      .pagination-ys table > tbody > tr > td:last-child > a,
+      .pagination-ys table > tbody > tr > td:last-child > span {
+          border-bottom-right-radius: 4px;
+          border-top-right-radius: 4px;
+      }
+      
+      .pagination-ys table > tbody > tr > td > a:hover,
+      .pagination-ys table > tbody > tr > td > span:hover,
+      .pagination-ys table > tbody > tr > td > a:focus,
+      .pagination-ys table > tbody > tr > td > span:focus {
+          color: #97310e;
+          background-color: #eeeeee;
+          border-color: #dddddd;
+      }
   </style>
 </head>
 <body>
@@ -95,7 +156,7 @@
                                     <Columns>
                                         <asp:TemplateField HeaderText="Student name" ItemStyle-Wrap="False">
                                             <ItemTemplate>
-                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> <span class="fas fa-chevron-right"></span></asp:LinkButton>
+                                                <asp:LinkButton ID="SelectStudent" CommandName="Select" CommandArgument='<%# Eval("balance") %>' runat="server"><%# Eval("lastname") %>, <%# Eval("firstname") %> (<%# Eval("email") %>) <span class="fas fa-chevron-right"></span></asp:LinkButton>
                                             </ItemTemplate>
                                             <ItemStyle Wrap="False" />
                                         </asp:TemplateField>
@@ -118,6 +179,7 @@
                                         FirstPageText="&laquo;"
                                         LastPageText="&raquo;"
                                      />
+                                    <PagerStyle CssClass="pagination-ys" />
                                     <PagerTemplate>
                                         <shy:GridPager ID="GridViewPager1" runat="server"
                                             ShowFirstAndLast="True"
@@ -223,6 +285,10 @@
                                             <label for="firstName">Last name</label>
                                             <asp:TextBox ID="lastName" required CssClass="form-control" runat="server" placeholder="Last name" MaxLength="20" />
                                         </div>
+                                        <div class="form-group">
+                                          <label for="email">Email</label>
+                                          <asp:TextBox ID="email" type="email" CssClass="form-control" runat="server" placeholder="Email address" MaxLength="255" />
+                                      </div>
                                     </div>
                                     <div class="modal-footer">
                                         <asp:Button ID="NewStudentCancel" onclick="NewStudentCancel_Click" formnovalidate CssClass="btn btn-secondary" CausesValidation="false" Text="Cancel" runat="server" style="width:80px;" />

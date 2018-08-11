@@ -67,7 +67,7 @@ public partial class editor : System.Web.UI.Page
             NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
             conn.Open();
             DataSet ds = new DataSet();
-            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
+            NpgsqlDataAdapter da = new NpgsqlDataAdapter("SELECT id, balance, lastname, firstname, email FROM old_student_balances WHERE lower(lastname) LIKE lower(@search) || '%' OR lower(firstname) LIKE lower(@search) || '%'", conn);
             da.SelectCommand.Parameters.AddWithValue("@search", searchText);
             da.Fill(ds, "old_student_balances");
             gvStudents.DataSource = ds.Tables["old_student_balances"].DefaultView; // formerly srcStudentBalances
@@ -95,12 +95,13 @@ public partial class editor : System.Web.UI.Page
     {
         NpgsqlConnection conn = new NpgsqlConnection(CONNECTION_STRING);
         conn.Open();
-        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname from old_students where 0 = 1", conn);
+        NpgsqlDataAdapter da = new NpgsqlDataAdapter("select firstname, lastname, email from old_students where 0 = 1", conn);
         DataSet ds = new DataSet();
         da.Fill(ds, "old_students");
         var newStudent = ds.Tables["old_students"].NewRow();
         newStudent["firstname"] = firstName.Text;
         newStudent["lastname"] = lastName.Text;
+        newStudent["email"] = email.Text;
         ds.Tables["old_students"].Rows.Add(newStudent);
         new NpgsqlCommandBuilder(da); // creates the Insert command automatically so I don't have to do parameters
         da.Update(ds, "old_students");
