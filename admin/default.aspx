@@ -333,7 +333,7 @@
         ConnectionString="<%$ ConnectionStrings:Heroku %>"
         ProviderName="<%$ ConnectionStrings:Heroku.ProviderName %>"
         SelectCommand="SELECT _id, &quot;firstName&quot;, &quot;lastName&quot;, email, &quot;optOut&quot; FROM &quot;Users&quot; WHERE lower(&quot;lastName&quot;) LIKE lower(@search_text || '%') OR lower(&quot;firstName&quot;) LIKE lower(@search_text || '%') OR lower(email) LIKE lower(@search_text || '%') ORDER BY &quot;lastName&quot;, &quot;firstName&quot;"
-        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, email, &quot;optOut&quot;) VALUES ( @firstName, @lastName, @phone, lower(@email), @optOut)"
+        InsertCommand="INSERT INTO &quot;Users&quot; (&quot;firstName&quot;, &quot;lastName&quot;, email, &quot;optOut&quot;) VALUES (@firstName, @lastName, lower(@email), @optOut)"
         UpdateCommand="UPDATE &quot;Users&quot; SET &quot;firstName&quot; = @firstName, &quot;lastName&quot; = @lastName, email = lower(@email), &quot;optOut&quot; = @optOut WHERE _id = @_id"
         DeleteCommand="DELETE FROM &quot;Users&quot; WHERE _id = @_id" >
         <SelectParameters>
