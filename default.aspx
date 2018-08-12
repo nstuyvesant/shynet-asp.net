@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="form-group">
                                           <label for="email">Email</label>
-                                          <asp:TextBox ID="email" type="email" CssClass="form-control" runat="server" placeholder="Email address" MaxLength="255" />
+                                          <asp:TextBox ID="email" required type="email" CssClass="form-control" runat="server" placeholder="Email address" MaxLength="255" />
                                       </div>
                                       <div class="form-group form-check">
                                           <asp:CheckBox ID="optOut" CssClass="form-check-input" runat="server" />
